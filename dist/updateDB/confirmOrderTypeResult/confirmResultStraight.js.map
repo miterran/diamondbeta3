@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/updateDB/confirmOrderTypeResult/confirmResultStraight.js"],"names":["confirmResultStraight"],"mappings":";;;;;AAAA,IAAMA,wBAAwB,SAAxBA,qBAAwB,GAAM,CAEnC,CAFD;;kBAIeA,qB","file":"confirmResultStraight.js","sourcesContent":["const confirmResultStraight = () => {\n\n}\n\nexport default confirmResultStraight"]}
