@@ -48,21 +48,23 @@ var fetch_jsonOdd_result = function () {
 
 						openBetJsonOddEvents = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
-								if (event.status === 'Pending' && event.source.provider === 'jsonOdd') {
+								if (event.status === 'Pending' && event.source.provider === 'jsonOdd' && (0, _moment2.default)().isAfter(event.cutOffTime)) {
 									return _lodash2.default.pick(event, ['eventOddId', 'sport', 'matchTime', 'details', 'league', 'region', 'status', 'team', 'source', 'oddType']);
 								}
 								return null;
 							});
 						})), 'eventOddId'));
 
+
+						console.log('fetch json result' + openBetJsonOddEvents);
 						// eventOddId = generate array unique source id and oddtype from all json open bet
 
 						if (_lodash2.default.isEmpty(openBetJsonOddEvents)) {
-							_context2.next = 11;
+							_context2.next = 12;
 							break;
 						}
 
-						_context2.next = 9;
+						_context2.next = 10;
 						return Promise.all(openBetJsonOddEvents.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event) {
 								var response, oddResult, response2, resultStatus, note, newResult, existedResult;
@@ -201,28 +203,28 @@ var fetch_jsonOdd_result = function () {
 							};
 						}()));
 
-					case 9:
-						_context2.next = 12;
+					case 10:
+						_context2.next = 13;
 						break;
-
-					case 11:
-						console.log('use open bet event id to update json odd result, but open bet empty');
 
 					case 12:
-						_context2.next = 17;
+						console.log('use open bet event id to update json odd result, but open bet empty');
+
+					case 13:
+						_context2.next = 18;
 						break;
 
-					case 14:
-						_context2.prev = 14;
+					case 15:
+						_context2.prev = 15;
 						_context2.t0 = _context2['catch'](0);
 						throw _context2.t0;
 
-					case 17:
+					case 18:
 					case 'end':
 						return _context2.stop();
 				}
 			}
-		}, _callee2, undefined, [[0, 14]]);
+		}, _callee2, undefined, [[0, 15]]);
 	}));
 
 	return function fetch_jsonOdd_result() {

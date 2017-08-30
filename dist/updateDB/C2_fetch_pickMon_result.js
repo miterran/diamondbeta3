@@ -50,7 +50,7 @@ var fetch_pickMon_result = function () {
 						pickMonApi = _context3.sent;
 
 						if (!pickMonApi) {
-							_context3.next = 20;
+							_context3.next = 24;
 							break;
 						}
 
@@ -61,7 +61,7 @@ var fetch_pickMon_result = function () {
 						openBets = _context3.sent;
 						openBetPickMonEvents = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
-								if (event.status === 'Pending' && event.source.provider === 'pickMon') {
+								if (event.status === 'Pending' && event.source.provider === 'pickMon' && (0, _moment2.default)().isAfter(event.cutOffTime)) {
 									event.sportLeague = event.sport.toLowerCase() + '-' + event.league.toLowerCase();
 									return _lodash2.default.pick(event, ['eventOddId', 'sport', 'matchTime', 'details', 'league', 'region', 'status', 'team', 'source', 'oddType', 'sportLeague']);
 								}
@@ -72,34 +72,36 @@ var fetch_pickMon_result = function () {
 							return event.sportLeague;
 						}).join(',');
 
+						console.log('fetch pickmon result' + pickMonSportLeagues);
+
 						if (_lodash2.default.isEmpty(pickMonSportLeagues)) {
-							_context3.next = 20;
+							_context3.next = 23;
 							break;
 						}
 
-						_context3.next = 12;
+						_context3.next = 13;
 						return _axios2.default.get(pickMonApi.apiLink + 'uid=' + _config2.default.pickMon_UID + '&key=' + _config2.default.pickMon_Key + '&sports=' + pickMonSportLeagues + '&graded=1&full_call=' + pickMonApi.option.resultFullCall);
 
-					case 12:
+					case 13:
 						response = _context3.sent;
 
 						if (_lodash2.default.isEmpty(response.data)) {
-							_context3.next = 20;
+							_context3.next = 21;
 							break;
 						}
 
-						_context3.next = 16;
+						_context3.next = 17;
 						return (0, _xml2jsEs6Promise2.default)(response.data, { explicitArray: false });
 
-					case 16:
+					case 17:
 						pickMonData = _context3.sent;
 
-						if (!(!_lodash2.default.isEmpty(pickMonData.lines) && !_lodash2.default.isEmpty(pickMonData.lines.game))) {
-							_context3.next = 20;
+						if (!(!_lodash2.default.isEmpty(pickMonData.lines) && !_lodash2.default.isEmpty(pickMonData.lines.game) && _lodash2.default.isFunction(pickMonData.lines.game.map))) {
+							_context3.next = 21;
 							break;
 						}
 
-						_context3.next = 20;
+						_context3.next = 21;
 						return Promise.all(pickMonData.lines.game.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(event) {
 								return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -207,7 +209,14 @@ var fetch_pickMon_result = function () {
 							};
 						}()));
 
-					case 20:
+					case 21:
+						_context3.next = 24;
+						break;
+
+					case 23:
+						console.log('use open bet event id to update pickmon result, but open bet empty');
+
+					case 24:
 					case 'end':
 						return _context3.stop();
 				}

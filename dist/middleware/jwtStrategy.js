@@ -63,7 +63,7 @@ var strategy = new JwtStrategy(jwtOptions, function () {
 					case 0:
 						role = jwt_payload.role, id = jwt_payload.id;
 						_context.t0 = role;
-						_context.next = _context.t0 === 'player' ? 4 : 12;
+						_context.next = _context.t0 === 'player' ? 4 : 9;
 						break;
 
 					case 4:
@@ -73,23 +73,14 @@ var strategy = new JwtStrategy(jwtOptions, function () {
 					case 6:
 						user = _context.sent;
 
-						if (!(user.currentStatus.availableCredit === 0)) {
-							_context.next = 10;
-							break;
-						}
-
-						_context.next = 10;
-						return (0, _updatePlayerStatusAfterOrder2.default)(id);
-
-					case 10:
 						user ? next(null, user) : next(null, false);
-						return _context.abrupt('break', 14);
+						return _context.abrupt('break', 11);
 
-					case 12:
+					case 9:
 						next(null, false);
 						return _context.abrupt('return');
 
-					case 14:
+					case 11:
 					case 'end':
 						return _context.stop();
 				}

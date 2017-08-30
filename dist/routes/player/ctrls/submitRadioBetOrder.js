@@ -100,13 +100,13 @@ var submitRadioBetOrder = function () {
 											case 13:
 												latestEvent = _context.sent;
 
-												if ((0, _compareBetDetail2.default)(event, latestEvent)) {
+												if ((0, _compareBetDetail2.default)(event, latestEvent, orderType).betDetailMatch) {
 													event.status = 'Pending';
 													event.note = '';
 												} else {
 													event.status = 'HasUpdated';
 													event.betDetailPrev = event.betDetail;
-													event.betDetail = latestBetDetail;
+													event.betDetail = (0, _compareBetDetail2.default)(event, latestEvent, orderType).latestBetDetail;
 												}
 												return _context.abrupt('return');
 

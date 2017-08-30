@@ -106,13 +106,6 @@ app.use(_passport2.default.initialize());
 
 app.use(_express2.default.static(_path2.default.resolve(__dirname, '../client/build')));
 
-// import C2_fetch_pickMon_result from './updateDB/C2_fetch_pickMon_result'
-// import C1_fetch_jsonOdd_result from './updateDB/C1_fetch_jsonOdd_result'
-// app.get('/pickmon', async (req, res) => {
-// 	await C2_fetch_pickMon_result()
-// 	res.json('okok')
-// })
-
 app.use('/admin', _setupDatabase2.default);
 
 app.use('/api', _authLogin2.default);

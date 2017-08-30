@@ -72,7 +72,7 @@ var fetch_pickMon_eventOdds = function () {
 					case 11:
 						pickMonData = _context2.sent;
 
-						if (!(!_lodash2.default.isEmpty(pickMonData.lines) && !_lodash2.default.isEmpty(pickMonData.lines.game))) {
+						if (!(!_lodash2.default.isEmpty(pickMonData.lines) && !_lodash2.default.isEmpty(pickMonData.lines.game) && _lodash2.default.isFunction(pickMonData.lines.game.map))) {
 							_context2.next = 17;
 							break;
 						}
