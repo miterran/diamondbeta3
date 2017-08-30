@@ -51,7 +51,7 @@ var confirmResultTeaser = function () {
 
 						openBet.eventOdds.map(function (event) {
 							if (event.status === 'Won') eventWonNum++;
-							return;
+							return event;
 						});
 
 						if (!(openBet.orderType !== 'SuperTeaser')) {

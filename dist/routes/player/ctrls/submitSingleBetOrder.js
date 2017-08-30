@@ -89,7 +89,7 @@ var submitSingleBetOrder = function () {
 													event.betDetailPrev = event.betDetail;
 													event.betDetail = (0, _compareBetDetail2.default)(event, latestEvent, orderType).latestBetDetail;
 												}
-												return _context.abrupt('return');
+												return _context.abrupt('break', 19);
 
 											case 19:
 												if (event.status !== 'Pending') {

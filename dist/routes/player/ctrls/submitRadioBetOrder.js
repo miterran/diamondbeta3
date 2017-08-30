@@ -108,7 +108,7 @@ var submitRadioBetOrder = function () {
 													event.betDetailPrev = event.betDetail;
 													event.betDetail = (0, _compareBetDetail2.default)(event, latestEvent, orderType).latestBetDetail;
 												}
-												return _context.abrupt('return');
+												return _context.abrupt('break', 16);
 
 											case 16:
 												return _context.abrupt('return', event);
