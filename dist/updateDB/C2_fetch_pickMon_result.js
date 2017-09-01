@@ -67,7 +67,7 @@ var fetch_pickMon_result = function () {
 								}
 								return null;
 							});
-						})), 'eventOddId'));
+						})), 'sportLeague'));
 						pickMonSportLeagues = openBetPickMonEvents.map(function (event) {
 							return event.sportLeague;
 						}).join(',');

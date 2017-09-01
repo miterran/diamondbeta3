@@ -38,20 +38,15 @@ var AgentSchema = _mongoose2.default.Schema({
 		role: { type: String, default: 'agent', required: true },
 		username: { type: String, required: true },
 		password: { type: String, default: '1234', required: true },
-		passcode: { type: String, default: '4321', required: true },
+		passcode: { type: String, default: '1234', required: true },
 		email: { type: String },
 		activate: { type: Boolean, default: true, required: true }
 	},
-	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
-	players: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
-	credit: {
-		amount: { type: Number, default: 0, required: true },
-		transactions: [AgentCreditTransactionSchema]
+	defaultSetting: {
+		maxPlayer: { type: Number, default: 10, required: true }
 	},
-	// betOrder: {
-	// 	openBets: [{ type: Schema.Types.ObjectId, ref: 'OpenBet' }],
-	// 	historyBets: [{ type: Schema.Types.ObjectId, ref: 'HistoryBet' }]
-	// },
+	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
+	credit: { type: Number, default: 0, required: true },
 	createdAt: { type: Date, default: Date.now, required: true }
 });
 
