@@ -139,7 +139,11 @@ var fetch_jsonOdd_eventOdds = function () {
 																									newEventOdd.region = '';
 																								}
 																								if (sportLeague.sport === 'Soccer') {
-																									newEventOdd.league = event.League.Name;
+																									if (event.League.hasOwnProperty('Name')) {
+																										newEventOdd.league = event.League.Name;
+																									} else {
+																										newEventOdd.league = '-';
+																									}
 																									newEventOdd.region = event.DisplayRegion;
 																								}
 
