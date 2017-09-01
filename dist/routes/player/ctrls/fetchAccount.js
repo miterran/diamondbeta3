@@ -26,7 +26,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var fetchAccount = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		var _thisWeekSummary, playerOpenBets, playerHistoryBets, playerCurrentBalance, totalWin, straightBetCounter, parlayBetCounter, teaserBetCounter, playerAccount;
+		var _thisWeekSummary, playerOpenBets, playerHistoryBets, playerCurrentBalance, totalWin, straightBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, playerAccount;
 
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
@@ -59,13 +59,15 @@ var fetchAccount = function () {
 							return total + (openBet.orderType === 'Teaser6040' || openBet.orderType === 'Teaser6545' || openBet.orderType === 'Teaser7050' || openBet.orderType === 'SuperTeaser');
 						}, 0); // indexOf
 
-						/// counter !!! on teaser winNum 
-
+						reverseBetCounter = playerOpenBets.reduce(function (total, openBet) {
+							return total + (openBet.orderType === 'ActionReverse' || openBet.orderType === 'WinReverse');
+						}, 0);
 						playerAccount = {
 							openBetStatus: {
 								straightBet: straightBetCounter || 0,
 								parlayBet: parlayBetCounter || 0,
 								teaserBet: teaserBetCounter || 0,
+								reverseBet: reverseBetCounter || 0,
 								totalBets: playerOpenBets.length || 0,
 								totalRisk: req.user.currentStatus.creditPending || 0,
 								totalWin: totalWin || 0
@@ -84,20 +86,20 @@ var fetchAccount = function () {
 
 						res.json(playerAccount);
 
-						_context.next = 20;
+						_context.next = 21;
 						break;
 
-					case 17:
-						_context.prev = 17;
+					case 18:
+						_context.prev = 18;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 20:
+					case 21:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 17]]);
+		}, _callee, undefined, [[0, 18]]);
 	}));
 
 	return function fetchAccount(_x, _x2) {
