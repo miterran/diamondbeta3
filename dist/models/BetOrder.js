@@ -17,7 +17,7 @@ var Schema = _mongoose2.default.Schema;
 
 var BetOrderSchema = new _mongoose2.default.Schema({
 	orderNumber: { type: String, required: true },
-	orderType: { type: String, enum: ['Straight', 'Parlay', 'Teaser6040', 'Teaser6545', 'Teaser7050', 'SuperTeaser'], required: true },
+	orderType: { type: String, enum: ['Straight', 'Parlay', 'Teaser6040', 'Teaser6545', 'Teaser7050', 'SuperTeaser', 'WinReverse', 'ActionReverse'], required: true },
 	owner: {
 		superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
 		agent: { type: Schema.Types.ObjectId, ref: 'Agent' },

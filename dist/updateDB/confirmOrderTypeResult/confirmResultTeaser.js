@@ -121,7 +121,7 @@ var confirmResultTeaser = function () {
 						}
 
 						_context.t1 = true;
-						_context.next = _context.t1 === (allEventsWon && eventWonCounter === 3) ? 51 : _context.t1 === allEventsLost ? 54 : _context.t1 === allEventsCanceled ? 57 : _context.t1 === allEventsPostponed ? 60 : _context.t1 === (eventsHaveLost || eventsHavePush) ? 63 : 67;
+						_context.next = _context.t1 === (allEventsWon && eventWonCounter === 3) ? 51 : _context.t1 === allEventsLost ? 54 : _context.t1 === allEventsCanceled ? 57 : _context.t1 === allEventsPostponed ? 60 : _context.t1 === eventsHavePush ? 63 : _context.t1 === eventsHaveLost ? 63 : 67;
 						break;
 
 					case 51:
@@ -148,7 +148,9 @@ var confirmResultTeaser = function () {
 						betOrderStatus = 'Lost';
 						resultAmount = -openBet.wagerDetail.riskAmount;
 						openBet.eventOdds.map(function (event) {
-							if (event.status !== 'Lost' || event.status !== 'Push') {
+							if (event.status === 'Lost' || event.status === 'Push') {
+								return;
+							} else {
 								event.status = 'Closed';
 							}
 							return event;

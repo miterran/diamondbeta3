@@ -34,6 +34,10 @@ var _confirmResultTeaser = require('./confirmOrderTypeResult/confirmResultTeaser
 
 var _confirmResultTeaser2 = _interopRequireDefault(_confirmResultTeaser);
 
+var _confirmResultReverse = require('./confirmOrderTypeResult/confirmResultReverse');
+
+var _confirmResultReverse2 = _interopRequireDefault(_confirmResultReverse);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -61,13 +65,13 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 						_context4.next = 7;
 						return Promise.all(openBets.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
-								var straightBetResult, parlayBetResult, teaserBetResult;
+								var straightBetResult, parlayBetResult, teaserBetResult, reverseBetResult;
 								return regeneratorRuntime.wrap(function _callee$(_context) {
 									while (1) {
 										switch (_context.prev = _context.next) {
 											case 0:
 												_context.t0 = openBet.orderType;
-												_context.next = _context.t0 === 'Straight' ? 3 : _context.t0 === 'Parlay' ? 12 : _context.t0 === 'Teaser6040' ? 21 : _context.t0 === 'Teaser6545' ? 21 : _context.t0 === 'Teaser7050' ? 21 : _context.t0 === 'SuperTeaser' ? 21 : 30;
+												_context.next = _context.t0 === 'Straight' ? 3 : _context.t0 === 'Parlay' ? 12 : _context.t0 === 'Teaser6040' ? 21 : _context.t0 === 'Teaser6545' ? 21 : _context.t0 === 'Teaser7050' ? 21 : _context.t0 === 'SuperTeaser' ? 21 : _context.t0 === 'WinReverse' ? 30 : _context.t0 === 'ActionReverse' ? 30 : 39;
 												break;
 
 											case 3:
@@ -88,7 +92,7 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 												return _context.abrupt('return', null);
 
 											case 11:
-												return _context.abrupt('break', 31);
+												return _context.abrupt('break', 40);
 
 											case 12:
 												_context.next = 14;
@@ -108,7 +112,7 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 												return _context.abrupt('return', null);
 
 											case 20:
-												return _context.abrupt('break', 31);
+												return _context.abrupt('break', 40);
 
 											case 21:
 												_context.next = 23;
@@ -128,12 +132,32 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 												return _context.abrupt('return', null);
 
 											case 29:
-												return _context.abrupt('break', 31);
+												return _context.abrupt('break', 40);
 
 											case 30:
+												_context.next = 32;
+												return (0, _confirmResultReverse2.default)(openBet);
+
+											case 32:
+												reverseBetResult = _context.sent;
+
+												if (!(reverseBetResult === true)) {
+													_context.next = 37;
+													break;
+												}
+
+												return _context.abrupt('return', JSON.parse(JSON.stringify(openBet.owner.player)));
+
+											case 37:
 												return _context.abrupt('return', null);
 
-											case 31:
+											case 38:
+												return _context.abrupt('break', 40);
+
+											case 39:
+												return _context.abrupt('return', null);
+
+											case 40:
 											case 'end':
 												return _context.stop();
 										}
