@@ -20,7 +20,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var confirmResultParlay = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
-		var betOrderStatus, resultAmount, eventsHaveWon, eventsHaveLost, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, parlayPoint, riskPoint, newHistoryBet;
+		var betOrderStatus, resultAmount, eventsHaveWon, eventsHaveLost, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, _openBet$wagerDetail, winAmount, riskAmount, parlayPoint, riskPoint, newHistoryBet;
+
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -44,73 +45,81 @@ var confirmResultParlay = function () {
 						//	const allEventsReview     = _.every(openBet.eventOdds, { status: 'Review' })
 						// const allEventsPending    = _.every(openBet.eventOdds, { status: 'Pending' })
 
+						_openBet$wagerDetail = openBet.wagerDetail, winAmount = _openBet$wagerDetail.winAmount, riskAmount = _openBet$wagerDetail.riskAmount;
+
+						winAmount = Number(winAmount);
+						riskAmount = Number(riskAmount);
+
 						_context.t0 = true;
-						_context.next = _context.t0 === allEventsWon ? 14 : _context.t0 === allEventsLost ? 17 : _context.t0 === allEventsPush ? 20 : _context.t0 === allEventsCanceled ? 23 : _context.t0 === allEventsPostponed ? 26 : _context.t0 === eventsHaveLost ? 29 : _context.t0 === (eventsHaveWon && !eventsHaveLost && !eventsHaveReview && !eventsHavePending) ? 33 : 38;
+						_context.next = _context.t0 === allEventsWon ? 17 : _context.t0 === allEventsLost ? 20 : _context.t0 === allEventsPush ? 23 : _context.t0 === allEventsCanceled ? 26 : _context.t0 === allEventsPostponed ? 29 : _context.t0 === eventsHaveLost ? 32 : _context.t0 === (eventsHaveWon && !eventsHaveLost && !eventsHaveReview && !eventsHavePending) ? 36 : 41;
 						break;
 
-					case 14:
-						betOrderStatus = 'Won';
-						resultAmount = openBet.wagerDetail.winAmount;
-						return _context.abrupt('break', 40);
-
 					case 17:
-						betOrderStatus = 'Lost';
-						resultAmount = -openBet.wagerDetail.riskAmount;
-						return _context.abrupt('break', 40);
+						betOrderStatus = 'Won';
+						resultAmount = winAmount;
+						return _context.abrupt('break', 43);
 
 					case 20:
-						betOrderStatus = 'Push';
-						resultAmount = 0;
-						return _context.abrupt('break', 40);
+						betOrderStatus = 'Lost';
+						resultAmount = -riskAmount;
+						return _context.abrupt('break', 43);
 
 					case 23:
-						betOrderStatus = 'Canceled';
+						betOrderStatus = 'Push';
 						resultAmount = 0;
-						return _context.abrupt('break', 40);
+						return _context.abrupt('break', 43);
 
 					case 26:
-						betOrderStatus = 'Postponed';
+						betOrderStatus = 'Canceled';
 						resultAmount = 0;
-						return _context.abrupt('break', 40);
+						return _context.abrupt('break', 43);
 
 					case 29:
+						betOrderStatus = 'Postponed';
+						resultAmount = 0;
+						return _context.abrupt('break', 43);
+
+					case 32:
 						betOrderStatus = 'Lost';
-						resultAmount = -openBet.wagerDetail.riskAmount;
+						resultAmount = -riskAmount;
 						openBet.eventOdds.map(function (event) {
 							if (event.status !== 'Lost') {
 								event.status = 'Closed';
 							}
 							return event;
 						});
-						return _context.abrupt('break', 40);
+						return _context.abrupt('break', 43);
 
-					case 33:
+					case 36:
 						parlayPoint = _lodash2.default.compact(openBet.eventOdds.map(function (event) {
+							var oddLine = event.betDetail.oddLine;
+
+							oddLine = Number(oddLine);
 							if (event.status === 'Won') {
-								if (event.betDetail.oddLine > 0) {
-									return (event.betDetail.oddLine + 100) / 100;
+								if (oddLine > 0) {
+									return (oddLine + 100) / 100;
 								} else {
-									return (Math.abs(event.betDetail.oddLine) + 100) / Math.abs(event.betDetail.oddLine);
+									return (Math.abs(oddLine) + 100) / Math.abs(oddLine);
 								}
 							} else {
 								return null;
 							}
 						}));
 						riskPoint = parlayPoint.reduce(function (a, b) {
-							return a * b;
+							return Number(a) * Number(b);
 						});
 
-						resultAmount = ((openBet.wagerDetail.riskAmount * riskPoint - openBet.wagerDetail.riskAmount) * 1).toFixed();
+						resultAmount = ((riskAmount * riskPoint - riskAmount) * 1).toFixed();
 						betOrderStatus = 'Won';
-						return _context.abrupt('break', 40);
+						return _context.abrupt('break', 43);
 
-					case 38:
+					case 41:
 						console.log(openBet.orderNumber + ' parlay not finished');
 						return _context.abrupt('return', false);
 
-					case 40:
+					case 43:
 						if (!(betOrderStatus !== 'TBD')) {
-							_context.next = 49;
+							_context.next = 52;
 							break;
 						}
 
@@ -125,19 +134,19 @@ var confirmResultParlay = function () {
 							createdAt: openBet.createdAt,
 							closedAt: (0, _moment2.default)()
 						});
-						_context.next = 44;
+						_context.next = 47;
 						return newHistoryBet.save();
 
-					case 44:
+					case 47:
 						console.log('saved history straight bet' + newHistoryBet.orderNumber);
-						_context.next = 47;
+						_context.next = 50;
 						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
 
-					case 47:
+					case 50:
 						console.log('deleted openbet ' + openBet.orderNumber);
 						return _context.abrupt('return', true);
 
-					case 49:
+					case 52:
 					case 'end':
 						return _context.stop();
 				}

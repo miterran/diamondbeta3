@@ -29,22 +29,22 @@ var confirmResultStraight = function () {
 
 					case 5:
 						betOrderStatus = 'Won';
-						resultAmount = openBet.wagerDetail.winAmount;
+						resultAmount = Number(openBet.wagerDetail.winAmount);
 						return _context.abrupt('break', 25);
 
 					case 8:
 						betOrderStatus = 'Lost';
-						resultAmount = -openBet.wagerDetail.riskAmount;
+						resultAmount = -Number(openBet.wagerDetail.riskAmount);
 						return _context.abrupt('break', 25);
 
 					case 11:
 						betOrderStatus = 'Won Half';
-						resultAmount = (openBet.wagerDetail.winAmount / 2).toFixed();
+						resultAmount = (Number(openBet.wagerDetail.winAmount) / 2).toFixed();
 						return _context.abrupt('break', 25);
 
 					case 14:
 						betOrderStatus = 'Lost Half';
-						resultAmount = -(openBet.wagerDetail.riskAmount / 2).toFixed();
+						resultAmount = -(Number(openBet.wagerDetail.riskAmount) / 2).toFixed();
 						return _context.abrupt('break', 25);
 
 					case 17:

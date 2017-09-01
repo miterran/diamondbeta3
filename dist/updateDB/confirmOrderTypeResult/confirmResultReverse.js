@@ -44,6 +44,7 @@ var confirmResultReverse = function () {
 						orderList = (0, _multiDimensionalUnique2.default)(inOrder);
 						betAmount = openBet.wagerDetail.betAmount;
 
+						betAmount = Number(betAmount);
 
 						if (!eventsHaveReview && !allEventsReview && !allEventsPending && !eventsHavePending) {
 
@@ -62,10 +63,10 @@ var confirmResultReverse = function () {
 										switch (status) {
 											case 'Won':
 												var winAmount = 0;
-												if (betDetail.oddLine > 0) {
-													winAmount = Math.round(betAmount * betDetail.oddLine / 100);
+												if (Number(betDetail.oddLine) > 0) {
+													winAmount = Math.round(betAmount * Number(betDetail.oddLine) / 100);
 												} else {
-													winAmount = Math.round(betAmount / Math.abs(betDetail.oddLine) * 100);
+													winAmount = Math.round(betAmount / Math.abs(Number(betDetail.oddLine)) * 100);
 												}
 												resultAmount += winAmount;
 												break;
@@ -115,7 +116,7 @@ var confirmResultReverse = function () {
 						}
 
 						if (!(betOrderStatus !== 'TBD')) {
-							_context.next = 20;
+							_context.next = 21;
 							break;
 						}
 
@@ -125,24 +126,24 @@ var confirmResultReverse = function () {
 							owner: openBet.owner,
 							wagerDetail: openBet.wagerDetail,
 							status: betOrderStatus,
-							resultAmount: resultAmount,
+							resultAmount: resultAmount.toFixed(),
 							eventOdds: openBet.eventOdds,
 							createdAt: openBet.createdAt,
 							closedAt: (0, _moment2.default)()
 						});
-						_context.next = 15;
+						_context.next = 16;
 						return newHistoryBet.save();
 
-					case 15:
+					case 16:
 						console.log('saved history straight bet' + newHistoryBet.orderNumber);
-						_context.next = 18;
+						_context.next = 19;
 						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
 
-					case 18:
+					case 19:
 						console.log('deleted openbet ' + openBet.orderNumber);
 						return _context.abrupt('return', true);
 
-					case 20:
+					case 21:
 					case 'end':
 						return _context.stop();
 				}

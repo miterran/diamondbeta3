@@ -43,60 +43,65 @@ var determine_OpenBet_eventOdds_result = function () {
 												_context2.next = 2;
 												return Promise.all(openBet.eventOdds.map(function () {
 													var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event) {
-														var status, sport, _event$betDetail, betType, oddLine, oddPoint, oddTarget, _event$score, homeScore, awayScore, resultStatus;
-
+														var status, sport, betDetail, score, betType, oddPoint, oddTarget, homeScore, awayScore, resultStatus;
 														return regeneratorRuntime.wrap(function _callee$(_context) {
 															while (1) {
 																switch (_context.prev = _context.next) {
 																	case 0:
-																		status = event.status, sport = event.sport;
-																		_event$betDetail = event.betDetail, betType = _event$betDetail.betType, oddLine = _event$betDetail.oddLine, oddPoint = _event$betDetail.oddPoint, oddTarget = _event$betDetail.oddTarget;
-																		_event$score = event.score, homeScore = _event$score.homeScore, awayScore = _event$score.awayScore;
+																		status = event.status, sport = event.sport, betDetail = event.betDetail, score = event.score;
+																		betType = betDetail.betType, oddPoint = betDetail.oddPoint, oddTarget = betDetail.oddTarget;
+																		homeScore = score.homeScore, awayScore = score.awayScore;
+
+
+																		oddPoint = Number(oddPoint);
+																		homeScore = Number(homeScore);
+																		awayScore = Number(awayScore);
+
 																		resultStatus = status;
 
 																		if (!(status === 'Finished')) {
-																			_context.next = 22;
+																			_context.next = 25;
 																			break;
 																		}
 
 																		_context.t0 = true;
-																		_context.next = _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint - awayScore === 0.25) ? 8 : _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint - homeScore === 0.25) ? 8 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore - oddPoint === 0.25) ? 8 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Under' && oddPoint - homeScore + awayScore === 0.25) ? 8 : _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint - awayScore === -0.25) ? 10 : _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint - homeScore === -0.25) ? 10 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore - oddPoint === -0.25) ? 10 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Under' && oddPoint - homeScore + awayScore === -0.25) ? 10 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Home' && homeScore > awayScore) ? 12 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Away' && awayScore > homeScore) ? 12 : _context.t0 === (betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint > awayScore) ? 12 : _context.t0 === (betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint > homeScore) ? 12 : _context.t0 === (betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore > oddPoint) ? 12 : _context.t0 === (betType === 'Total' && oddTarget === 'Under' && homeScore + awayScore < oddPoint) ? 12 : _context.t0 === (betType === 'Draw' && homeScore === awayScore) ? 12 : _context.t0 === (sport === 'Soccer' && betType === 'M-Line' && homeScore === awayScore) ? 14 : _context.t0 === (sport === 'Hockey' && betType === 'M-Line' && homeScore === awayScore) ? 14 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Home' && homeScore < awayScore) ? 14 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Away' && awayScore < homeScore) ? 14 : _context.t0 === (betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint < awayScore) ? 14 : _context.t0 === (betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint < homeScore) ? 14 : _context.t0 === (betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore < oddPoint) ? 14 : _context.t0 === (betType === 'Total' && oddTarget === 'Under' && homeScore + awayScore > oddPoint) ? 14 : _context.t0 === (betType === 'Draw' && homeScore !== awayScore) ? 14 : _context.t0 === (sport !== 'Soccer' && betType === 'M-Line' && homeScore === awayScore) ? 16 : _context.t0 === (sport !== 'Hockey' && betType === 'M-Line' && homeScore === awayScore) ? 16 : _context.t0 === (betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint === awayScore) ? 16 : _context.t0 === (betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint === homeScore) ? 16 : _context.t0 === (betType === 'Total' && homeScore + awayScore === oddPoint) ? 16 : 18;
+																		_context.next = _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint - awayScore === 0.25) ? 11 : _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint - homeScore === 0.25) ? 11 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore - oddPoint === 0.25) ? 11 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Under' && oddPoint - homeScore + awayScore === 0.25) ? 11 : _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint - awayScore === -0.25) ? 13 : _context.t0 === (sport === 'Soccer' && betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint - homeScore === -0.25) ? 13 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore - oddPoint === -0.25) ? 13 : _context.t0 === (sport === 'Soccer' && betType === 'Total' && oddTarget === 'Under' && oddPoint - homeScore + awayScore === -0.25) ? 13 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Home' && homeScore > awayScore) ? 15 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Away' && awayScore > homeScore) ? 15 : _context.t0 === (betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint > awayScore) ? 15 : _context.t0 === (betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint > homeScore) ? 15 : _context.t0 === (betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore > oddPoint) ? 15 : _context.t0 === (betType === 'Total' && oddTarget === 'Under' && homeScore + awayScore < oddPoint) ? 15 : _context.t0 === (betType === 'Draw' && homeScore === awayScore) ? 15 : _context.t0 === (sport === 'Soccer' && betType === 'M-Line' && homeScore === awayScore) ? 17 : _context.t0 === (sport === 'Hockey' && betType === 'M-Line' && homeScore === awayScore) ? 17 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Home' && homeScore < awayScore) ? 17 : _context.t0 === (betType === 'M-Line' && oddTarget === 'Away' && awayScore < homeScore) ? 17 : _context.t0 === (betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint < awayScore) ? 17 : _context.t0 === (betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint < homeScore) ? 17 : _context.t0 === (betType === 'Total' && oddTarget === 'Over' && homeScore + awayScore < oddPoint) ? 17 : _context.t0 === (betType === 'Total' && oddTarget === 'Under' && homeScore + awayScore > oddPoint) ? 17 : _context.t0 === (betType === 'Draw' && homeScore !== awayScore) ? 17 : _context.t0 === (sport !== 'Soccer' && betType === 'M-Line' && homeScore === awayScore) ? 19 : _context.t0 === (sport !== 'Hockey' && betType === 'M-Line' && homeScore === awayScore) ? 19 : _context.t0 === (betType === 'Spread' && oddTarget === 'Home' && homeScore + oddPoint === awayScore) ? 19 : _context.t0 === (betType === 'Spread' && oddTarget === 'Away' && awayScore + oddPoint === homeScore) ? 19 : _context.t0 === (betType === 'Total' && homeScore + awayScore === oddPoint) ? 19 : 21;
 																		break;
 
-																	case 8:
+																	case 11:
 																		resultStatus = 'Won Half';
-																		return _context.abrupt('break', 20);
+																		return _context.abrupt('break', 23);
 
-																	case 10:
+																	case 13:
 																		resultStatus = 'Lost Half';
-																		return _context.abrupt('break', 20);
+																		return _context.abrupt('break', 23);
 
-																	case 12:
+																	case 15:
 																		resultStatus = 'Won';
-																		return _context.abrupt('break', 20);
+																		return _context.abrupt('break', 23);
 
-																	case 14:
+																	case 17:
 																		resultStatus = 'Lost';
-																		return _context.abrupt('break', 20);
+																		return _context.abrupt('break', 23);
 
-																	case 16:
+																	case 19:
 																		resultStatus = 'Push';
-																		return _context.abrupt('break', 20);
+																		return _context.abrupt('break', 23);
 
-																	case 18:
+																	case 21:
 																		resultStatus = 'Review';
 																		return _context.abrupt('return');
 
-																	case 20:
-																		_context.next = 22;
+																	case 23:
+																		_context.next = 25;
 																		return _BetOrder.OpenBet.findOneAndUpdate({
 																			orderNumber: openBet.orderNumber,
 																			eventOdds: { $elemMatch: { singlePickId: event.singlePickId } } }, { '$set': { 'eventOdds.$.status': resultStatus } });
 
-																	case 22:
+																	case 25:
 																		return _context.abrupt('return', null);
 
-																	case 23:
+																	case 26:
 																	case 'end':
 																		return _context.stop();
 																}

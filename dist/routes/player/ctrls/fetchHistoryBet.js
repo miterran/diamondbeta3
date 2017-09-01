@@ -42,10 +42,9 @@ var fetchHistoryBet = function () {
 
 
 						if (!_lodash2.default.isEmpty(historyBetList)) {
-							historyBetList.map(function (historyBet) {
-								historyBets.weekSummary[(0, _moment2.default)(historyBet.closedAt).format('MMM DD')].amount += historyBet.resultAmount;
+							historyBetList.forEach(function (historyBet) {
+								historyBets.weekSummary[(0, _moment2.default)(historyBet.closedAt).format('MMM DD')].amount += Number(historyBet.resultAmount);
 								historyBets.weekSummary[(0, _moment2.default)(historyBet.closedAt).format('MMM DD')].bets++;
-								return null;
 							});
 						}
 

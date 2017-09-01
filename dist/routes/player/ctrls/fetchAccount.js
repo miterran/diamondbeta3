@@ -44,10 +44,10 @@ var fetchAccount = function () {
 					case 6:
 						playerHistoryBets = _context.sent;
 						playerCurrentBalance = playerHistoryBets.reduce(function (total, historyBet) {
-							return total + historyBet.resultAmount;
+							return total + Number(historyBet.resultAmount);
 						}, 0);
 						totalWin = playerOpenBets.reduce(function (total, openBet) {
-							return total + openBet.wagerDetail.winAmount;
+							return total + Number(openBet.wagerDetail.winAmount);
 						}, 0);
 						straightBetCounter = playerOpenBets.reduce(function (total, openBet) {
 							return total + (openBet.orderType === 'Straight');
@@ -77,10 +77,9 @@ var fetchAccount = function () {
 
 
 						if (!_lodash2.default.isEmpty(playerHistoryBets)) {
-							playerHistoryBets.map(function (historyBet) {
-								playerAccount.thisWeekSummary[(0, _moment2.default)(historyBet.closedAt).format('MMM DD')].amount += historyBet.resultAmount;
+							playerHistoryBets.forEach(function (historyBet) {
+								playerAccount.thisWeekSummary[(0, _moment2.default)(historyBet.closedAt).format('MMM DD')].amount += Number(historyBet.resultAmount);
 								playerAccount.thisWeekSummary[(0, _moment2.default)(historyBet.closedAt).format('MMM DD')].bets++;
-								return null;
 							});
 						}
 
