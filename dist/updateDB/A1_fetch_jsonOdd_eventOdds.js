@@ -139,8 +139,12 @@ var fetch_jsonOdd_eventOdds = function () {
 																									newEventOdd.region = '';
 																								}
 																								if (sportLeague.sport === 'Soccer') {
-																									if (event.League.hasOwnProperty('Name')) {
-																										newEventOdd.league = event.League.Name;
+																									if (event.hasOwnProperty('League')) {
+																										if (event.League.hasOwnProperty('Name')) {
+																											newEventOdd.league = event.League.Name;
+																										} else {
+																											newEventOdd.league = '-';
+																										}
 																									} else {
 																										newEventOdd.league = '-';
 																									}
