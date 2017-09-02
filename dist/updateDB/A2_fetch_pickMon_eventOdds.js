@@ -191,7 +191,8 @@ var fetch_pickMon_eventOdds = function () {
 													newEventOdd.expireAt = (0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').subtract(1, 's');
 												}
 
-												newEventOdd.eventOddId = 'pickMon_' + event.sporttype + '_' + newEventOdd.oddType.replace(/\s/g, '').toUpperCase() + '_' + event.id, newEventOdd.uniqueId = newEventOdd.team.homeROT + '_' + newEventOdd.team.awayROT + '_' + newEventOdd.sport.replace(/\s/g, '').toUpperCase() + '_' + newEventOdd.oddType.replace(/\s/g, '').toUpperCase() + '_' + (0, _moment2.default)(newEventOdd.matchTime).format('MMDDYYYY');
+												//							newEventOdd.eventOddId = `pickMon_${event.sporttype}_${newEventOdd.oddType.replace(/\s/g,'').toUpperCase()}_${event.id}`,
+												newEventOdd.uniqueId = newEventOdd.team.homeROT + '_' + newEventOdd.team.awayROT + '_' + newEventOdd.sport.replace(/\s/g, '').toUpperCase() + '_' + newEventOdd.oddType.replace(/\s/g, '').toUpperCase() + '_' + (0, _moment2.default)(newEventOdd.matchTime).format('MMDDYYYY');
 
 												_context.next = 30;
 												return _EventOdd.EventOdd.findOne({ uniqueId: newEventOdd.uniqueId });

@@ -76,7 +76,7 @@ var submitSingleBetOrder = function () {
 
 											case 14:
 												_context.next = 16;
-												return _EventOdd.EventOdd.findOne({ eventOddId: event.eventOddId });
+												return _EventOdd.EventOdd.findOne({ uniqueId: event.uniqueId });
 
 											case 16:
 												latestEvent = _context.sent;

@@ -38,7 +38,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var fetch_pickMon_result = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
-		var pickMonApi, openBets, openBetPickMonEvents, pickMonSportLeagues, response, pickMonData;
+		var pickMonApi, openBets, openBetPickMon, pickMonSportLeagues, response, pickMonData;
 		return regeneratorRuntime.wrap(function _callee3$(_context3) {
 			while (1) {
 				switch (_context3.prev = _context3.next) {
@@ -59,7 +59,7 @@ var fetch_pickMon_result = function () {
 
 					case 6:
 						openBets = _context3.sent;
-						openBetPickMonEvents = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
+						openBetPickMon = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
 								if (event.status === 'Pending' && event.source.provider === 'pickMon' && (0, _moment2.default)().isAfter(event.cutOffTime)) {
 									if (event.sport === 'Football' && event.league === 'College') {
@@ -69,16 +69,17 @@ var fetch_pickMon_result = function () {
 									} else {
 										event.sportLeague = event.sport.toLowerCase() + '-' + event.league.toLowerCase();
 									}
-									return _lodash2.default.pick(event, ['eventOddId', 'sport', 'matchTime', 'details', 'league', 'region', 'status', 'team', 'source', 'oddType', 'sportLeague']);
+									return _lodash2.default.pick(event, ['uniqueId', 'sport', 'matchTime', 'details', 'league', 'region', 'status', 'team', 'source', 'oddType', 'sportLeague']);
 								}
 								return null;
 							});
-						})), 'sportLeague'));
-						pickMonSportLeagues = openBetPickMonEvents.map(function (event) {
-							return event.sportLeague;
+						})), 'uniqueId'));
+						pickMonSportLeagues = _lodash2.default.uniqBy(openBetPickMon, 'sportLeague').map(function (pickMonSportLeague) {
+							return pickMonSportLeague.sportLeague;
 						}).join(',');
 
-						console.log('fetch pickmon result ' + pickMonSportLeagues);
+
+						console.log(pickMonSportLeagues);
 
 						if (_lodash2.default.isEmpty(pickMonSportLeagues)) {
 							_context3.next = 23;
@@ -120,7 +121,7 @@ var fetch_pickMon_result = function () {
 												}
 
 												_context2.next = 3;
-												return Promise.all(openBetPickMonEvents.map(function () {
+												return Promise.all(openBetPickMon.map(function () {
 													var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBetEvent) {
 														var newResult, existedResult;
 														return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -128,14 +129,12 @@ var fetch_pickMon_result = function () {
 																switch (_context.prev = _context.next) {
 																	case 0:
 																		if (!(event.id === openBetEvent.source.id)) {
-																			_context.next = 18;
+																			_context.next = 17;
 																			break;
 																		}
 
-																		console.log('checkhere pickmond result');
 																		newResult = {
 																			uniqueId: openBetEvent.uniqueId,
-																			eventResultId: openBetEvent.eventOddId,
 																			source: {
 																				provider: 'pickMon',
 																				id: openBetEvent.source.id
@@ -154,40 +153,40 @@ var fetch_pickMon_result = function () {
 																			expireAt: (0, _moment2.default)().add(3, 'd')
 																		};
 																		_context.t0 = event.void;
-																		_context.next = _context.t0 === '0' ? 6 : 8;
+																		_context.next = _context.t0 === '0' ? 5 : 7;
 																		break;
 
-																	case 6:
+																	case 5:
 																		newResult.status = 'Finished';
-																		return _context.abrupt('break', 11);
+																		return _context.abrupt('break', 10);
 
-																	case 8:
+																	case 7:
 																		newResult.status = 'Review';
 																		newResult.note = 'Server Reviewing... TBD, pm void ' + event.void;
 																		return _context.abrupt('return');
 
-																	case 11:
-																		_context.next = 13;
+																	case 10:
+																		_context.next = 12;
 																		return _EventOdd.Result.findOne({ uniqueId: openBetEvent.uniqueId });
 
-																	case 13:
+																	case 12:
 																		existedResult = _context.sent;
 
 																		if (!_lodash2.default.isEmpty(existedResult)) {
-																			_context.next = 18;
+																			_context.next = 17;
 																			break;
 																		}
 
-																		_context.next = 17;
+																		_context.next = 16;
 																		return new _EventOdd.Result(newResult).save();
 
-																	case 17:
+																	case 16:
 																		console.log('saved pickMon new result ' + openBetEvent.uniqueId);
 
-																	case 18:
+																	case 17:
 																		return _context.abrupt('return', null);
 
-																	case 19:
+																	case 18:
 																	case 'end':
 																		return _context.stop();
 																}

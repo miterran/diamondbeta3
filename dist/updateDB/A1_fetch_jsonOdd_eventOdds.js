@@ -96,7 +96,7 @@ var fetch_jsonOdd_eventOdds = function () {
 																								}
 
 																								newEventOdd = {
-																									eventOddId: 'jsonOdd_' + sportLeague.league + '_' + odd.OddType.replace(/\s/g, '').toUpperCase() + '_' + event.ID,
+																									//									eventOddId: `jsonOdd_${sportLeague.league}_${odd.OddType.replace(/\s/g,'').toUpperCase()}_${event.ID}`,
 																									source: {
 																										provider: 'jsonOdd',
 																										bookmaker: odd.SiteID.toString(),

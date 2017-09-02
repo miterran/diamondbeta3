@@ -95,7 +95,7 @@ var submitRadioBetOrder = function () {
 
 											case 11:
 												_context.next = 13;
-												return _EventOdd.EventOdd.findOne({ eventOddId: event.eventOddId });
+												return _EventOdd.EventOdd.findOne({ uniqueId: event.uniqueId });
 
 											case 13:
 												latestEvent = _context.sent;
