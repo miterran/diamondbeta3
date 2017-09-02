@@ -32,6 +32,8 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _EventOdd = require('../models/EventOdd');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -175,19 +177,14 @@ router.get('/create-agent', function () {
 						superAgent = _context5.sent;
 
 						if (_lodash2.default.isEmpty(superAgent)) {
-							_context5.next = 14;
+							_context5.next = 11;
 							break;
 						}
 
 						newAgent = new _Agent2.default({
 							account: {
-								username: 'diamond',
-								password: '1234',
-								passcode: '4321',
-								activate: true
-							},
-							superAgent: superAgent._id,
-							credit: 0
+								username: 'diamond'
+							}
 						});
 						_context5.next = 7;
 						return newAgent.save();
@@ -195,19 +192,16 @@ router.get('/create-agent', function () {
 					case 7:
 						agent = _context5.sent;
 
-						superAgent.agents.push(agent._id);
-						_context5.next = 11;
-						return superAgent.save();
-
-					case 11:
+						//		superAgent.agents.push(agent._id)
+						//		await superAgent.save()
 						res.json('done');
-						_context5.next = 15;
+						_context5.next = 12;
 						break;
 
-					case 14:
+					case 11:
 						res.json('super agent not found');
 
-					case 15:
+					case 12:
 					case 'end':
 						return _context5.stop();
 				}
@@ -240,6 +234,47 @@ router.get('/create-super-agent', function (req, res) {
 router.get('/agent-info', function (req, res) {
 	_Agent2.default.findOne({ 'account.username': 'diamond' }).populate('players').then(function (agent) {
 		res.json(agent);
+	});
+});
+
+router.get('/create-result', function (req, res) {
+
+	var newResult = new _EventOdd.Result({
+
+		"eventResultId": "pickMon_College_GAME_1414713",
+		"uniqueId": "221_222_FOOTBALL_GAME_08312017",
+		"sport": "Football",
+		"oddType": "Game",
+		"league": "College",
+		"region": "",
+		"details": "Presbyterian College At Wake Forest",
+		"matchTime": _moment2.default.utc("2017-08-31T22:30:00.000Z"),
+		"expireAt": _moment2.default.utc("2017-09-03T11:00:00.000Z"),
+		"status": "Finished",
+		"score": {
+			"awayScore": 51,
+			"homeScore": 7
+		},
+		"team": {
+			"awayROT": "222",
+			"away": "Wake Forest",
+			"homeROT": "221",
+			"home": "Presbyterian College"
+		},
+		"source": {
+			"provider": "custom",
+			"id": "0"
+		}
+	});
+
+	_EventOdd.Result.findOne({ uniqueId: newResult.uniqueId }).then(function (result) {
+		if (_lodash2.default.isEmpty(result)) {
+			newResult.save().then(function () {
+				res.json('done');
+			});
+		} else {
+			res.json('existed');
+		}
 	});
 });
 

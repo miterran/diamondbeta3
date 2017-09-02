@@ -45,8 +45,15 @@ var AgentSchema = _mongoose2.default.Schema({
 	defaultSetting: {
 		maxPlayer: { type: Number, default: 10, required: true }
 	},
+	currentStatus: {
+		existedPlayer: { type: Number, default: 0 },
+		activePlayer: { type: Number, default: 0 },
+		credit: { type: Number, default: 0 },
+		creditPending: { type: Number, default: 0 },
+		availableCredit: { type: Number, default: 0 }
+	},
+	players: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
 	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
-	credit: { type: Number, default: 0, required: true },
 	createdAt: { type: Date, default: Date.now, required: true }
 });
 

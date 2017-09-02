@@ -128,6 +128,7 @@ var fetch_pickMon_result = function () {
 
 																		console.log('checkhere pickmond result');
 																		newResult = {
+																			uniqueId: openBetEvent.uniqueId,
 																			eventResultId: openBetEvent.eventOddId,
 																			source: {
 																				provider: 'pickMon',
@@ -161,7 +162,7 @@ var fetch_pickMon_result = function () {
 
 																	case 11:
 																		_context.next = 13;
-																		return _EventOdd.Result.findOne({ eventResultId: openBetEvent.eventOddId });
+																		return _EventOdd.Result.findOne({ uniqueId: openBetEvent.uniqueId });
 
 																	case 13:
 																		existedResult = _context.sent;
@@ -175,7 +176,7 @@ var fetch_pickMon_result = function () {
 																		return new _EventOdd.Result(newResult).save();
 
 																	case 17:
-																		console.log('saved pickMon new result');
+																		console.log('saved pickMon new result ' + openBetEvent.uniqueId);
 
 																	case 18:
 																		return _context.abrupt('return', null);

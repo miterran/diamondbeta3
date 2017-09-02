@@ -56,14 +56,14 @@ var jwtOptions = {
 
 var strategy = new JwtStrategy(jwtOptions, function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(jwt_payload, next) {
-		var role, id, user;
+		var role, id, user, agent;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
 						role = jwt_payload.role, id = jwt_payload.id;
 						_context.t0 = role;
-						_context.next = _context.t0 === 'player' ? 4 : 9;
+						_context.next = _context.t0 === 'player' ? 4 : _context.t0 === 'agent' ? 9 : 14;
 						break;
 
 					case 4:
@@ -74,13 +74,23 @@ var strategy = new JwtStrategy(jwtOptions, function () {
 						user = _context.sent;
 
 						user ? next(null, user) : next(null, false);
-						return _context.abrupt('break', 11);
+						return _context.abrupt('break', 16);
 
 					case 9:
+						_context.next = 11;
+						return _Agent2.default.findOne({ '_id': _mongoose2.default.Types.ObjectId(id) }, 'superAgent account.username account.passcode account.role account.activate defaultSetting currentStatus');
+
+					case 11:
+						agent = _context.sent;
+
+						agent ? next(null, agent) : next(null, false);
+						return _context.abrupt('break', 16);
+
+					case 14:
 						next(null, false);
 						return _context.abrupt('return');
 
-					case 11:
+					case 16:
 					case 'end':
 						return _context.stop();
 				}

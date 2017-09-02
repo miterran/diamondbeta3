@@ -26,7 +26,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var fetchAccount = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		var _thisWeekSummary, playerOpenBets, playerHistoryBets, playerCurrentBalance, totalWin, straightBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, playerAccount;
+		var _thisWeekSummary, playerOpenBets, playerHistoryBets, playerCurrentBalance, totalWin, totalRisk, straightBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, playerAccount;
 
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
@@ -49,6 +49,9 @@ var fetchAccount = function () {
 						totalWin = playerOpenBets.reduce(function (total, openBet) {
 							return total + Number(openBet.wagerDetail.winAmount);
 						}, 0);
+						totalRisk = playerOpenBets.reduce(function (total, openBet) {
+							return total + Number(openBet.wagerDetail.riskAmount);
+						}, 0);
 						straightBetCounter = playerOpenBets.reduce(function (total, openBet) {
 							return total + (openBet.orderType === 'Straight');
 						}, 0);
@@ -69,7 +72,7 @@ var fetchAccount = function () {
 								teaserBet: teaserBetCounter || 0,
 								reverseBet: reverseBetCounter || 0,
 								totalBets: playerOpenBets.length || 0,
-								totalRisk: req.user.currentStatus.creditPending || 0,
+								totalRisk: totalRisk || 0,
 								totalWin: totalWin || 0
 							},
 							thisWeekSummary: (_thisWeekSummary = {}, _defineProperty(_thisWeekSummary, (0, _moment2.default)().startOf('isoWeek').add(0, 'd').format('MMM DD'), { bets: 0, amount: 0 }), _defineProperty(_thisWeekSummary, (0, _moment2.default)().startOf('isoWeek').add(1, 'd').format('MMM DD'), { bets: 0, amount: 0 }), _defineProperty(_thisWeekSummary, (0, _moment2.default)().startOf('isoWeek').add(2, 'd').format('MMM DD'), { bets: 0, amount: 0 }), _defineProperty(_thisWeekSummary, (0, _moment2.default)().startOf('isoWeek').add(3, 'd').format('MMM DD'), { bets: 0, amount: 0 }), _defineProperty(_thisWeekSummary, (0, _moment2.default)().startOf('isoWeek').add(4, 'd').format('MMM DD'), { bets: 0, amount: 0 }), _defineProperty(_thisWeekSummary, (0, _moment2.default)().startOf('isoWeek').add(5, 'd').format('MMM DD'), { bets: 0, amount: 0 }), _defineProperty(_thisWeekSummary, (0, _moment2.default)().startOf('isoWeek').add(6, 'd').format('MMM DD'), { bets: 0, amount: 0 }), _thisWeekSummary)
@@ -85,20 +88,20 @@ var fetchAccount = function () {
 
 						res.json(playerAccount);
 
-						_context.next = 21;
+						_context.next = 22;
 						break;
 
-					case 18:
-						_context.prev = 18;
+					case 19:
+						_context.prev = 19;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 21:
+					case 22:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 18]]);
+		}, _callee, undefined, [[0, 19]]);
 	}));
 
 	return function fetchAccount(_x, _x2) {

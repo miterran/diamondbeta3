@@ -51,31 +51,35 @@ var sync_Result_with_OpenBet_eventOdds = function () {
 																switch (_context.prev = _context.next) {
 																	case 0:
 																		_context.next = 2;
-																		return _EventOdd.Result.findOne({ 'eventResultId': event.eventOddId });
+																		return _EventOdd.Result.findOne({ 'uniqueId': event.uniqueId });
 
 																	case 2:
 																		eventResult = _context.sent;
 
+																		if (event.uniqueId === '1651_1652_BASKETBALL_GAME_09012017') {
+																			console.log(eventResult);
+																		}
+
 																		if (_lodash2.default.isEmpty(eventResult)) {
-																			_context.next = 9;
+																			_context.next = 10;
 																			break;
 																		}
 
-																		_context.next = 6;
+																		_context.next = 7;
 																		return _BetOrder.OpenBet.findOneAndUpdate({ orderNumber: openBet.orderNumber, eventOdds: { $elemMatch: { singlePickId: event.singlePickId } } }, { '$set': { 'eventOdds.$.score': eventResult.score, 'eventOdds.$.status': eventResult.status } });
 
-																	case 6:
+																	case 7:
 																		console.log('updated openBet with final score');
-																		_context.next = 10;
+																		_context.next = 11;
 																		break;
 
-																	case 9:
-																		console.log('result haven\'t save yet or start yet ' + event.eventOddId + ' ' + (0, _moment2.default)(event.matchTime).format('ddd, MMM DD, YYYY @ hh:mm A'));
-
 																	case 10:
-																		return _context.abrupt('return', null);
+																		console.log('result haven\'t save yet or start yet ' + event.uniqueId + ' ' + (0, _moment2.default)(event.matchTime).format('ddd, MMM DD, YYYY @ hh:mm A'));
 
 																	case 11:
+																		return _context.abrupt('return', null);
+
+																	case 12:
 																	case 'end':
 																		return _context.stop();
 																}

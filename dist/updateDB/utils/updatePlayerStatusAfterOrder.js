@@ -55,7 +55,7 @@ var updatePlayerStatusAfterOrder = function () {
 						playerCurrentStatus = {
 							creditPending: playerCreditPending,
 							currentBalance: playerCurrentBalance,
-							availableCredit: player.defaultSetting.weeklyStartCredit - playerCreditPending + playerCurrentBalance
+							availableCredit: Number(player.defaultSetting.weeklyStartCredit) - Number(playerCreditPending) + Number(playerCurrentBalance)
 						};
 						_context.next = 15;
 						return _Player2.default.findOneAndUpdate({ _id: _mongoose2.default.Types.ObjectId(playerId) }, { '$set': { currentStatus: playerCurrentStatus } }, { new: true }).then(function (result) {

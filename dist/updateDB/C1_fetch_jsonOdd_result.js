@@ -143,6 +143,7 @@ var fetch_jsonOdd_result = function () {
 
 											case 32:
 												newResult = {
+													uniqueId: event.uniqueId,
 													eventResultId: event.eventOddId,
 													source: {
 														provider: 'jsonOdd',
@@ -164,7 +165,7 @@ var fetch_jsonOdd_result = function () {
 													expireAt: (0, _moment2.default)().add(3, 'd')
 												};
 												_context.next = 35;
-												return _EventOdd.Result.findOne({ eventResultId: event.eventOddId });
+												return _EventOdd.Result.findOne({ uniqueId: event.uniqueId });
 
 											case 35:
 												existedResult = _context.sent;
@@ -178,14 +179,14 @@ var fetch_jsonOdd_result = function () {
 												return new _EventOdd.Result(newResult).save();
 
 											case 39:
-												console.log('saved jsonOdd new result');
+												console.log('saved jsonOdd new result ' + event.uniqueId);
 
 											case 40:
 												_context.next = 43;
 												break;
 
 											case 42:
-												console.log('json odd event ' + event.eventOddId + ' not finish yet, skip save result');
+												console.log('json odd event ' + event.uniqueId + ' not finish yet, skip save result');
 
 											case 43:
 												return _context.abrupt('return', null);

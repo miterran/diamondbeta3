@@ -154,7 +154,7 @@ var fetch_jsonOdd_eventOdds = function () {
 																								newEventOdd.uniqueId = newEventOdd.team.homeROT + '_' + newEventOdd.team.awayROT + '_' + newEventOdd.sport.replace(/\s/g, '').toUpperCase() + '_' + newEventOdd.oddType.replace(/\s/g, '').toUpperCase() + '_' + (0, _moment2.default)(newEventOdd.matchTime).format('MMDDYYYY');
 
 																								_context.next = 10;
-																								return _EventOdd.EventOdd.findOne({ eventOddId: newEventOdd.eventOddId });
+																								return _EventOdd.EventOdd.findOne({ uniqueId: newEventOdd.uniqueId });
 
 																							case 10:
 																								existedEventOdd = _context.sent;
@@ -168,7 +168,7 @@ var fetch_jsonOdd_eventOdds = function () {
 																								return new _EventOdd.EventOdd(newEventOdd).save();
 
 																							case 14:
-																								console.log('saved ' + newEventOdd.eventOddId);
+																								console.log('saved ' + newEventOdd.uniqueId);
 																								_context.next = 24;
 																								break;
 
@@ -179,15 +179,15 @@ var fetch_jsonOdd_eventOdds = function () {
 																								}
 
 																								_context.next = 20;
-																								return _EventOdd.EventOdd.findOneAndUpdate({ eventOddId: newEventOdd.eventOddId }, { $set: newEventOdd });
+																								return _EventOdd.EventOdd.findOneAndUpdate({ uniqueId: newEventOdd.uniqueId }, { $set: newEventOdd });
 
 																							case 20:
-																								console.log('updated ' + newEventOdd.eventOddId);
+																								console.log('updated ' + newEventOdd.uniqueId);
 																								_context.next = 24;
 																								break;
 
 																							case 23:
-																								console.log(newEventOdd.eventOddId + ' is up to date');
+																								console.log(newEventOdd.uniqueId + ' is up to date');
 
 																							case 24:
 																								return _context.abrupt('return', null);
