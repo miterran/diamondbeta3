@@ -18,7 +18,7 @@ var AgentCreditTransactionSchema = _mongoose2.default.Schema({
 		agent: { type: Schema.Types.ObjectId, ref: 'Agent' },
 		player: { type: Schema.Types.ObjectId, ref: 'Player' }
 	},
-	status: { type: String, enum: ['Deposited', 'Won', 'Lost', 'Push', 'Pending', 'Canceled', 'Closed'] },
+	status: { type: String, enum: ['in', 'out', 'adjust'] },
 	amount: { type: Number, required: true },
 	resultAmount: { type: Number, required: true },
 	orderNumber: { type: String, required: true },
