@@ -62,7 +62,13 @@ var fetch_pickMon_result = function () {
 						openBetPickMonEvents = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
 								if (event.status === 'Pending' && event.source.provider === 'pickMon' && (0, _moment2.default)().isAfter(event.cutOffTime)) {
-									event.sportLeague = event.sport.toLowerCase() + '-' + event.league.toLowerCase();
+									if (event.sport === 'Football' && event.league === 'College') {
+										event.sportLeague = event.sport.toLowerCase() + '-ncaa';
+									} else if (event.sport === 'Soccer') {
+										event.sportLeague = 'soccer';
+									} else {
+										event.sportLeague = event.sport.toLowerCase() + '-' + event.league.toLowerCase();
+									}
 									return _lodash2.default.pick(event, ['eventOddId', 'sport', 'matchTime', 'details', 'league', 'region', 'status', 'team', 'source', 'oddType', 'sportLeague']);
 								}
 								return null;
@@ -72,7 +78,7 @@ var fetch_pickMon_result = function () {
 							return event.sportLeague;
 						}).join(',');
 
-						console.log('fetch pickmon result' + pickMonSportLeagues);
+						console.log('fetch pickmon result ' + pickMonSportLeagues);
 
 						if (_lodash2.default.isEmpty(pickMonSportLeagues)) {
 							_context3.next = 23;

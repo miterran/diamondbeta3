@@ -49,15 +49,16 @@ var fetch_jsonOdd_result = function () {
 						openBetJsonOddEvents = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
 								if (event.status === 'Pending' && event.source.provider === 'jsonOdd' && (0, _moment2.default)().isAfter(event.cutOffTime)) {
-									return _lodash2.default.pick(event, ['eventOddId', 'sport', 'matchTime', 'details', 'league', 'region', 'status', 'team', 'source', 'oddType']);
+									return _lodash2.default.pick(event, ['sport', 'matchTime', 'details', 'league', 'region', 'status', 'team', 'source', 'oddType', 'uniqueId']);
 								}
 								return null;
 							});
-						})), 'eventOddId'));
+						})), 'uniqueId'));
 
 
-						console.log('fetch json result' + openBetJsonOddEvents);
-						// eventOddId = generate array unique source id and oddtype from all json open bet
+						openBetJsonOddEvents.map(function (event) {
+							console.log('fetch json result ' + event.uniqueId);
+						});
 
 						if (_lodash2.default.isEmpty(openBetJsonOddEvents)) {
 							_context2.next = 12;
@@ -144,7 +145,6 @@ var fetch_jsonOdd_result = function () {
 											case 32:
 												newResult = {
 													uniqueId: event.uniqueId,
-													eventResultId: event.eventOddId,
 													source: {
 														provider: 'jsonOdd',
 														id: event.source.id

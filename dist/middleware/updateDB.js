@@ -137,62 +137,48 @@ var buildSportLeagueTable_MW = exports.buildSportLeagueTable_MW = function () {
 
 var fullResultUpdateDB_MW = exports.fullResultUpdateDB_MW = function () {
 	var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(req, res, next) {
-		var cooldown;
 		return regeneratorRuntime.wrap(function _callee3$(_context3) {
 			while (1) {
 				switch (_context3.prev = _context3.next) {
 					case 0:
 						_context3.prev = 0;
 						_context3.next = 3;
-						return _CoolDown2.default.findOne({ usage: 'fullResultUpdateDB' });
+						return (0, _C1_fetch_jsonOdd_result2.default)();
 
 					case 3:
-						cooldown = _context3.sent;
+						_context3.next = 5;
+						return (0, _C2_fetch_pickMon_result2.default)();
 
-						if (!((0, _moment2.default)().format('X') - (0, _moment2.default)(cooldown.updatedAt).format('X') > cooldown.sec)) {
-							_context3.next = 17;
-							break;
-						}
-
+					case 5:
 						_context3.next = 7;
-						return (0, _C1_fetch_jsonOdd_result2.default)();
+						return (0, _D1_sync_Result_to_openBet_eventOdds2.default)();
 
 					case 7:
 						_context3.next = 9;
-						return (0, _C2_fetch_pickMon_result2.default)();
+						return (0, _E1_determine_OpenBet_eventOdds_result2.default)();
 
 					case 9:
 						_context3.next = 11;
-						return (0, _D1_sync_Result_to_openBet_eventOdds2.default)();
-
-					case 11:
-						_context3.next = 13;
-						return (0, _E1_determine_OpenBet_eventOdds_result2.default)();
-
-					case 13:
-						_context3.next = 15;
 						return (0, _F1_confirm_openBet_result_to_HistoryBet2.default)();
 
-					case 15:
-						_context3.next = 17;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
-
-					case 17:
+					case 11:
+						//			await CoolDown.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: moment() } })
+						//		}
 						next();
-						_context3.next = 23;
+						_context3.next = 17;
 						break;
 
-					case 20:
-						_context3.prev = 20;
+					case 14:
+						_context3.prev = 14;
 						_context3.t0 = _context3['catch'](0);
 						throw _context3.t0;
 
-					case 23:
+					case 17:
 					case 'end':
 						return _context3.stop();
 				}
 			}
-		}, _callee3, undefined, [[0, 20]]);
+		}, _callee3, undefined, [[0, 14]]);
 	}));
 
 	return function fullResultUpdateDB_MW(_x7, _x8, _x9) {
