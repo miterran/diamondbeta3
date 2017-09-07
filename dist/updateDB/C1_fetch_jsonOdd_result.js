@@ -113,7 +113,7 @@ var fetch_jsonOdd_result = function () {
 												}
 
 											case 16:
-												if (!(!_lodash2.default.isEmpty(oddResult) && oddResult.Final && oddResult.FinalType !== 'NotFinished')) {
+												if (!(!_lodash2.default.isEmpty(oddResult) && oddResult.FinalType !== 'NotFinished')) {
 													_context.next = 42;
 													break;
 												}

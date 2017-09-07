@@ -24,46 +24,51 @@ var confirmResultStraight = function () {
 						betOrderStatus = 'TBD';
 						resultAmount = 0;
 						_context.t0 = openBet.eventOdds[0].status;
-						_context.next = _context.t0 === 'Won' ? 5 : _context.t0 === 'Lost' ? 8 : _context.t0 === 'Won Half' ? 11 : _context.t0 === 'Lost Half' ? 14 : _context.t0 === 'Push' ? 17 : _context.t0 === 'Canceled' ? 20 : 23;
+						_context.next = _context.t0 === 'Won' ? 5 : _context.t0 === 'Lost' ? 8 : _context.t0 === 'Won Half' ? 11 : _context.t0 === 'Lost Half' ? 14 : _context.t0 === 'Push' ? 17 : _context.t0 === 'Canceled' ? 20 : _context.t0 === 'Postponed' ? 23 : 26;
 						break;
 
 					case 5:
 						betOrderStatus = 'Won';
 						resultAmount = Number(openBet.wagerDetail.winAmount);
-						return _context.abrupt('break', 25);
+						return _context.abrupt('break', 28);
 
 					case 8:
 						betOrderStatus = 'Lost';
 						resultAmount = -Number(openBet.wagerDetail.riskAmount);
-						return _context.abrupt('break', 25);
+						return _context.abrupt('break', 28);
 
 					case 11:
 						betOrderStatus = 'Won';
 						resultAmount = (Number(openBet.wagerDetail.winAmount) / 2).toFixed();
-						return _context.abrupt('break', 25);
+						return _context.abrupt('break', 28);
 
 					case 14:
 						betOrderStatus = 'Lost';
 						resultAmount = -(Number(openBet.wagerDetail.riskAmount) / 2).toFixed();
-						return _context.abrupt('break', 25);
+						return _context.abrupt('break', 28);
 
 					case 17:
 						betOrderStatus = 'Push';
 						resultAmount = 0;
-						return _context.abrupt('break', 25);
+						return _context.abrupt('break', 28);
 
 					case 20:
 						betOrderStatus = 'Canceled';
 						resultAmount = 0;
-						return _context.abrupt('break', 25);
+						return _context.abrupt('break', 28);
 
 					case 23:
+						betOrderStatus = 'Postponed';
+						resultAmount = 0;
+						return _context.abrupt('break', 28);
+
+					case 26:
 						console.log(openBet.orderNumber + ' straight not finished');
 						return _context.abrupt('return', false);
 
-					case 25:
+					case 28:
 						if (!(betOrderStatus !== 'TBD')) {
-							_context.next = 34;
+							_context.next = 37;
 							break;
 						}
 
@@ -78,19 +83,19 @@ var confirmResultStraight = function () {
 							createdAt: openBet.createdAt,
 							closedAt: (0, _moment2.default)()
 						});
-						_context.next = 29;
+						_context.next = 32;
 						return newHistoryBet.save();
 
-					case 29:
+					case 32:
 						console.log('saved history straight bet' + newHistoryBet.orderNumber);
-						_context.next = 32;
+						_context.next = 35;
 						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
 
-					case 32:
+					case 35:
 						console.log('deleted openbet ' + openBet.orderNumber);
 						return _context.abrupt('return', true);
 
-					case 34:
+					case 37:
 					case 'end':
 						return _context.stop();
 				}

@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -28,9 +24,18 @@ var _fetchHistoryBet = require('./ctrls/fetchHistoryBet');
 
 var _fetchHistoryBet2 = _interopRequireDefault(_fetchHistoryBet);
 
+var _purchaseCredit = require('./ctrls/purchaseCredit');
+
+var _purchaseCredit2 = _interopRequireDefault(_purchaseCredit);
+
+var _fetchTransaction = require('./ctrls/fetchTransaction');
+
+var _fetchTransaction2 = _interopRequireDefault(_fetchTransaction);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var router = _express2.default.Router();
+var router = _express2.default.Router(); //import moment from 'moment';
+
 
 // import fetchSportLeague from './ctrls/fetchSportLeague'
 // import fetchEventOdd from './ctrls/fetchEventOdd'
@@ -42,7 +47,9 @@ var router = _express2.default.Router();
 router.route('/sync-current-status').get(_syncCurrentStatus2.default);
 router.route('/fetch-account').get(_fetchAccount2.default);
 router.route('/fetch-open-bet').get(_fetchOpenBet2.default);
-router.route('/fetch-history-bet').get(_fetchHistoryBet2.default);
+router.route('/fetch-history-bet').post(_fetchHistoryBet2.default);
+router.route('/purchase-credit').post(_purchaseCredit2.default);
+router.route('/fetch-transaction').post(_fetchTransaction2.default);
 // router.route('/fetch-sport-league-list').get(fetchAllEventOdds_MW, buildSportLeagueTable_MW, fetchSportLeague)
 
 // router.route('/fetch-eventodd-list').post(fetchEventOdd)

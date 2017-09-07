@@ -7,9 +7,12 @@ Object.defineProperty(exports, "__esModule", {
 var _BetOrder = require('../../../models/BetOrder');
 
 var fetchOpenBet = function fetchOpenBet(req, res) {
-	var player = req.body.player;
-
-	_BetOrder.OpenBet.find({ 'owner.agent': req.user._id, 'owner.player': player }).then(function (openBets) {
+	_BetOrder.OpenBet.find({
+		'owner.agent': req.user._id
+	}).populate({
+		path: 'owner.player',
+		select: 'account.username'
+	}).then(function (openBets) {
 		res.json(openBets);
 	}).catch(function (err) {
 		throw err;

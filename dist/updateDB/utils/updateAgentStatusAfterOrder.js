@@ -71,9 +71,9 @@ var updateAgentStatusAfterOrder = function () {
 						agentCurrentStatus = {
 							existedPlayer: existedPlayer.length,
 							activePlayer: activePlayerCounter.length,
-							credit: 100000 + agentCreditSpent,
+							credit: agent.currentStatus.credit + agentCreditSpent,
 							creditPending: agentCreditPending,
-							availableCredit: 100000 + (agentCreditSpent - agentCreditPending)
+							availableCredit: agent.currentStatus.credit + (agentCreditSpent - agentCreditPending)
 						};
 						_context.next = 19;
 						return _Agent2.default.findOneAndUpdate({ _id: _mongoose2.default.Types.ObjectId(AgentId) }, { '$set': { currentStatus: agentCurrentStatus } }, { new: true }).then(function (result) {

@@ -24,17 +24,18 @@ var fetchHistoryBet = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
 		var _weekSummary;
 
-		var _req$body, weekNum, player, historyBetList, historyBets;
-
+		var weekNum, historyBetList, historyBets;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
-						_req$body = req.body, weekNum = _req$body.weekNum, player = _req$body.player;
-						_context.next = 3;
-						return _BetOrder.HistoryBet.find({ 'owner.agent': req.user._id, 'owner.player': player, 'closedAt': { $gte: (0, _moment2.default)().subtract(weekNum, 'w').startOf('isoWeek'), $lte: (0, _moment2.default)().subtract(weekNum, 'w').endOf('isoWeek') } });
+						console.log('hi');
+						console.log(req.body);
+						weekNum = req.body.weekNum;
+						_context.next = 5;
+						return _BetOrder.HistoryBet.find({ 'owner.agent': req.user._id, 'closedAt': { $gte: (0, _moment2.default)().subtract(weekNum, 'w').startOf('isoWeek'), $lte: (0, _moment2.default)().subtract(weekNum, 'w').endOf('isoWeek') } });
 
-					case 3:
+					case 5:
 						historyBetList = _context.sent;
 						historyBets = {
 							historyBetList: historyBetList,
@@ -51,7 +52,7 @@ var fetchHistoryBet = function () {
 
 						res.json(historyBets);
 
-					case 7:
+					case 9:
 					case 'end':
 						return _context.stop();
 				}

@@ -15,18 +15,18 @@ var Schema = _mongoose2.default.Schema;
 // import mongoose from 'mongoose'
 // const Schema = mongoose.Schema
 
-var AgentCreditTransactionSchema = _mongoose2.default.Schema({
-	owner: {
-		superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
-		agent: { type: Schema.Types.ObjectId, ref: 'Agent' },
-		player: { type: Schema.Types.ObjectId, ref: 'Player' }
-	},
-	amount: { type: Number },
-	balance: { type: Number },
-	type: { type: String },
-	orderNumber: { type: String },
-	createdAt: { type: Date, default: Date.now }
-});
+// const AgentCreditTransactionSchema = mongoose.Schema({
+// 	owner:{
+// 		superAgent : { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
+// 		agent : { type: Schema.Types.ObjectId, ref: 'Agent' },
+// 		player: { type: Schema.Types.ObjectId, ref: 'Player' }
+// 	},
+// 	amount: { type: Number },
+// 	balance: { type: Number },
+// 	type: { type: String },
+// 	orderNumber: { type: String },
+// 	createdAt: { type: Date, default: Date.now }
+// })
 
 // const AgentCreditTransaction = mongoose.model('AgentCreditTransaction', AgentCreditTransactionSchema)
 
