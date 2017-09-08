@@ -18,7 +18,7 @@ var _Player2 = _interopRequireDefault(_Player);
 
 var _BetOrder = require('../models/BetOrder');
 
-var _updatePlayerStatusAfterOrder = require('./utils/updatePlayerStatusAfterOrder');
+var _updatePlayerStatusAfterOrder = require('./updateUser/updatePlayerStatusAfterOrder');
 
 var _updatePlayerStatusAfterOrder2 = _interopRequireDefault(_updatePlayerStatusAfterOrder);
 

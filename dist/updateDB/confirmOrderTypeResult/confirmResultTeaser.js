@@ -24,7 +24,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var confirmResultTeaser = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
-		var betOrderStatus, resultAmount, teamLength, eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHavePostponed, eventsHaveCanceled, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, eventWonCounter, teaserOddLine, winAmount, newHistoryBet;
+		var betOrderStatus, resultAmount, teamLength, eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHavePostponed, eventsHaveCanceled, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsPending, eventWonCounter, teaserOddLine, winAmount, newHistoryBet;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -44,43 +44,37 @@ var confirmResultTeaser = function () {
 						allEventsPush = _lodash2.default.every(openBet.eventOdds, { status: 'Push' });
 						allEventsCanceled = _lodash2.default.every(openBet.eventOdds, { status: 'Postponed' });
 						allEventsPostponed = _lodash2.default.every(openBet.eventOdds, { status: 'Canceled' });
-						//	const allEventsReview     = _.every(openBet.eventOdds, { status: 'Review' })
-						// const allEventsPending    = _.every(openBet.eventOdds, { status: 'Pending' })
-
+						allEventsReview = _lodash2.default.every(openBet.eventOdds, { status: 'Review' });
+						allEventsPending = _lodash2.default.every(openBet.eventOdds, { status: 'Pending' });
 						eventWonCounter = openBet.eventOdds.reduce(function (total, event) {
 							return total + (event.status === 'Won');
 						}, 0);
 
 						if (!(openBet.orderType !== 'SuperTeaser')) {
-							_context.next = 47;
+							_context.next = 46;
 							break;
 						}
 
 						_context.t0 = true;
-						_context.next = _context.t0 === allEventsWon ? 20 : _context.t0 === allEventsLost ? 23 : _context.t0 === allEventsCanceled ? 26 : _context.t0 === allEventsPostponed ? 29 : _context.t0 === eventsHaveLost ? 32 : _context.t0 === (teamLength === 2 && eventWonCounter === 1 && !eventsHaveLost && !eventsHaveReview && !eventsHavePending && (eventsHavePush || eventsHavePostponed || eventsHaveCanceled)) ? 36 : _context.t0 === allEventsPush ? 36 : _context.t0 === (eventsHaveWon && eventWonCounter > 1 && !eventsHaveLost && !eventsHaveReview && !eventsHavePending) ? 39 : 45;
+						_context.next = _context.t0 === allEventsWon ? 22 : _context.t0 === allEventsLost ? 25 : _context.t0 === (!eventsHaveWon && !eventsHaveLost && !eventsHavePush && !eventsHavePending && (eventsHavePostponed || eventsHaveCanceled)) ? 28 : _context.t0 === allEventsPostponed ? 28 : _context.t0 === allEventsCanceled ? 28 : _context.t0 === eventsHaveLost ? 31 : _context.t0 === (teamLength === 2 && eventWonCounter === 1 && !eventsHaveLost && !eventsHaveReview && !eventsHavePending && (eventsHavePush || eventsHavePostponed || eventsHaveCanceled)) ? 35 : _context.t0 === allEventsPush ? 35 : _context.t0 === (eventsHaveWon && eventWonCounter > 1 && !eventsHaveLost && !eventsHaveReview && !eventsHavePending) ? 38 : 44;
 						break;
 
-					case 20:
+					case 22:
 						betOrderStatus = 'Won';
 						resultAmount = openBet.wagerDetail.winAmount;
-						return _context.abrupt('break', 47);
+						return _context.abrupt('break', 46);
 
-					case 23:
+					case 25:
 						betOrderStatus = 'Lost';
 						resultAmount = -openBet.wagerDetail.riskAmount;
-						return _context.abrupt('break', 47);
+						return _context.abrupt('break', 46);
 
-					case 26:
+					case 28:
 						betOrderStatus = 'Canceled';
 						resultAmount = 0;
-						return _context.abrupt('break', 47);
+						return _context.abrupt('break', 46);
 
-					case 29:
-						betOrderStatus = 'Postponed';
-						resultAmount = 0;
-						return _context.abrupt('break', 47);
-
-					case 32:
+					case 31:
 						betOrderStatus = 'Lost';
 						resultAmount = -openBet.wagerDetail.riskAmount;
 						openBet.eventOdds.map(function (event) {
@@ -89,14 +83,14 @@ var confirmResultTeaser = function () {
 							}
 							return event;
 						});
-						return _context.abrupt('break', 47);
+						return _context.abrupt('break', 46);
 
-					case 36:
+					case 35:
 						betOrderStatus = 'Push';
 						resultAmount = 0;
-						return _context.abrupt('break', 47);
+						return _context.abrupt('break', 46);
 
-					case 39:
+					case 38:
 						teaserOddLine = Number((0, _teaserOddLineAdjust2.default)(openBet.orderType, eventWonCounter));
 						winAmount = 0;
 
@@ -108,43 +102,38 @@ var confirmResultTeaser = function () {
 						}
 						betOrderStatus = 'Won';
 						resultAmount = Number(winAmount).toFixed();
-						return _context.abrupt('break', 47);
+						return _context.abrupt('break', 46);
 
-					case 45:
+					case 44:
 						console.log(openBet.orderNumber + ' teaser not finished');
 						return _context.abrupt('return', false);
 
-					case 47:
+					case 46:
 						if (!(openBet.orderType === 'SuperTeaser')) {
-							_context.next = 69;
+							_context.next = 65;
 							break;
 						}
 
 						_context.t1 = true;
-						_context.next = _context.t1 === (allEventsWon && eventWonCounter === 3) ? 51 : _context.t1 === allEventsLost ? 54 : _context.t1 === (eventsHaveWon && !eventsHavePush && !eventsHaveLost && !eventsHaveReview && (allEventsCanceled || allEventsPostponed)) ? 57 : _context.t1 === allEventsCanceled ? 57 : _context.t1 === allEventsPostponed ? 60 : _context.t1 === eventsHavePush ? 63 : _context.t1 === eventsHaveLost ? 63 : 67;
+						_context.next = _context.t1 === (allEventsWon && eventWonCounter === 3) ? 50 : _context.t1 === allEventsLost ? 53 : _context.t1 === (!eventsHaveWon && !eventsHaveLost && !eventsHavePush && !eventsHavePending && (eventsHavePostponed || eventsHaveCanceled)) ? 56 : _context.t1 === allEventsPostponed ? 56 : _context.t1 === allEventsCanceled ? 56 : _context.t1 === eventsHavePush ? 59 : _context.t1 === eventsHaveLost ? 59 : 63;
 						break;
 
-					case 51:
+					case 50:
 						betOrderStatus = 'Won';
 						resultAmount = openBet.wagerDetail.winAmount;
-						return _context.abrupt('break', 69);
+						return _context.abrupt('break', 65);
 
-					case 54:
+					case 53:
 						betOrderStatus = 'Lost';
 						resultAmount = -openBet.wagerDetail.riskAmount;
-						return _context.abrupt('break', 69);
+						return _context.abrupt('break', 65);
 
-					case 57:
+					case 56:
 						betOrderStatus = 'Canceled';
 						resultAmount = 0;
-						return _context.abrupt('break', 69);
+						return _context.abrupt('break', 65);
 
-					case 60:
-						betOrderStatus = 'Postponed';
-						resultAmount = 0;
-						return _context.abrupt('break', 69);
-
-					case 63:
+					case 59:
 						betOrderStatus = 'Lost';
 						resultAmount = -openBet.wagerDetail.riskAmount;
 						openBet.eventOdds.map(function (event) {
@@ -155,15 +144,15 @@ var confirmResultTeaser = function () {
 							}
 							return event;
 						});
-						return _context.abrupt('break', 69);
+						return _context.abrupt('break', 65);
 
-					case 67:
+					case 63:
 						console.log(openBet.orderNumber + ' teaser not finished');
 						return _context.abrupt('return', false);
 
-					case 69:
+					case 65:
 						if (!(betOrderStatus !== 'TBD')) {
-							_context.next = 78;
+							_context.next = 74;
 							break;
 						}
 
@@ -178,19 +167,23 @@ var confirmResultTeaser = function () {
 							createdAt: openBet.createdAt,
 							closedAt: (0, _moment2.default)()
 						});
-						_context.next = 73;
+						_context.next = 69;
 						return newHistoryBet.save();
 
-					case 73:
+					case 69:
 						console.log('saved history teaser bet' + newHistoryBet.orderNumber);
-						_context.next = 76;
+						_context.next = 72;
 						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
 
-					case 76:
+					case 72:
 						console.log('deleted openbet ' + openBet.orderNumber);
+
+						// updateAgentCredit if player lose
+						// create new trasaction
+
 						return _context.abrupt('return', true);
 
-					case 78:
+					case 74:
 					case 'end':
 						return _context.stop();
 				}

@@ -12,27 +12,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Schema = _mongoose2.default.Schema;
 
-// import mongoose from 'mongoose'
-// const Schema = mongoose.Schema
-
-// const AgentCreditTransactionSchema = mongoose.Schema({
-// 	owner:{
-// 		superAgent : { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
-// 		agent : { type: Schema.Types.ObjectId, ref: 'Agent' },
-// 		player: { type: Schema.Types.ObjectId, ref: 'Player' }
-// 	},
-// 	amount: { type: Number },
-// 	balance: { type: Number },
-// 	type: { type: String },
-// 	orderNumber: { type: String },
-// 	createdAt: { type: Date, default: Date.now }
-// })
-
-// const AgentCreditTransaction = mongoose.model('AgentCreditTransaction', AgentCreditTransactionSchema)
-
-// export default AgentCreditTransaction
-
-
 var AgentSchema = _mongoose2.default.Schema({
 	account: {
 		role: { type: String, default: 'agent', required: true },
@@ -46,14 +25,13 @@ var AgentSchema = _mongoose2.default.Schema({
 		maxPlayer: { type: Number, default: 10, required: true }
 	},
 	currentStatus: {
-		existedPlayer: { type: Number, default: 0 },
 		activePlayer: { type: Number, default: 0 },
 		credit: { type: Number, default: 0 },
 		creditPending: { type: Number, default: 0 },
 		availableCredit: { type: Number, default: 0 }
 	},
 	players: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
-	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
+	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent', required: true },
 	createdAt: { type: Date, default: Date.now, required: true }
 });
 

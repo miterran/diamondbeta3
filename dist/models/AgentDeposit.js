@@ -22,7 +22,7 @@ var AgentDepositSchema = _mongoose2.default.Schema({
 	creditAmount: { type: Number },
 	priceAmount: { type: Number },
 	orderNumber: { type: String, required: true },
-	createdAt: { type: Date, default: Date.now }
+	closedAt: { type: Date, default: Date.now }
 });
 
 var AgentDeposit = _mongoose2.default.model('AgentDeposit', AgentDepositSchema);

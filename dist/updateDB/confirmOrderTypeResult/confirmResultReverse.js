@@ -28,17 +28,28 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var confirmResultReverse = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
-		var allEventsReview, allEventsPending, allEventsCanceled, allEventsPostponed, eventsHaveReview, eventsHavePending, betOrderStatus, resultAmount, teamLength, inOrder, orderList, betAmount, newHistoryBet;
+		var eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHavePostponed, eventsHaveCanceled, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsPending, betOrderStatus, resultAmount, teamLength, inOrder, orderList, betAmount, newHistoryBet;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
-						allEventsReview = _lodash2.default.every(openBet.eventOdds, { status: 'Review' });
-						allEventsPending = _lodash2.default.every(openBet.eventOdds, { status: 'Pending' });
-						allEventsCanceled = _lodash2.default.every(openBet.eventOdds, { status: 'Postponed' });
-						allEventsPostponed = _lodash2.default.every(openBet.eventOdds, { status: 'Canceled' });
+						eventsHaveWon = _lodash2.default.some(openBet.eventOdds, { status: 'Won' });
+						eventsHaveLost = _lodash2.default.some(openBet.eventOdds, { status: 'Lost' });
+						eventsHavePush = _lodash2.default.some(openBet.eventOdds, { status: 'Push' });
+						eventsHavePostponed = _lodash2.default.some(openBet.eventOdds, { status: 'Postponed' });
+						eventsHaveCanceled = _lodash2.default.some(openBet.eventOdds, { status: 'Canceled' });
 						eventsHaveReview = _lodash2.default.some(openBet.eventOdds, { status: 'Review' });
 						eventsHavePending = _lodash2.default.some(openBet.eventOdds, { status: 'Pending' });
+						allEventsWon = _lodash2.default.every(openBet.eventOdds, { status: 'Won' });
+						allEventsLost = _lodash2.default.every(openBet.eventOdds, { status: 'Lost' });
+						allEventsPush = _lodash2.default.every(openBet.eventOdds, { status: 'Push' });
+						allEventsCanceled = _lodash2.default.every(openBet.eventOdds, { status: 'Postponed' });
+						allEventsPostponed = _lodash2.default.every(openBet.eventOdds, { status: 'Canceled' });
+						allEventsReview = _lodash2.default.every(openBet.eventOdds, { status: 'Review' });
+						allEventsPending = _lodash2.default.every(openBet.eventOdds, { status: 'Pending' });
+
+						//case !eventsHaveWon && !eventsHaveLost && !eventsHavePush && !eventsHavePending && ( eventsHavePostponed || eventsHaveCanceled ):
+
 						betOrderStatus = 'TBD';
 						resultAmount = 0;
 						teamLength = _lodash2.default.range(openBet.eventOdds.length);
@@ -48,11 +59,8 @@ var confirmResultReverse = function () {
 
 						betAmount = Number(betAmount);
 
-						if (allEventsCanceled) {
+						if (allEventsCanceled || allEventsPostponed || !eventsHaveWon && !eventsHaveLost && !eventsHavePush && !eventsHavePending && (eventsHavePostponed || eventsHaveCanceled)) {
 							betOrderStatus = 'Canceled';
-							resultAmount = 0;
-						} else if (allEventsPostponed) {
-							betOrderStatus = 'Postponed';
 							resultAmount = 0;
 						} else if (!eventsHaveReview && !allEventsReview && !allEventsPending && !eventsHavePending) {
 							orderList.forEach(function (list) {
@@ -122,7 +130,7 @@ var confirmResultReverse = function () {
 						}
 
 						if (!(betOrderStatus !== 'TBD')) {
-							_context.next = 23;
+							_context.next = 31;
 							break;
 						}
 
@@ -137,19 +145,19 @@ var confirmResultReverse = function () {
 							createdAt: openBet.createdAt,
 							closedAt: (0, _moment2.default)()
 						});
-						_context.next = 18;
+						_context.next = 26;
 						return newHistoryBet.save();
 
-					case 18:
+					case 26:
 						console.log('saved history straight bet' + newHistoryBet.orderNumber);
-						_context.next = 21;
+						_context.next = 29;
 						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
 
-					case 21:
+					case 29:
 						console.log('deleted openbet ' + openBet.orderNumber);
 						return _context.abrupt('return', true);
 
-					case 23:
+					case 31:
 					case 'end':
 						return _context.stop();
 				}

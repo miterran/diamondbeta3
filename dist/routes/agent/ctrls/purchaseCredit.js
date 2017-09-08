@@ -49,8 +49,8 @@ var purchaseCredit = function () {
 						purchasePrice = req.body.price;
 						newAgentDeposit = new _AgentDeposit2.default({
 							owner: {
-								superAgent: req.user._id,
-								agent: req.user.superAgent
+								superAgent: req.user.superAgent,
+								agent: req.user._id
 							},
 							creditAmount: _purchaseCredit,
 							priceAmount: purchasePrice,
@@ -107,15 +107,35 @@ var purchaseCredit = function () {
 
 exports.default = purchaseCredit;
 
-// const agentCurrentStatus = {
-// 	existedPlayer: existedPlayer.length,
-// 	activePlayer: activePlayerCounter.length,
-// 	credit: agent.currentStatus.credit + agentCreditSpent,
-// 	creditPending: agentCreditPending,
-// 	availableCredit: agent.currentStatus.credit + ( agentCreditSpent - agentCreditPending )
+// import Agent from '../../models/Agent';
+// import Player from '../../models/Player'
+// import { OpenBet, HistoryBet } from '../../models/BetOrder';
+// import moment from 'moment'
+// import mongoose from 'mongoose'
+// import _ from 'lodash'
+
+// const createAgentTransaction = async (AgentId) => {
+
+// 	try {
+
+// 		let newAgentTransaction = new AgentTransaction({
+// 			owner:{
+// 				superAgent : req.user.superAgent,
+// 				agent : req.user._id
+// 			},
+// 			orderType: 'Deposit',
+// 			transactionType: 'in',
+// 			creditAmount: purchaseCredit,
+// 			priceAmount: purchasePrice,
+// 			resultAmount: agent.currentStatus.credit,
+// 			orderNumber: newAgentDeposit.orderNumber
+// 		})
+// 		await newAgentTransaction.save()
+
+// 	}catch(err){
+// 		throw err
+// 	}
 // }
 
-// await Agent.findOneAndUpdate({ _id: mongoose.Types.ObjectId(AgentId) }, {'$set': { currentStatus: agentCurrentStatus }}, {new: true}).then(result => {
-// 	console.log(result)
-// })
+// export default createAgentTransaction
 //# sourceMappingURL=purchaseCredit.js.map

@@ -8,7 +8,7 @@ var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
 
-var _updatePlayerStatusAfterOrder = require('../updateDB/utils/updatePlayerStatusAfterOrder');
+var _updatePlayerStatusAfterOrder = require('../updateDB/updateUser/updatePlayerStatusAfterOrder');
 
 var _updatePlayerStatusAfterOrder2 = _interopRequireDefault(_updatePlayerStatusAfterOrder);
 

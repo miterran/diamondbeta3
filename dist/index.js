@@ -86,7 +86,7 @@ var _setupDatabase = require('./admin/setupDatabase');
 
 var _setupDatabase2 = _interopRequireDefault(_setupDatabase);
 
-var _updateAgentStatusAfterOrder = require('./updateDB/utils/updateAgentStatusAfterOrder');
+var _updateAgentStatusAfterOrder = require('./updateDB/updateUser/updateAgentStatusAfterOrder');
 
 var _updateAgentStatusAfterOrder2 = _interopRequireDefault(_updateAgentStatusAfterOrder);
 

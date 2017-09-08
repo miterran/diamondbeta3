@@ -24,7 +24,7 @@ var _compareBetDetail = require('../../../utils/compareBetDetail');
 
 var _compareBetDetail2 = _interopRequireDefault(_compareBetDetail);
 
-var _updatePlayerStatusAfterOrder = require('../../../updateDB/utils/updatePlayerStatusAfterOrder');
+var _updatePlayerStatusAfterOrder = require('../../../updateDB/updateUser/updatePlayerStatusAfterOrder');
 
 var _updatePlayerStatusAfterOrder2 = _interopRequireDefault(_updatePlayerStatusAfterOrder);
 
