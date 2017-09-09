@@ -34,10 +34,15 @@ var PlayerSchema = _mongoose2.default.Schema({
 		currentBalance: { type: Number, default: 0 },
 		availableCredit: { type: Number, default: 0 }
 	},
-	// betOrder: {
-	// 	openBets: [{ type: Schema.Types.ObjectId, ref: 'OpenBet' }],
-	// 	historyBets: [{ type: Schema.Types.ObjectId, ref: 'HistoryBet' }]
-	// },
+	openBetStatus: {
+		straightBet: { type: Number, default: 0 },
+		parlayBet: { type: Number, default: 0 },
+		teaserBet: { type: Number, default: 0 },
+		reverseBet: { type: Number, default: 0 },
+		totalBets: { type: Number, default: 0 },
+		totalRisk: { type: Number, default: 0 },
+		totalWin: { type: Number, default: 0 }
+	},
 	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
 	agent: { type: Schema.Types.ObjectId, ref: 'Agent' },
 	createdAt: { type: Date, default: Date.now, required: true }

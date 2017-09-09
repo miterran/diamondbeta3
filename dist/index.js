@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 require('babel-polyfill');
@@ -86,13 +86,11 @@ var _setupDatabase = require('./admin/setupDatabase');
 
 var _setupDatabase2 = _interopRequireDefault(_setupDatabase);
 
-var _updateAgentStatusAfterOrder = require('./updateDB/updateUser/updateAgentStatusAfterOrder');
+var _Player = require('./models/Player');
 
-var _updateAgentStatusAfterOrder2 = _interopRequireDefault(_updateAgentStatusAfterOrder);
+var _Player2 = _interopRequireDefault(_Player);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 _passport2.default.use(_jwtStrategy2.default);
 
@@ -118,30 +116,22 @@ app.use(_express2.default.static(_path2.default.resolve(__dirname, '../client/bu
 
 app.use('/admin', _setupDatabase2.default);
 
-app.use('/update-agent', function () {
-	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		return regeneratorRuntime.wrap(function _callee$(_context) {
-			while (1) {
-				switch (_context.prev = _context.next) {
-					case 0:
-						_context.next = 2;
-						return (0, _updateAgentStatusAfterOrder2.default)('59912a50a600c8ab54afebbc');
+// import mongoose from 'mongoose'
 
-					case 2:
-						res.json('done');
+// const test = async () => {
+// 	const p = await Player.findOne({ _id: mongoose.Types.ObjectId('59a39d3f68353d1311815538') }).populate({ path: 'agent', select: 'account.username' })
+// 	console.log(p.agent._id)
+// }
 
-					case 3:
-					case 'end':
-						return _context.stop();
-				}
-			}
-		}, _callee, undefined);
-	}));
+// test()
 
-	return function (_x, _x2) {
-		return _ref.apply(this, arguments);
-	};
-}());
+// import updateAgentStatusAfterOrder from './updateDB/updateUser/updateAgentStatusAfterOrder'
+
+// app.use('/update-agent', async (req, res) => {
+// 	await updateAgentStatusAfterOrder('59912a50a600c8ab54afebbc')
+// 	res.json('done')
+// })
+
 
 app.use('/api', _authLogin2.default);
 app.use('/api', _createAccount2.default);
@@ -152,11 +142,11 @@ app.use('/api/player', _player2.default);
 app.use('/api/agent', _agent2.default);
 
 app.get('*', function (request, response) {
-	return response.sendFile(_path2.default.resolve(__dirname, '../client/build', 'index.html'));
+  return response.sendFile(_path2.default.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 app.server.listen(process.env.PORT || _config2.default.port, function () {
-	return console.log('Started on port ' + app.server.address().port);
+  return console.log('Started on port ' + app.server.address().port);
 });
 
 exports.default = app;

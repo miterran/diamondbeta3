@@ -69,7 +69,7 @@ router.get('/make-agent-transaction', function () {
 					case 6:
 						agentDeposits = _context3.sent;
 						_context3.next = 9;
-						return _BetOrder.HistoryBet.find({ 'owner.agent': agent._id, 'status': 'Lost' }, 'orderNumber orderType resultAmount owner');
+						return _BetOrder.HistoryBet.find({ 'owner.agent': agent._id, 'status': 'Lost' }, 'orderNumber orderType resultAmount owner closedAt');
 
 					case 9:
 						agentHistoryBets = _context3.sent;
@@ -101,7 +101,7 @@ router.get('/make-agent-transaction', function () {
 													//			creditAmount: { type: Number },
 													//			resultAmount: { type: Number },
 													orderNumber: transaction.orderNumber,
-													createdAt: (0, _moment2.default)()
+													createdAt: (0, _moment2.default)(transaction.closedAt)
 												});
 
 

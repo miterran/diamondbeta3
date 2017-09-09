@@ -25,14 +25,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 // update player current status every time order changed
 var updatePlayerStatusAfterOrder = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerId) {
-		var player, playerOpenBets, playerHistoryBets, playerCreditPending, playerCurrentBalance, playerCurrentStatus;
+		var player, playerOpenBets, playerHistoryBets, playerCreditPending, playerCurrentBalance, straightBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, totalRisk, totalWin, playerCurrentStatus, playerOpenBetStatus;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
 						_context.prev = 0;
 						_context.next = 3;
-						return _Player2.default.findOne({ _id: _mongoose2.default.Types.ObjectId(playerId) }, 'defaultSetting.weeklyStartCredit');
+						return _Player2.default.findOne({ _id: _mongoose2.default.Types.ObjectId(playerId) }, 'defaultSetting.weeklyStartCredit agent').populate({ path: 'agent', select: 'account.username' });
 
 					case 3:
 						player = _context.sent;
@@ -52,31 +52,57 @@ var updatePlayerStatusAfterOrder = function () {
 						playerCurrentBalance = playerHistoryBets.reduce(function (total, historyBet) {
 							return total + historyBet.resultAmount;
 						}, 0);
+						straightBetCounter = playerOpenBets.reduce(function (total, openBet) {
+							return total + (openBet.orderType === 'Straight');
+						}, 0);
+						parlayBetCounter = playerOpenBets.reduce(function (total, openBet) {
+							return total + (openBet.orderType === 'Parlay');
+						}, 0);
+						teaserBetCounter = playerOpenBets.reduce(function (total, openBet) {
+							return total + (openBet.orderType === 'Teaser6040' || openBet.orderType === 'Teaser6545' || openBet.orderType === 'Teaser7050' || openBet.orderType === 'SuperTeaser');
+						}, 0);
+						reverseBetCounter = playerOpenBets.reduce(function (total, openBet) {
+							return total + (openBet.orderType === 'ActionReverse' || openBet.orderType === 'WinReverse');
+						}, 0);
+						totalRisk = playerOpenBets.reduce(function (total, openBet) {
+							return total + Number(openBet.wagerDetail.riskAmount);
+						}, 0);
+						totalWin = playerOpenBets.reduce(function (total, openBet) {
+							return total + Number(openBet.wagerDetail.winAmount);
+						}, 0);
 						playerCurrentStatus = {
 							creditPending: playerCreditPending,
 							currentBalance: playerCurrentBalance,
 							availableCredit: Number(player.defaultSetting.weeklyStartCredit) - Number(playerCreditPending) + Number(playerCurrentBalance)
 						};
-						_context.next = 15;
-						return _Player2.default.findOneAndUpdate({ _id: _mongoose2.default.Types.ObjectId(playerId) }, { '$set': { currentStatus: playerCurrentStatus } }, { new: true }).then(function (result) {
+						playerOpenBetStatus = {
+							straightBet: straightBetCounter || 0,
+							parlayBet: parlayBetCounter || 0,
+							teaserBet: teaserBetCounter || 0,
+							reverseBet: reverseBetCounter || 0,
+							totalBets: playerOpenBets.length || 0,
+							totalRisk: totalRisk || 0,
+							totalWin: totalWin || 0
+						};
+						_context.next = 22;
+						return _Player2.default.findOneAndUpdate({ _id: _mongoose2.default.Types.ObjectId(playerId) }, { '$set': { currentStatus: playerCurrentStatus, openBetStatus: playerOpenBetStatus } }, { new: true }).then(function (result) {
 							console.log(result);
 						});
 
-					case 15:
-						_context.next = 20;
-						break;
+					case 22:
+						return _context.abrupt('return', player.agent._id);
 
-					case 17:
-						_context.prev = 17;
+					case 25:
+						_context.prev = 25;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 20:
+					case 28:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 17]]);
+		}, _callee, undefined, [[0, 25]]);
 	}));
 
 	return function updatePlayerStatusAfterOrder(_x) {
@@ -85,4 +111,36 @@ var updatePlayerStatusAfterOrder = function () {
 }();
 
 exports.default = updatePlayerStatusAfterOrder;
+
+// const playerOpenBets = await OpenBet.find({ 'owner.player': req.user._id }, 'orderType wagerDetail.riskAmount wagerDetail.winAmount')
+// const playerHistoryBets = await HistoryBet.find({ 'owner.player': req.user._id, 'closedAt': {$gte: moment().startOf('isoWeek'), $lte: moment().endOf('isoWeek')} }, 'closedAt resultAmount')
+// const playerCreditPending = playerOpenBets.reduce((total, openBet) => total + openBet.wagerDetail.riskAmount, 0)
+// const playerCurrentBalance = playerHistoryBets.reduce((total, historyBet) => total + historyBet.resultAmount ,0)
+
+// const playerCurrentStatus = {
+// 	creditPending: playerCreditPending,
+// 	currentBalance: playerCurrentBalance,
+// 	availableCredit: Number(req.user.defaultSetting.weeklyStartCredit) - Number(playerCreditPending) + Number(playerCurrentBalance)
+// }
+// await Player.findOneAndUpdate({ _id: req.user._id }, {'$set': { currentStatus: playerCurrentStatus }})
+
+// // const totalWin = playerOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.winAmount), 0)
+// // const totalRisk = playerOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.riskAmount), 0)
+// // const straightBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Straight' ), 0)
+// // const parlayBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Parlay' ), 0)
+// // const teaserBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Teaser6040' || openBet.orderType === 'Teaser6545' || openBet.orderType === 'Teaser7050' || openBet.orderType === 'SuperTeaser' ), 0)  // indexOf
+// // const reverseBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'ActionReverse' || openBet.orderType === 'WinReverse' ), 0)
+
+// const playerAccount = {
+// 	openBetStatus: {
+// 		straightBet: straightBetCounter || 0,
+// 		parlayBet: parlayBetCounter || 0,
+// 		teaserBet: teaserBetCounter || 0,
+// 		reverseBet: reverseBetCounter || 0,
+// 		totalBets: playerOpenBets.length || 0,
+// 		totalRisk: totalRisk || 0,
+// 		totalWin: totalWin || 0
+// 	},
+// 	thisWeekHistoryBetList: playerHistoryBets
+// }
 //# sourceMappingURL=updatePlayerStatusAfterOrder.js.map

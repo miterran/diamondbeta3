@@ -22,13 +22,25 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+var _Agent = require('../../models/Agent');
+
+var _Agent2 = _interopRequireDefault(_Agent);
+
+var _AgentTransaction = require('../../models/AgentTransaction');
+
+var _AgentTransaction2 = _interopRequireDefault(_AgentTransaction);
+
+var _saveNewHistoryBet = require('./utils/saveNewHistoryBet');
+
+var _saveNewHistoryBet2 = _interopRequireDefault(_saveNewHistoryBet);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var confirmResultReverse = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
-		var eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHavePostponed, eventsHaveCanceled, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsPending, betOrderStatus, resultAmount, teamLength, inOrder, orderList, betAmount, newHistoryBet;
+		var eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHavePostponed, eventsHaveCanceled, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsPending, betOrderStatus, resultAmount, teamLength, inOrder, orderList, betAmount;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -130,34 +142,20 @@ var confirmResultReverse = function () {
 						}
 
 						if (!(betOrderStatus !== 'TBD')) {
-							_context.next = 31;
+							_context.next = 28;
 							break;
 						}
 
-						newHistoryBet = new _BetOrder.HistoryBet({
-							orderNumber: openBet.orderNumber,
-							orderType: openBet.orderType,
-							owner: openBet.owner,
-							wagerDetail: openBet.wagerDetail,
-							status: betOrderStatus,
-							resultAmount: resultAmount.toFixed(),
-							eventOdds: openBet.eventOdds,
-							createdAt: openBet.createdAt,
-							closedAt: (0, _moment2.default)()
-						});
-						_context.next = 26;
-						return newHistoryBet.save();
+						_context.next = 25;
+						return (0, _saveNewHistoryBet2.default)(openBet, betOrderStatus, resultAmount);
 
-					case 26:
-						console.log('saved history straight bet' + newHistoryBet.orderNumber);
-						_context.next = 29;
-						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
-
-					case 29:
-						console.log('deleted openbet ' + openBet.orderNumber);
+					case 25:
 						return _context.abrupt('return', true);
 
-					case 31:
+					case 28:
+						return _context.abrupt('return', false);
+
+					case 29:
 					case 'end':
 						return _context.stop();
 				}
@@ -171,37 +169,4 @@ var confirmResultReverse = function () {
 }();
 
 exports.default = confirmResultReverse;
-
-// export const handleReverseChangeRiskAmount = (e) => {
-// 	return (dispatch, getState) => {
-
-// 		const { orderType } = getState().playerUtilsReducer
-// 		const reverseEvents = getState().playerOddWagerReducer.oddWagerPickList
-// //		const betAmount = Number(e.target.value) * reverseEvents.length
-
-// 		const reverseOddLine = reverseEvents.map(event => {
-// 			if(event.betDetail.oddLine > 0){
-// 				return Math.round(Number(e.target.value) * event.betDetail.oddLine / 100)
-// 			}else{
-// 				return Math.round(Number(e.target.value) / Math.abs(event.betDetail.oddLine) * 100)
-// 			}
-// 		})
-
-// 		const singleRisk = reverseOddLine.reduce((total, value) => total += value)
-// 		const riskAmount = ( reverseEvents.length - 1 ) * reverseEvents.length * Number(e.target.value)
-// 		const winAmount = ( reverseEvents.length - 1 ) * 2 * singleRisk
-
-
-// 		const wagerDetail = {
-// 			betType: 'risk',
-// 			betAmount: Number(e.target.value).toFixed(),
-// 			riskAmount: Number(riskAmount).toFixed(),
-// 			winAmount: Number(winAmount).toFixed(),
-// 			confirm: false
-// 		}
-// 		return dispatch({
-// 			type: 'HANDLE_REVERSE_CHANGE_RISK_AMOUNT', payload: wagerDetail
-// 		})
-// 	}
-// }
 //# sourceMappingURL=confirmResultReverse.js.map

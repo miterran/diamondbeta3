@@ -25,10 +25,19 @@ var AgentSchema = _mongoose2.default.Schema({
 		maxPlayer: { type: Number, default: 10, required: true }
 	},
 	currentStatus: {
-		activePlayer: { type: Number, default: 0 },
 		credit: { type: Number, default: 0 },
 		creditPending: { type: Number, default: 0 },
 		availableCredit: { type: Number, default: 0 }
+	},
+	openBetStatus: {
+		activePlayer: { type: Number, default: 0 },
+		straightBet: { type: Number, default: 0 },
+		parlayBet: { type: Number, default: 0 },
+		teaserBet: { type: Number, default: 0 },
+		reverseBet: { type: Number, default: 0 },
+		totalBets: { type: Number, default: 0 },
+		totalRisk: { type: Number, default: 0 },
+		totalWin: { type: Number, default: 0 }
 	},
 	players: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
 	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent', required: true },

@@ -28,6 +28,10 @@ var _updatePlayerStatusAfterOrder = require('../../../updateDB/updateUser/update
 
 var _updatePlayerStatusAfterOrder2 = _interopRequireDefault(_updatePlayerStatusAfterOrder);
 
+var _updateAgentOpenBetStatusAfterOrder = require('../../../updateDB/updateUser/updateAgentOpenBetStatusAfterOrder');
+
+var _updateAgentOpenBetStatusAfterOrder2 = _interopRequireDefault(_updateAgentOpenBetStatusAfterOrder);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -146,7 +150,7 @@ var submitRadioBetOrder = function () {
 													winAmount: 0,
 													confirm: false
 												} });
-											_context2.next = 12;
+											_context2.next = 14;
 											break;
 
 										case 5:
@@ -172,10 +176,14 @@ var submitRadioBetOrder = function () {
 											return (0, _updatePlayerStatusAfterOrder2.default)(req.user._id);
 
 										case 11:
+											_context2.next = 13;
+											return (0, _updateAgentOpenBetStatusAfterOrder2.default)(req.user.agent);
+
+										case 13:
 
 											res.json([]);
 
-										case 12:
+										case 14:
 										case 'end':
 											return _context2.stop();
 									}

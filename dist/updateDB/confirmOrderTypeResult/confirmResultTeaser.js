@@ -18,13 +18,25 @@ var _teaserOddLineAdjust = require('./utils/teaserOddLineAdjust');
 
 var _teaserOddLineAdjust2 = _interopRequireDefault(_teaserOddLineAdjust);
 
+var _Agent = require('../../models/Agent');
+
+var _Agent2 = _interopRequireDefault(_Agent);
+
+var _AgentTransaction = require('../../models/AgentTransaction');
+
+var _AgentTransaction2 = _interopRequireDefault(_AgentTransaction);
+
+var _saveNewHistoryBet = require('./utils/saveNewHistoryBet');
+
+var _saveNewHistoryBet2 = _interopRequireDefault(_saveNewHistoryBet);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var confirmResultTeaser = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
-		var betOrderStatus, resultAmount, teamLength, eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHavePostponed, eventsHaveCanceled, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsPending, eventWonCounter, teaserOddLine, winAmount, newHistoryBet;
+		var betOrderStatus, resultAmount, teamLength, eventsHaveWon, eventsHaveLost, eventsHavePush, eventsHavePostponed, eventsHaveCanceled, eventsHaveReview, eventsHavePending, allEventsWon, allEventsLost, allEventsPush, allEventsCanceled, allEventsPostponed, allEventsReview, allEventsPending, eventWonCounter, teaserOddLine, winAmount;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -152,38 +164,20 @@ var confirmResultTeaser = function () {
 
 					case 65:
 						if (!(betOrderStatus !== 'TBD')) {
-							_context.next = 74;
+							_context.next = 71;
 							break;
 						}
 
-						newHistoryBet = new _BetOrder.HistoryBet({
-							orderNumber: openBet.orderNumber,
-							orderType: openBet.orderType,
-							owner: openBet.owner,
-							wagerDetail: openBet.wagerDetail,
-							status: betOrderStatus,
-							resultAmount: resultAmount,
-							eventOdds: openBet.eventOdds,
-							createdAt: openBet.createdAt,
-							closedAt: (0, _moment2.default)()
-						});
-						_context.next = 69;
-						return newHistoryBet.save();
+						_context.next = 68;
+						return (0, _saveNewHistoryBet2.default)(openBet, betOrderStatus, resultAmount);
 
-					case 69:
-						console.log('saved history teaser bet' + newHistoryBet.orderNumber);
-						_context.next = 72;
-						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
-
-					case 72:
-						console.log('deleted openbet ' + openBet.orderNumber);
-
-						// updateAgentCredit if player lose
-						// create new trasaction
-
+					case 68:
 						return _context.abrupt('return', true);
 
-					case 74:
+					case 71:
+						return _context.abrupt('return', false);
+
+					case 72:
 					case 'end':
 						return _context.stop();
 				}

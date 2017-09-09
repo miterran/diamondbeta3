@@ -38,7 +38,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var purchaseCredit = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		var _purchaseCredit, purchasePrice, newAgentDeposit, newAgentTransaction, agent;
+		var _purchaseCredit, purchasePrice, newAgentDeposit, agent, newAgentTransaction;
 
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
@@ -60,28 +60,26 @@ var purchaseCredit = function () {
 						return newAgentDeposit.save();
 
 					case 6:
+						_context.next = 8;
+						return _Agent2.default.findOneAndUpdate({ _id: req.user._id }, { '$inc': { 'currentStatus.credit': _purchaseCredit, 'currentStatus.availableCredit': _purchaseCredit } }, { new: true });
+
+					case 8:
+						agent = _context.sent;
 						newAgentTransaction = new _AgentTransaction2.default({
 							owner: {
 								superAgent: req.user.superAgent,
 								agent: req.user._id
 							},
-							user: req.user._id,
 							orderType: 'Deposit',
 							transactionType: 'in',
 							creditAmount: _purchaseCredit,
-							resultAmount: req.user.currentStatus.credit + _purchaseCredit,
+							resultAmount: agent.currentStatus.credit,
 							orderNumber: newAgentDeposit.orderNumber
 						});
-						_context.next = 9;
+						_context.next = 12;
 						return newAgentTransaction.save();
 
-					case 9:
-						_context.next = 11;
-						return _Agent2.default.findOneAndUpdate({ _id: req.user._id }, { '$inc': { 'currentStatus.credit': _purchaseCredit, 'currentStatus.availableCredit': _purchaseCredit } });
-
-					case 11:
-						agent = _context.sent;
-
+					case 12:
 
 						res.json(req.user);
 						_context.next = 18;

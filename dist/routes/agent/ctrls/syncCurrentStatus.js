@@ -23,7 +23,7 @@ var syncCurrentStatus = function () {
 						_context.next = 3;
 						return _Agent2.default.findOne({
 							'_id': req.user._id
-						}, 'account.username account.passcode account.role account.activate defaultSetting currentStatus players').populate({
+						}, 'account.username account.passcode account.role account.activate defaultSetting currentStatus openBetStatus players').populate({
 							path: 'players',
 							select: 'account.username'
 						});

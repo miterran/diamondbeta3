@@ -21,7 +21,7 @@ var syncCurrentStatus = function () {
 					case 0:
 						_context.prev = 0;
 						_context.next = 3;
-						return _Player2.default.findOne({ '_id': req.user._id }, 'account.username account.passcode account.role account.activate defaultSetting currentStatus');
+						return _Player2.default.findOne({ '_id': req.user._id }, 'account.username account.passcode account.role account.activate defaultSetting currentStatus openBetStatus');
 
 					case 3:
 						player = _context.sent;

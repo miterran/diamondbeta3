@@ -22,6 +22,10 @@ var _updatePlayerStatusAfterOrder = require('./updateUser/updatePlayerStatusAfte
 
 var _updatePlayerStatusAfterOrder2 = _interopRequireDefault(_updatePlayerStatusAfterOrder);
 
+var _updateAgentOpenBetStatusAfterOrder = require('./updateUser/updateAgentOpenBetStatusAfterOrder');
+
+var _updateAgentOpenBetStatusAfterOrder2 = _interopRequireDefault(_updateAgentOpenBetStatusAfterOrder);
+
 var _confirmResultStraight = require('./confirmOrderTypeResult/confirmResultStraight');
 
 var _confirmResultStraight2 = _interopRequireDefault(_confirmResultStraight);
@@ -45,24 +49,24 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var confirm_OpenBet_result_to_HistoryBet = function () {
-	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee6() {
 		var openBets;
-		return regeneratorRuntime.wrap(function _callee4$(_context4) {
+		return regeneratorRuntime.wrap(function _callee6$(_context6) {
 			while (1) {
-				switch (_context4.prev = _context4.next) {
+				switch (_context6.prev = _context6.next) {
 					case 0:
-						_context4.prev = 0;
-						_context4.next = 3;
+						_context6.prev = 0;
+						_context6.next = 3;
 						return _BetOrder.OpenBet.find({});
 
 					case 3:
-						openBets = _context4.sent;
+						openBets = _context6.sent;
 
 						if (_lodash2.default.isEmpty(openBets)) {
 							next();
 						}
 
-						_context4.next = 7;
+						_context6.next = 7;
 						return Promise.all(openBets.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet) {
 								var straightBetResult, parlayBetResult, teaserBetResult, reverseBetResult;
@@ -169,24 +173,25 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 								return _ref2.apply(this, arguments);
 							};
 						}())).then(function () {
-							var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(playerIds) {
+							var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(playerIds) {
 								var playerIdArr;
-								return regeneratorRuntime.wrap(function _callee3$(_context3) {
+								return regeneratorRuntime.wrap(function _callee5$(_context5) {
 									while (1) {
-										switch (_context3.prev = _context3.next) {
+										switch (_context5.prev = _context5.next) {
 											case 0:
 												playerIdArr = _lodash2.default.compact([].concat(_toConsumableArray(new Set(playerIds))));
 
 												if (_lodash2.default.isEmpty(playerIdArr)) {
-													_context3.next = 8;
+													_context5.next = 8;
 													break;
 												}
 
 												console.log('update following players');
 												console.log(playerIdArr);
-												_context3.next = 6;
+												_context5.next = 6;
 												return Promise.all(playerIdArr.map(function () {
 													var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(playerId) {
+														var agentId;
 														return regeneratorRuntime.wrap(function _callee2$(_context2) {
 															while (1) {
 																switch (_context2.prev = _context2.next) {
@@ -195,10 +200,12 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 																		return (0, _updatePlayerStatusAfterOrder2.default)(playerId);
 
 																	case 2:
-																		console.log('updated' + playerId);
-																		return _context2.abrupt('return', null);
+																		agentId = _context2.sent;
 
-																	case 4:
+																		console.log('updated' + playerId);
+																		return _context2.abrupt('return', agentId);
+
+																	case 5:
 																	case 'end':
 																		return _context2.stop();
 																}
@@ -209,12 +216,54 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 													return function (_x3) {
 														return _ref4.apply(this, arguments);
 													};
-												}())).catch(function (err) {
+												}())).then(function () {
+													var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(agentIds) {
+														var AgentIdArr;
+														return regeneratorRuntime.wrap(function _callee4$(_context4) {
+															while (1) {
+																switch (_context4.prev = _context4.next) {
+																	case 0:
+																		AgentIdArr = _lodash2.default.compact([].concat(_toConsumableArray(new Set(agentIds))));
+																		_context4.next = 3;
+																		return Promise.all(AgentIdArr.map(function () {
+																			var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(agentId) {
+																				return regeneratorRuntime.wrap(function _callee3$(_context3) {
+																					while (1) {
+																						switch (_context3.prev = _context3.next) {
+																							case 0:
+																								_context3.next = 2;
+																								return (0, _updateAgentOpenBetStatusAfterOrder2.default)(agentId);
+
+																							case 2:
+																							case 'end':
+																								return _context3.stop();
+																						}
+																					}
+																				}, _callee3, undefined);
+																			}));
+
+																			return function (_x5) {
+																				return _ref6.apply(this, arguments);
+																			};
+																		}()));
+
+																	case 3:
+																	case 'end':
+																		return _context4.stop();
+																}
+															}
+														}, _callee4, undefined);
+													}));
+
+													return function (_x4) {
+														return _ref5.apply(this, arguments);
+													};
+												}()).catch(function (err) {
 													throw err;
 												});
 
 											case 6:
-												_context3.next = 9;
+												_context5.next = 9;
 												break;
 
 											case 8:
@@ -222,10 +271,10 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 
 											case 9:
 											case 'end':
-												return _context3.stop();
+												return _context5.stop();
 										}
 									}
-								}, _callee3, undefined);
+								}, _callee5, undefined);
 							}));
 
 							return function (_x2) {
@@ -236,20 +285,20 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 						});
 
 					case 7:
-						_context4.next = 12;
+						_context6.next = 12;
 						break;
 
 					case 9:
-						_context4.prev = 9;
-						_context4.t0 = _context4['catch'](0);
-						throw _context4.t0;
+						_context6.prev = 9;
+						_context6.t0 = _context6['catch'](0);
+						throw _context6.t0;
 
 					case 12:
 					case 'end':
-						return _context4.stop();
+						return _context6.stop();
 				}
 			}
-		}, _callee4, undefined, [[0, 9]]);
+		}, _callee6, undefined, [[0, 9]]);
 	}));
 
 	return function confirm_OpenBet_result_to_HistoryBet() {

@@ -24,87 +24,68 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var fetchAccount = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		var agentOpenBets, agentHistoryBets, agentCreditPending, activePlayerCounter, agentCurrentStatus, totalWin, totalRisk, straightBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, agentAccount;
+		var agentHistoryBets;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
 						_context.prev = 0;
 						_context.next = 3;
-						return _BetOrder.OpenBet.find({ 'owner.agent': req.user._id }, 'orderType wagerDetail.riskAmount wagerDetail.winAmount owner');
-
-					case 3:
-						agentOpenBets = _context.sent;
-						_context.next = 6;
 						return _BetOrder.HistoryBet.find({ 'owner.agent': req.user._id, 'closedAt': { $gte: (0, _moment2.default)().startOf('isoWeek'), $lte: (0, _moment2.default)().endOf('isoWeek') } }, 'closedAt resultAmount');
 
-					case 6:
+					case 3:
 						agentHistoryBets = _context.sent;
-						agentCreditPending = agentOpenBets.reduce(function (total, openBet) {
-							return total + openBet.wagerDetail.riskAmount;
-						}, 0);
-						activePlayerCounter = _lodash2.default.uniqBy([].concat.apply([], agentOpenBets.map(function (openBet) {
-							return openBet.owner.player;
-						})));
-						agentCurrentStatus = {
-							activePlayer: activePlayerCounter.length,
-							credit: req.user.currentStatus.credit,
-							creditPending: agentCreditPending,
-							availableCredit: req.user.currentStatus.credit - agentCreditPending
-						};
-						_context.next = 12;
-						return _Agent2.default.findOneAndUpdate({ _id: req.user._id }, { '$set': { currentStatus: agentCurrentStatus } });
 
-					case 12:
-						totalWin = agentOpenBets.reduce(function (total, openBet) {
-							return total + Number(openBet.wagerDetail.winAmount);
-						}, 0);
-						totalRisk = agentOpenBets.reduce(function (total, openBet) {
-							return total + Number(openBet.wagerDetail.riskAmount);
-						}, 0);
-						straightBetCounter = agentOpenBets.reduce(function (total, openBet) {
-							return total + (openBet.orderType === 'Straight');
-						}, 0);
-						parlayBetCounter = agentOpenBets.reduce(function (total, openBet) {
-							return total + (openBet.orderType === 'Parlay');
-						}, 0);
-						teaserBetCounter = agentOpenBets.reduce(function (total, openBet) {
-							return total + (openBet.orderType === 'Teaser6040' || openBet.orderType === 'Teaser6545' || openBet.orderType === 'Teaser7050' || openBet.orderType === 'SuperTeaser');
-						}, 0); // indexOf
+						res.json(agentHistoryBets);
+						// const agentCreditPending = agentOpenBets.reduce((total, openBet) => total + openBet.wagerDetail.riskAmount, 0)
 
-						reverseBetCounter = agentOpenBets.reduce(function (total, openBet) {
-							return total + (openBet.orderType === 'ActionReverse' || openBet.orderType === 'WinReverse');
-						}, 0);
-						agentAccount = {
-							openBetStatus: {
-								straightBet: straightBetCounter || 0,
-								parlayBet: parlayBetCounter || 0,
-								teaserBet: teaserBetCounter || 0,
-								reverseBet: reverseBetCounter || 0,
-								totalBets: agentOpenBets.length || 0,
-								totalRisk: totalRisk || 0,
-								totalWin: totalWin || 0
-							},
-							thisWeekHistoryBetList: agentHistoryBets
-						};
+						// const activePlayerCounter = _.uniq(agentOpenBets.map(openBet => openBet.owner.player.toString()))
 
+						// const agentCurrentStatus = {
+						// 	credit: req.user.currentStatus.credit,
+						// 	creditPending: agentCreditPending,
+						// 	availableCredit: req.user.currentStatus.credit - agentCreditPending
+						// }
 
-						res.json(agentAccount);
+						// await Agent.findOneAndUpdate({ _id: req.user._id }, {'$set': { currentStatus: agentCurrentStatus }})
 
-						_context.next = 25;
+						// const totalWin = agentOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.winAmount), 0)
+						// const totalRisk = agentOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.riskAmount), 0)
+						// const straightBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Straight' ), 0)
+						// const parlayBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Parlay' ), 0)
+						// const teaserBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Teaser6040' || openBet.orderType === 'Teaser6545' || openBet.orderType === 'Teaser7050' || openBet.orderType === 'SuperTeaser' ), 0)  // indexOf
+						// const reverseBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'ActionReverse' || openBet.orderType === 'WinReverse' ), 0)
+
+						// const agentAccount = {
+						// 	openBetStatus: {
+						// 		activePlayer: activePlayerCounter.length,
+						// 		straightBet: straightBetCounter || 0,
+						// 		parlayBet: parlayBetCounter || 0,
+						// 		teaserBet: teaserBetCounter || 0,
+						// 		reverseBet: reverseBetCounter || 0,
+						// 		totalBets: agentOpenBets.length || 0,
+						// 		totalRisk: totalRisk || 0,
+						// 		totalWin: totalWin || 0
+						// 	},
+						// 	thisWeekHistoryBetList: agentHistoryBets,
+						// }
+
+						// res.json(agentAccount)
+
+						_context.next = 10;
 						break;
 
-					case 22:
-						_context.prev = 22;
+					case 7:
+						_context.prev = 7;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 25:
+					case 10:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 22]]);
+		}, _callee, undefined, [[0, 7]]);
 	}));
 
 	return function fetchAccount(_x, _x2) {
