@@ -44,7 +44,10 @@ var fetch_jsonOdd_result = function () {
 					case 3:
 						openBets = _context2.sent;
 
-						if (_lodash2.default.isEmpty(openBets)) next();
+						if (_lodash2.default.isEmpty(openBets)) {
+							_context2.next = 13;
+							break;
+						}
 
 						openBetJsonOddEvents = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
@@ -55,16 +58,14 @@ var fetch_jsonOdd_result = function () {
 							});
 						})), 'uniqueId'));
 
-
-						openBetJsonOddEvents.map(function (event) {
-							console.log('fetch json result ' + event.uniqueId);
-						});
-
 						if (_lodash2.default.isEmpty(openBetJsonOddEvents)) {
 							_context2.next = 12;
 							break;
 						}
 
+						openBetJsonOddEvents.forEach(function (event) {
+							console.log('fetch json result ' + event.uniqueId);
+						});
 						_context2.next = 10;
 						return Promise.all(openBetJsonOddEvents.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event) {

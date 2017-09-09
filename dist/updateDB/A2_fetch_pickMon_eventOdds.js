@@ -80,13 +80,13 @@ var fetch_pickMon_eventOdds = function () {
 						_context2.next = 15;
 						return Promise.all(pickMonData.lines.game.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event) {
-								var newEventOdd, existedEventOdd;
+								var newEventOdd, checkOddPoints, allZero, existedEventOdd;
 								return regeneratorRuntime.wrap(function _callee$(_context) {
 									while (1) {
 										switch (_context.prev = _context.next) {
 											case 0:
-												if (!(event.header && !event.line.score.winner && (0, _moment2.default)().isBefore((0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').format()) && event.void === '0' && (!event.team1.name.includes('/') || !event.team1.name.includes('/')))) {
-													_context.next = 44;
+												if (!(event.header && !event.line.score.winner && (0, _moment2.default)().isBefore((0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').format()) && event.void === '0' && (!event.team1.name.includes('/') || !event.team2.name.includes('/')))) {
+													_context.next = 48;
 													break;
 												}
 
@@ -119,7 +119,15 @@ var fetch_pickMon_eventOdds = function () {
 													},
 													updatedAt: (0, _moment2.default)()
 												};
+												checkOddPoints = _lodash2.default.pick(newEventOdd.odds, ['moneyLineHome', 'moneyLineAway', 'pointSpreadHome', 'pointSpreadAway', 'pointSpreadHomeLine', 'pointSpreadAwayLine', 'totalNumber', 'overLine', 'underLine', 'drawLine']);
+												allZero = Object.values(checkOddPoints).every(function (val) {
+													return Number(val) === 0;
+												});
 
+												if (allZero) {
+													_context.next = 48;
+													break;
+												}
 
 												if (Number(event.line.spread.points) > 0) {
 													newEventOdd.odds.pointSpreadHome = -Number(event.line.spread.points);
@@ -143,45 +151,46 @@ var fetch_pickMon_eventOdds = function () {
 												}
 
 												_context.t0 = event.line.perioddesc;
-												_context.next = _context.t0 === 'Game' ? 9 : _context.t0 === '1st Half' ? 11 : _context.t0 === '2nd Half' ? 13 : _context.t0 === '1st Quarter' ? 15 : _context.t0 === '2nd Quarter' ? 17 : _context.t0 === '3rd Quarter' ? 19 : _context.t0 === '3rd Quarter' ? 21 : _context.t0 === '1st 5 Innings' ? 23 : 25;
+												_context.next = _context.t0 === 'Game' ? 12 : _context.t0 === '1st Half' ? 14 : _context.t0 === '2nd Half' ? 16 : _context.t0 === '1st Quarter' ? 18 : _context.t0 === '2nd Quarter' ? 20 : _context.t0 === '3rd Quarter' ? 22 : _context.t0 === '3rd Quarter' ? 24 : _context.t0 === '1st 5 Innings' ? 26 : 28;
 												break;
 
-											case 9:
+											case 12:
 												newEventOdd.oddType = 'Game';
-												return _context.abrupt('break', 26);
+												return _context.abrupt('break', 30);
 
-											case 11:
+											case 14:
 												newEventOdd.oddType = 'First Half';
-												return _context.abrupt('break', 26);
+												return _context.abrupt('break', 30);
 
-											case 13:
+											case 16:
 												newEventOdd.oddType = 'Second Half';
-												return _context.abrupt('break', 26);
+												return _context.abrupt('break', 30);
 
-											case 15:
+											case 18:
 												newEventOdd.oddType = 'First Quarter';
-												return _context.abrupt('break', 26);
+												return _context.abrupt('break', 30);
 
-											case 17:
+											case 20:
 												newEventOdd.oddType = 'Second Quarter';
-												return _context.abrupt('break', 26);
+												return _context.abrupt('break', 30);
 
-											case 19:
+											case 22:
 												newEventOdd.oddType = 'Third Quarter';
-												return _context.abrupt('break', 26);
+												return _context.abrupt('break', 30);
 
-											case 21:
+											case 24:
 												newEventOdd.oddType = 'Third Quarter';
-												return _context.abrupt('break', 26);
-
-											case 23:
-												newEventOdd.oddType = 'First Five Innings';
-												return _context.abrupt('break', 26);
-
-											case 25:
-												return _context.abrupt('return');
+												return _context.abrupt('break', 30);
 
 											case 26:
+												newEventOdd.oddType = 'First Five Innings';
+												return _context.abrupt('break', 30);
+
+											case 28:
+												console.log('new event !!!!!!!!!!!!!!!! ' + event.line.perioddesc);
+												return _context.abrupt('return');
+
+											case 30:
 
 												if (newEventOdd.oddType === 'Game') {
 													newEventOdd.cutOffTime = (0, _moment2.default)(event.gamedate).subtract(3, 'h').subtract(1, 's');
@@ -191,49 +200,48 @@ var fetch_pickMon_eventOdds = function () {
 													newEventOdd.expireAt = (0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').subtract(1, 's');
 												}
 
-												//							newEventOdd.eventOddId = `pickMon_${event.sporttype}_${newEventOdd.oddType.replace(/\s/g,'').toUpperCase()}_${event.id}`,
 												newEventOdd.uniqueId = newEventOdd.team.homeROT + '_' + newEventOdd.team.awayROT + '_' + newEventOdd.sport.replace(/\s/g, '').toUpperCase() + '_' + newEventOdd.oddType.replace(/\s/g, '').toUpperCase() + '_' + (0, _moment2.default)(newEventOdd.matchTime).format('MMDDYYYY');
 
-												_context.next = 30;
+												_context.next = 34;
 												return _EventOdd.EventOdd.findOne({ uniqueId: newEventOdd.uniqueId });
 
-											case 30:
+											case 34:
 												existedEventOdd = _context.sent;
 
 												if (!_lodash2.default.isEmpty(existedEventOdd)) {
-													_context.next = 37;
+													_context.next = 41;
 													break;
 												}
 
-												_context.next = 34;
+												_context.next = 38;
 												return new _EventOdd.EventOdd(newEventOdd).save();
 
-											case 34:
+											case 38:
 												console.log('saved ' + newEventOdd.uniqueId);
-												_context.next = 44;
+												_context.next = 48;
 												break;
 
-											case 37:
+											case 41:
 												if ((0, _moment2.default)(existedEventOdd.source.lastUpdated).isSame((0, _moment2.default)(newEventOdd.source.lastUpdated).format())) {
-													_context.next = 43;
+													_context.next = 47;
 													break;
 												}
 
-												_context.next = 40;
+												_context.next = 44;
 												return _EventOdd.EventOdd.findOneAndUpdate({ uniqueId: newEventOdd.uniqueId }, { $set: newEventOdd });
 
-											case 40:
+											case 44:
 												console.log('updated ' + newEventOdd.uniqueId);
-												_context.next = 44;
+												_context.next = 48;
 												break;
 
-											case 43:
+											case 47:
 												console.log(newEventOdd.uniqueId + ' is up to date');
 
-											case 44:
+											case 48:
 												return _context.abrupt('return', null);
 
-											case 45:
+											case 49:
 											case 'end':
 												return _context.stop();
 										}

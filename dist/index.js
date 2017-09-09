@@ -82,14 +82,6 @@ var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _setupDatabase = require('./admin/setupDatabase');
-
-var _setupDatabase2 = _interopRequireDefault(_setupDatabase);
-
-var _Player = require('./models/Player');
-
-var _Player2 = _interopRequireDefault(_Player);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _passport2.default.use(_jwtStrategy2.default);
@@ -114,24 +106,8 @@ app.use(_passport2.default.initialize());
 
 app.use(_express2.default.static(_path2.default.resolve(__dirname, '../client/build')));
 
-app.use('/admin', _setupDatabase2.default);
-
-// import mongoose from 'mongoose'
-
-// const test = async () => {
-// 	const p = await Player.findOne({ _id: mongoose.Types.ObjectId('59a39d3f68353d1311815538') }).populate({ path: 'agent', select: 'account.username' })
-// 	console.log(p.agent._id)
-// }
-
-// test()
-
-// import updateAgentStatusAfterOrder from './updateDB/updateUser/updateAgentStatusAfterOrder'
-
-// app.use('/update-agent', async (req, res) => {
-// 	await updateAgentStatusAfterOrder('59912a50a600c8ab54afebbc')
-// 	res.json('done')
-// })
-
+// import setupDatabase from './admin/setupDatabase'
+// app.use('/admin', setupDatabase)
 
 app.use('/api', _authLogin2.default);
 app.use('/api', _createAccount2.default);

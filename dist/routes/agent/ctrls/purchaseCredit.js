@@ -30,11 +30,7 @@ var _Agent2 = _interopRequireDefault(_Agent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } //uniqid.process().toUpperCase()
-
-
-//import updateAgentStatusAfterOrder from '../../../updateDB/utils/updateAgentStatusAfterOrder';
-
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var purchaseCredit = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
@@ -80,8 +76,8 @@ var purchaseCredit = function () {
 						return newAgentTransaction.save();
 
 					case 12:
-
 						res.json(req.user);
+
 						_context.next = 18;
 						break;
 
@@ -104,36 +100,4 @@ var purchaseCredit = function () {
 }();
 
 exports.default = purchaseCredit;
-
-// import Agent from '../../models/Agent';
-// import Player from '../../models/Player'
-// import { OpenBet, HistoryBet } from '../../models/BetOrder';
-// import moment from 'moment'
-// import mongoose from 'mongoose'
-// import _ from 'lodash'
-
-// const createAgentTransaction = async (AgentId) => {
-
-// 	try {
-
-// 		let newAgentTransaction = new AgentTransaction({
-// 			owner:{
-// 				superAgent : req.user.superAgent,
-// 				agent : req.user._id
-// 			},
-// 			orderType: 'Deposit',
-// 			transactionType: 'in',
-// 			creditAmount: purchaseCredit,
-// 			priceAmount: purchasePrice,
-// 			resultAmount: agent.currentStatus.credit,
-// 			orderNumber: newAgentDeposit.orderNumber
-// 		})
-// 		await newAgentTransaction.save()
-
-// 	}catch(err){
-// 		throw err
-// 	}
-// }
-
-// export default createAgentTransaction
 //# sourceMappingURL=purchaseCredit.js.map

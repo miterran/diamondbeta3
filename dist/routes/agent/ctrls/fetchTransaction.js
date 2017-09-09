@@ -28,7 +28,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var fetchTransaction = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		var weekNum, pendingTransactionList, newList, agentCredit, pendingCredit, transactionList;
+		var weekNum, pendingTransactionList, newList, agentCredit, pendingCredit, openBets, transactionList;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -42,7 +42,7 @@ var fetchTransaction = function () {
 							break;
 						}
 
-						agentCredit = req.user.currentStatus.credit;
+						agentCredit = Number(req.user.currentStatus.credit);
 						pendingCredit = 0;
 						_context.next = 8;
 						return _BetOrder.OpenBet.find({
@@ -50,17 +50,13 @@ var fetchTransaction = function () {
 						}, 'orderNumber orderType createdAt wagerDetail.riskAmount owner.player').populate({ path: 'owner.player', select: 'account.username' });
 
 					case 8:
-						pendingTransactionList = _context.sent;
+						openBets = _context.sent;
 
-
-						pendingTransactionList.sort(function (a, b) {
+						openBets.sort(function (a, b) {
 							return new Date(a.createdAt) - new Date(b.createdAt);
 						});
-
-						newList = pendingTransactionList.map(function (transaction, transactionIdx) {
-
-							agentCredit -= transaction.wagerDetail.riskAmount;
-
+						pendingTransactionList = openBets.map(function (transaction, transactionIdx) {
+							agentCredit -= Number(transaction.wagerDetail.riskAmount);
 							return {
 								orderNumber: transaction.orderNumber,
 								orderType: transaction.orderType,
@@ -82,7 +78,7 @@ var fetchTransaction = function () {
 						transactionList = _context.sent;
 
 
-						res.json({ transactionList: transactionList, pendingTransactionList: newList });
+						res.json({ transactionList: transactionList, pendingTransactionList: pendingTransactionList });
 
 					case 15:
 					case 'end':

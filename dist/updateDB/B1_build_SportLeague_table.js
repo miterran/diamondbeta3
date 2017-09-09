@@ -79,11 +79,7 @@ var build_SportLeague_table = function () {
 							return function (_x) {
 								return _ref2.apply(this, arguments);
 							};
-						}())).then(function () {
-							console.log('update sport league done');
-						}).catch(function (err) {
-							throw err;
-						});
+						}()));
 
 					case 6:
 						_context2.next = 11;

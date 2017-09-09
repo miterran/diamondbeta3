@@ -43,21 +43,22 @@ var fetch_pickMon_result = function () {
 			while (1) {
 				switch (_context3.prev = _context3.next) {
 					case 0:
-						_context3.next = 2;
+						_context3.prev = 0;
+						_context3.next = 3;
 						return _Provider2.default.findOne({ provider: 'pickMon', activate: true });
 
-					case 2:
+					case 3:
 						pickMonApi = _context3.sent;
 
 						if (!pickMonApi) {
-							_context3.next = 24;
+							_context3.next = 25;
 							break;
 						}
 
-						_context3.next = 6;
+						_context3.next = 7;
 						return _BetOrder.OpenBet.find({});
 
-					case 6:
+					case 7:
 						openBets = _context3.sent;
 						openBetPickMon = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
@@ -82,33 +83,33 @@ var fetch_pickMon_result = function () {
 						console.log(pickMonSportLeagues);
 
 						if (_lodash2.default.isEmpty(pickMonSportLeagues)) {
-							_context3.next = 23;
+							_context3.next = 24;
 							break;
 						}
 
-						_context3.next = 13;
+						_context3.next = 14;
 						return _axios2.default.get(pickMonApi.apiLink + 'uid=' + _config2.default.pickMon_UID + '&key=' + _config2.default.pickMon_Key + '&sports=' + pickMonSportLeagues + '&graded=1&full_call=' + pickMonApi.option.resultFullCall);
 
-					case 13:
+					case 14:
 						response = _context3.sent;
 
 						if (_lodash2.default.isEmpty(response.data)) {
-							_context3.next = 21;
+							_context3.next = 22;
 							break;
 						}
 
-						_context3.next = 17;
+						_context3.next = 18;
 						return (0, _xml2jsEs6Promise2.default)(response.data, { explicitArray: false });
 
-					case 17:
+					case 18:
 						pickMonData = _context3.sent;
 
 						if (!(!_lodash2.default.isEmpty(pickMonData.lines) && !_lodash2.default.isEmpty(pickMonData.lines.game) && _lodash2.default.isFunction(pickMonData.lines.game.map))) {
-							_context3.next = 21;
+							_context3.next = 22;
 							break;
 						}
 
-						_context3.next = 21;
+						_context3.next = 22;
 						return Promise.all(pickMonData.lines.game.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(event) {
 								return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -215,19 +216,28 @@ var fetch_pickMon_result = function () {
 							};
 						}()));
 
-					case 21:
-						_context3.next = 24;
+					case 22:
+						_context3.next = 25;
 						break;
 
-					case 23:
+					case 24:
 						console.log('use open bet event id to update pickmon result, but open bet empty');
 
-					case 24:
+					case 25:
+						_context3.next = 30;
+						break;
+
+					case 27:
+						_context3.prev = 27;
+						_context3.t0 = _context3['catch'](0);
+						throw _context3.t0;
+
+					case 30:
 					case 'end':
 						return _context3.stop();
 				}
 			}
-		}, _callee3, undefined);
+		}, _callee3, undefined, [[0, 27]]);
 	}));
 
 	return function fetch_pickMon_result() {

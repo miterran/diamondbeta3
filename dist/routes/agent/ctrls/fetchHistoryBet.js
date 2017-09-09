@@ -25,8 +25,9 @@ var fetchHistoryBet = function () {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
+						_context.prev = 0;
 						weekNum = req.body.weekNum;
-						_context.next = 3;
+						_context.next = 4;
 						return _BetOrder.HistoryBet.find({
 							'owner.agent': req.user._id,
 							'closedAt': { $gte: (0, _moment2.default)().subtract(weekNum, 'w').startOf('isoWeek'), $lte: (0, _moment2.default)().subtract(weekNum, 'w').endOf('isoWeek') }
@@ -35,38 +36,24 @@ var fetchHistoryBet = function () {
 							select: 'account.username'
 						});
 
-					case 3:
+					case 4:
 						historyBetList = _context.sent;
 
-
-						// let historyBets = {
-						// 	historyBetList: historyBetList,
-						// 	weekSummary: {
-						// 		[moment().startOf('isoWeek').subtract(weekNum, 'w').add(0, 'd').format('MMM DD')]: { bets: 0, amount: 0 },
-						// 		[moment().startOf('isoWeek').subtract(weekNum, 'w').add(1, 'd').format('MMM DD')]: { bets: 0, amount: 0 },
-						// 		[moment().startOf('isoWeek').subtract(weekNum, 'w').add(2, 'd').format('MMM DD')]: { bets: 0, amount: 0 },
-						// 		[moment().startOf('isoWeek').subtract(weekNum, 'w').add(3, 'd').format('MMM DD')]: { bets: 0, amount: 0 },
-						// 		[moment().startOf('isoWeek').subtract(weekNum, 'w').add(4, 'd').format('MMM DD')]: { bets: 0, amount: 0 },
-						// 		[moment().startOf('isoWeek').subtract(weekNum, 'w').add(5, 'd').format('MMM DD')]: { bets: 0, amount: 0 },
-						// 		[moment().startOf('isoWeek').subtract(weekNum, 'w').add(6, 'd').format('MMM DD')]: { bets: 0, amount: 0 }
-						// 	}
-						// }
-
-						// if(!_.isEmpty(historyBetList)){
-						// 	historyBetList.forEach(historyBet => {
-						// 		historyBets.weekSummary[moment(historyBet.closedAt).format('MMM DD')].amount += Number(historyBet.resultAmount);
-						// 		historyBets.weekSummary[moment(historyBet.closedAt).format('MMM DD')].bets++;
-						// 	})
-						// }
-
 						res.json(historyBetList);
+						_context.next = 11;
+						break;
 
-					case 5:
+					case 8:
+						_context.prev = 8;
+						_context.t0 = _context['catch'](0);
+						throw _context.t0;
+
+					case 11:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined);
+		}, _callee, undefined, [[0, 8]]);
 	}));
 
 	return function fetchHistoryBet(_x, _x2) {

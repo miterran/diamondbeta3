@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -32,7 +28,11 @@ var determine_OpenBet_eventOdds_result = function () {
 					case 3:
 						openBets = _context3.sent;
 
-						if (_lodash2.default.isEmpty(openBets)) next();
+						if (_lodash2.default.isEmpty(openBets)) {
+							_context3.next = 7;
+							break;
+						}
+
 						_context3.next = 7;
 						return Promise.all(openBets.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(openBet) {
@@ -112,9 +112,7 @@ var determine_OpenBet_eventOdds_result = function () {
 													return function (_x2) {
 														return _ref3.apply(this, arguments);
 													};
-												}())).catch(function (err) {
-													throw err;
-												});
+												}()));
 
 											case 2:
 												return _context2.abrupt('return', null);
@@ -130,9 +128,7 @@ var determine_OpenBet_eventOdds_result = function () {
 							return function (_x) {
 								return _ref2.apply(this, arguments);
 							};
-						}())).catch(function (err) {
-							throw err;
-						});
+						}()));
 
 					case 7:
 						_context3.next = 12;

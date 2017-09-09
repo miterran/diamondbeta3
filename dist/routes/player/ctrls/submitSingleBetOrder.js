@@ -48,9 +48,10 @@ var submitSingleBetOrder = function () {
 			while (1) {
 				switch (_context5.prev = _context5.next) {
 					case 0:
+						_context5.prev = 0;
 						_req$body = req.body, eventOdds = _req$body.eventOdds, wagerDetails = _req$body.wagerDetails, orderType = _req$body.orderType;
-
-						Promise.all(eventOdds.map(function () {
+						_context5.next = 4;
+						return Promise.all(eventOdds.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event, eventIdx) {
 								var eventTimeOut, existed, latestEvent;
 								return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -205,9 +206,7 @@ var submitSingleBetOrder = function () {
 														}
 													}
 												}, _callee3, undefined);
-											}))).catch(function (err) {
-												throw err;
-											});
+											})));
 
 										case 7:
 										case 'end':
@@ -215,16 +214,23 @@ var submitSingleBetOrder = function () {
 									}
 								}
 							}, _callee4, undefined);
-						}))).catch(function (err) {
-							throw err;
-						});
+						})));
 
-					case 2:
+					case 4:
+						_context5.next = 9;
+						break;
+
+					case 6:
+						_context5.prev = 6;
+						_context5.t0 = _context5['catch'](0);
+						throw _context5.t0;
+
+					case 9:
 					case 'end':
 						return _context5.stop();
 				}
 			}
-		}, _callee5, undefined);
+		}, _callee5, undefined, [[0, 6]]);
 	}));
 
 	return function submitSingleBetOrder(_x, _x2) {

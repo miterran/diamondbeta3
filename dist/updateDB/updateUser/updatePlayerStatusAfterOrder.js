@@ -22,7 +22,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-// update player current status every time order changed
 var updatePlayerStatusAfterOrder = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(playerId) {
 		var player, playerOpenBets, playerHistoryBets, playerCreditPending, playerCurrentBalance, straightBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, totalRisk, totalWin, playerCurrentStatus, playerOpenBetStatus;
@@ -90,7 +89,7 @@ var updatePlayerStatusAfterOrder = function () {
 						});
 
 					case 22:
-						return _context.abrupt('return', player.agent._id);
+						return _context.abrupt('return', player.agent._id.toString());
 
 					case 25:
 						_context.prev = 25;
@@ -111,36 +110,4 @@ var updatePlayerStatusAfterOrder = function () {
 }();
 
 exports.default = updatePlayerStatusAfterOrder;
-
-// const playerOpenBets = await OpenBet.find({ 'owner.player': req.user._id }, 'orderType wagerDetail.riskAmount wagerDetail.winAmount')
-// const playerHistoryBets = await HistoryBet.find({ 'owner.player': req.user._id, 'closedAt': {$gte: moment().startOf('isoWeek'), $lte: moment().endOf('isoWeek')} }, 'closedAt resultAmount')
-// const playerCreditPending = playerOpenBets.reduce((total, openBet) => total + openBet.wagerDetail.riskAmount, 0)
-// const playerCurrentBalance = playerHistoryBets.reduce((total, historyBet) => total + historyBet.resultAmount ,0)
-
-// const playerCurrentStatus = {
-// 	creditPending: playerCreditPending,
-// 	currentBalance: playerCurrentBalance,
-// 	availableCredit: Number(req.user.defaultSetting.weeklyStartCredit) - Number(playerCreditPending) + Number(playerCurrentBalance)
-// }
-// await Player.findOneAndUpdate({ _id: req.user._id }, {'$set': { currentStatus: playerCurrentStatus }})
-
-// // const totalWin = playerOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.winAmount), 0)
-// // const totalRisk = playerOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.riskAmount), 0)
-// // const straightBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Straight' ), 0)
-// // const parlayBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Parlay' ), 0)
-// // const teaserBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Teaser6040' || openBet.orderType === 'Teaser6545' || openBet.orderType === 'Teaser7050' || openBet.orderType === 'SuperTeaser' ), 0)  // indexOf
-// // const reverseBetCounter = playerOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'ActionReverse' || openBet.orderType === 'WinReverse' ), 0)
-
-// const playerAccount = {
-// 	openBetStatus: {
-// 		straightBet: straightBetCounter || 0,
-// 		parlayBet: parlayBetCounter || 0,
-// 		teaserBet: teaserBetCounter || 0,
-// 		reverseBet: reverseBetCounter || 0,
-// 		totalBets: playerOpenBets.length || 0,
-// 		totalRisk: totalRisk || 0,
-// 		totalWin: totalWin || 0
-// 	},
-// 	thisWeekHistoryBetList: playerHistoryBets
-// }
 //# sourceMappingURL=updatePlayerStatusAfterOrder.js.map

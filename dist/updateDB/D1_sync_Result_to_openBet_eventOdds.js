@@ -34,7 +34,11 @@ var sync_Result_with_OpenBet_eventOdds = function () {
 					case 3:
 						openBets = _context3.sent;
 
-						if (_lodash2.default.isEmpty(openBets)) next();
+						if (_lodash2.default.isEmpty(openBets)) {
+							_context3.next = 7;
+							break;
+						}
+
 						_context3.next = 7;
 						return Promise.all(openBets.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(openBet) {
@@ -56,30 +60,26 @@ var sync_Result_with_OpenBet_eventOdds = function () {
 																	case 2:
 																		eventResult = _context.sent;
 
-																		if (event.uniqueId === '1651_1652_BASKETBALL_GAME_09012017') {
-																			console.log(eventResult);
-																		}
-
 																		if (_lodash2.default.isEmpty(eventResult)) {
-																			_context.next = 10;
+																			_context.next = 9;
 																			break;
 																		}
 
-																		_context.next = 7;
+																		_context.next = 6;
 																		return _BetOrder.OpenBet.findOneAndUpdate({ orderNumber: openBet.orderNumber, eventOdds: { $elemMatch: { singlePickId: event.singlePickId } } }, { '$set': { 'eventOdds.$.score': eventResult.score, 'eventOdds.$.status': eventResult.status } });
 
-																	case 7:
+																	case 6:
 																		console.log('updated openBet with final score');
-																		_context.next = 11;
+																		_context.next = 10;
 																		break;
 
-																	case 10:
+																	case 9:
 																		console.log('result haven\'t save yet or start yet ' + event.uniqueId + ' ' + (0, _moment2.default)(event.matchTime).format('ddd, MMM DD, YYYY @ hh:mm A'));
 
-																	case 11:
+																	case 10:
 																		return _context.abrupt('return', null);
 
-																	case 12:
+																	case 11:
 																	case 'end':
 																		return _context.stop();
 																}
@@ -90,9 +90,7 @@ var sync_Result_with_OpenBet_eventOdds = function () {
 													return function (_x2) {
 														return _ref3.apply(this, arguments);
 													};
-												}())).catch(function (err) {
-													throw err;
-												});
+												}()));
 
 											case 2:
 												return _context2.abrupt('return', null);
@@ -108,9 +106,7 @@ var sync_Result_with_OpenBet_eventOdds = function () {
 							return function (_x) {
 								return _ref2.apply(this, arguments);
 							};
-						}())).catch(function (err) {
-							throw err;
-						});
+						}()));
 
 					case 7:
 						_context3.next = 12;

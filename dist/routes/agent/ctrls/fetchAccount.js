@@ -37,40 +37,6 @@ var fetchAccount = function () {
 						agentHistoryBets = _context.sent;
 
 						res.json(agentHistoryBets);
-						// const agentCreditPending = agentOpenBets.reduce((total, openBet) => total + openBet.wagerDetail.riskAmount, 0)
-
-						// const activePlayerCounter = _.uniq(agentOpenBets.map(openBet => openBet.owner.player.toString()))
-
-						// const agentCurrentStatus = {
-						// 	credit: req.user.currentStatus.credit,
-						// 	creditPending: agentCreditPending,
-						// 	availableCredit: req.user.currentStatus.credit - agentCreditPending
-						// }
-
-						// await Agent.findOneAndUpdate({ _id: req.user._id }, {'$set': { currentStatus: agentCurrentStatus }})
-
-						// const totalWin = agentOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.winAmount), 0)
-						// const totalRisk = agentOpenBets.reduce((total, openBet) => total + Number(openBet.wagerDetail.riskAmount), 0)
-						// const straightBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Straight' ), 0)
-						// const parlayBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Parlay' ), 0)
-						// const teaserBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'Teaser6040' || openBet.orderType === 'Teaser6545' || openBet.orderType === 'Teaser7050' || openBet.orderType === 'SuperTeaser' ), 0)  // indexOf
-						// const reverseBetCounter = agentOpenBets.reduce((total, openBet) => total + ( openBet.orderType === 'ActionReverse' || openBet.orderType === 'WinReverse' ), 0)
-
-						// const agentAccount = {
-						// 	openBetStatus: {
-						// 		activePlayer: activePlayerCounter.length,
-						// 		straightBet: straightBetCounter || 0,
-						// 		parlayBet: parlayBetCounter || 0,
-						// 		teaserBet: teaserBetCounter || 0,
-						// 		reverseBet: reverseBetCounter || 0,
-						// 		totalBets: agentOpenBets.length || 0,
-						// 		totalRisk: totalRisk || 0,
-						// 		totalWin: totalWin || 0
-						// 	},
-						// 	thisWeekHistoryBetList: agentHistoryBets,
-						// }
-
-						// res.json(agentAccount)
 
 						_context.next = 10;
 						break;

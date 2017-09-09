@@ -33,39 +33,39 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var axiosJsonOdd = _axios2.default.create({ headers: { 'JsonOdds-API-Key': _config2.default.jsonOddApiKey } });
 
 var fetch_jsonOdd_eventOdds = function () {
-	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee5() {
+	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
 		var jsonOddList;
-		return regeneratorRuntime.wrap(function _callee5$(_context5) {
+		return regeneratorRuntime.wrap(function _callee4$(_context4) {
 			while (1) {
-				switch (_context5.prev = _context5.next) {
+				switch (_context4.prev = _context4.next) {
 					case 0:
-						_context5.prev = 0;
-						_context5.next = 3;
+						_context4.prev = 0;
+						_context4.next = 3;
 						return _Provider2.default.find({ provider: 'jsonOdd', activate: true });
 
 					case 3:
-						jsonOddList = _context5.sent;
-						_context5.next = 6;
+						jsonOddList = _context4.sent;
+						_context4.next = 6;
 						return Promise.all(jsonOddList.map(function () {
-							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(sportLeague) {
+							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(sportLeague) {
 								var events;
-								return regeneratorRuntime.wrap(function _callee4$(_context4) {
+								return regeneratorRuntime.wrap(function _callee3$(_context3) {
 									while (1) {
-										switch (_context4.prev = _context4.next) {
+										switch (_context3.prev = _context3.next) {
 											case 0:
-												_context4.next = 2;
+												_context3.next = 2;
 												return axiosJsonOdd.get(sportLeague.apiLink);
 
 											case 2:
-												events = _context4.sent;
+												events = _context3.sent;
 
 												if (_lodash2.default.isEmpty(events.data)) {
-													_context4.next = 9;
+													_context3.next = 9;
 													break;
 												}
 
 												console.log('jsonOdd ' + sportLeague.league + ' has event');
-												_context4.next = 7;
+												_context3.next = 7;
 												return Promise.all(events.data.map(function () {
 													var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(event) {
 														return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -80,23 +80,13 @@ var fetch_jsonOdd_eventOdds = function () {
 																		_context2.next = 3;
 																		return Promise.all(event.Odds.map(function () {
 																			var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(odd) {
-																				var checkOddPoints, allZero, newEventOdd, existedEventOdd;
+																				var newEventOdd, checkOddPoints, allZero, existedEventOdd;
 																				return regeneratorRuntime.wrap(function _callee$(_context) {
 																					while (1) {
 																						switch (_context.prev = _context.next) {
 																							case 0:
-																								checkOddPoints = _lodash2.default.pick(odd, ['MoneyLineHome', 'MoneyLineAway', 'PointSpreadHome', 'PointSpreadAway', 'PointSpreadHomeLine', 'PointSpreadAwayLine', 'TotalNumber', 'OverLine', 'UnderLine', 'DrawLine']);
-																								allZero = Object.values(checkOddPoints).every(function (val) {
-																									return Number(val) === 0;
-																								});
-
-																								if (allZero) {
-																									_context.next = 24;
-																									break;
-																								}
-
 																								newEventOdd = {
-																									//									eventOddId: `jsonOdd_${sportLeague.league}_${odd.OddType.replace(/\s/g,'').toUpperCase()}_${event.ID}`,
+
 																									source: {
 																										provider: 'jsonOdd',
 																										bookmaker: odd.SiteID.toString(),
@@ -129,6 +119,15 @@ var fetch_jsonOdd_eventOdds = function () {
 																									updatedAt: (0, _moment2.default)(),
 																									expireAt: _moment2.default.utc(event.MatchTime).subtract(1, 'seconds')
 																								};
+																								checkOddPoints = _lodash2.default.pick(newEventOdd.odds, ['moneyLineHome', 'moneyLineAway', 'pointSpreadHome', 'pointSpreadAway', 'pointSpreadHomeLine', 'pointSpreadAwayLine', 'totalNumber', 'overLine', 'underLine', 'drawLine']);
+																								allZero = Object.values(checkOddPoints).every(function (val) {
+																									return Number(val) === 0;
+																								});
+
+																								if (allZero) {
+																									_context.next = 24;
+																									break;
+																								}
 
 																								if (sportLeague.sport === 'Baseball') {
 																									newEventOdd.team.homePitcher = event.HomePitcher || 'Action';
@@ -221,65 +220,46 @@ var fetch_jsonOdd_eventOdds = function () {
 													return function (_x2) {
 														return _ref3.apply(this, arguments);
 													};
-												}())).then(_asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
-													return regeneratorRuntime.wrap(function _callee3$(_context3) {
-														while (1) {
-															switch (_context3.prev = _context3.next) {
-																case 0:
-																case 'end':
-																	return _context3.stop();
-															}
-														}
-													}, _callee3, undefined);
-												}))
-												// await ProviderJsonOdd.findOneAndUpdate({ _id: sportLeague._id }, { $set: { updatedAt: moment() }})
-												// console.log(`jsonOdd ${sportLeague.league} updated time`)
-												).catch(function (err) {
-													throw err;
-												});
+												}()));
 
 											case 7:
-												_context4.next = 10;
+												_context3.next = 10;
 												break;
 
 											case 9:
 												console.log('jsonOdd ' + sportLeague.league + ' has no event');
 
 											case 10:
-												return _context4.abrupt('return', null);
+												return _context3.abrupt('return', null);
 
 											case 11:
 											case 'end':
-												return _context4.stop();
+												return _context3.stop();
 										}
 									}
-								}, _callee4, undefined);
+								}, _callee3, undefined);
 							}));
 
 							return function (_x) {
 								return _ref2.apply(this, arguments);
 							};
-						}())).then(function () {
-							console.log('jsonOdd Event Update Done');
-						}).catch(function (err) {
-							throw err;
-						});
+						}()));
 
 					case 6:
-						_context5.next = 11;
+						_context4.next = 11;
 						break;
 
 					case 8:
-						_context5.prev = 8;
-						_context5.t0 = _context5['catch'](0);
-						throw _context5.t0;
+						_context4.prev = 8;
+						_context4.t0 = _context4['catch'](0);
+						throw _context4.t0;
 
 					case 11:
 					case 'end':
-						return _context5.stop();
+						return _context4.stop();
 				}
 			}
-		}, _callee5, undefined, [[0, 8]]);
+		}, _callee4, undefined, [[0, 8]]);
 	}));
 
 	return function fetch_jsonOdd_eventOdds() {

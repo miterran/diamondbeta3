@@ -77,7 +77,7 @@ var updateAgentOpenBetStatusAfterOrder = function () {
 						agentCurrentStatus = {
 							credit: agent.currentStatus.credit,
 							creditPending: agentCreditPending,
-							availableCredit: agent.currentStatus.credit - agentCreditPending
+							availableCredit: Number(agent.currentStatus.credit) - Number(agentCreditPending)
 						};
 						agentOpenBetStatus = {
 							activePlayer: activePlayerCounter.length,
@@ -91,8 +91,7 @@ var updateAgentOpenBetStatusAfterOrder = function () {
 						};
 						_context.next = 19;
 						return _Agent2.default.findOneAndUpdate({ _id: _mongoose2.default.Types.ObjectId(AgentId) }, { '$set': { currentStatus: agentCurrentStatus, openBetStatus: agentOpenBetStatus } }, { new: true }).then(function (agentUpdated) {
-							console.log('update agent status');
-							console.log(agentUpdated);
+							console.log('update agent status ' + agentUpdated);
 						});
 
 					case 19:

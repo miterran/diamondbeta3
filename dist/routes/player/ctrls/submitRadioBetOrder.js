@@ -44,19 +44,16 @@ var submitRadioBetOrder = function () {
 			while (1) {
 				switch (_context3.prev = _context3.next) {
 					case 0:
-						_req$body = req.body, eventOdds = _req$body.eventOdds, wagerDetails = _req$body.wagerDetails, orderType = _req$body.orderType; // make short name
-
+						_context3.prev = 0;
+						_req$body = req.body, eventOdds = _req$body.eventOdds, wagerDetails = _req$body.wagerDetails, orderType = _req$body.orderType;
 						newOrderCombo = eventOdds.map(function (event) {
 							return event['singlePickId'];
-						}); // get new order id list, saved as an array
-
-						_context3.next = 4;
+						});
+						_context3.next = 5;
 						return _BetOrder.OpenBet.find({ 'owner.player': req.user._id, 'orderType': orderType });
 
-					case 4:
+					case 5:
 						existedOrders = _context3.sent;
-						// fetch combo existed openbet order
-
 						existed = false;
 						existedOrderNumber = '';
 
@@ -65,16 +62,16 @@ var submitRadioBetOrder = function () {
 							if (existed) return;
 							var existedOrderCombo = existedOrder.eventOdds.map(function (event) {
 								return event['singlePickId'];
-							}); // map each order and get order id list
+							});
 							if (_lodash2.default.difference(newOrderCombo, existedOrderCombo).length === 0) {
-								// compare new order and existed order id array.
 								existed = true;
 								existedOrderNumber = existedOrder.orderNumber;
 								return;
 							}
 						});
 
-						Promise.all(eventOdds.map(function () {
+						_context3.next = 11;
+						return Promise.all(eventOdds.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event) {
 								var eventTimeOut, latestEvent;
 								return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -171,7 +168,6 @@ var submitRadioBetOrder = function () {
 
 										case 8:
 											console.log('saved new openBet ' + newOpenBet.orderNumber);
-
 											_context2.next = 11;
 											return (0, _updatePlayerStatusAfterOrder2.default)(req.user._id);
 
@@ -180,7 +176,6 @@ var submitRadioBetOrder = function () {
 											return (0, _updateAgentOpenBetStatusAfterOrder2.default)(req.user.agent);
 
 										case 13:
-
 											res.json([]);
 
 										case 14:
@@ -189,16 +184,23 @@ var submitRadioBetOrder = function () {
 									}
 								}
 							}, _callee2, undefined);
-						}))).catch(function (err) {
-							throw err;
-						});
+						})));
 
-					case 9:
+					case 11:
+						_context3.next = 16;
+						break;
+
+					case 13:
+						_context3.prev = 13;
+						_context3.t0 = _context3['catch'](0);
+						throw _context3.t0;
+
+					case 16:
 					case 'end':
 						return _context3.stop();
 				}
 			}
-		}, _callee3, undefined);
+		}, _callee3, undefined, [[0, 13]]);
 	}));
 
 	return function submitRadioBetOrder(_x, _x2) {
