@@ -47,7 +47,7 @@ var fetchTransaction = function () {
 						_context.next = 8;
 						return _BetOrder.OpenBet.find({
 							'owner.agent': req.user._id
-						}, 'orderNumber orderType createdAt wagerDetail.riskAmount owner.player').populate({ path: 'owner.player', select: 'account.username' });
+						}, 'orderNumber orderType createdAt wagerDetail owner.player').populate({ path: 'owner.player', select: 'account.username' });
 
 					case 8:
 						openBets = _context.sent;
@@ -56,7 +56,7 @@ var fetchTransaction = function () {
 							return new Date(a.createdAt) - new Date(b.createdAt);
 						});
 						pendingTransactionList = openBets.map(function (transaction, transactionIdx) {
-							agentCredit -= Number(transaction.wagerDetail.riskAmount);
+							agentCredit -= Number(transaction.wagerDetail.winAmount);
 							return {
 								orderNumber: transaction.orderNumber,
 								orderType: transaction.orderType,

@@ -45,12 +45,12 @@ var updateAgentOpenBetStatusAfterOrder = function () {
 					case 3:
 						agent = _context.sent;
 						_context.next = 6;
-						return _BetOrder.OpenBet.find({ 'owner.agent': _mongoose2.default.Types.ObjectId(AgentId) }, 'orderType wagerDetail.riskAmount wagerDetail.winAmount owner');
+						return _BetOrder.OpenBet.find({ 'owner.agent': _mongoose2.default.Types.ObjectId(AgentId) }, 'orderType wagerDetail wagerDetail owner');
 
 					case 6:
 						agentOpenBets = _context.sent;
 						agentCreditPending = agentOpenBets.reduce(function (total, openBet) {
-							return total + openBet.wagerDetail.riskAmount;
+							return total + openBet.wagerDetail.winAmount;
 						}, 0);
 						activePlayerCounter = _lodash2.default.uniq(agentOpenBets.map(function (openBet) {
 							return openBet.owner.player.toString();
