@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _BetOrder = require('../../../models/BetOrder');
 
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);

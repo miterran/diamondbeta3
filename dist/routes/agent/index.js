@@ -28,6 +28,10 @@ var _fetchTransaction = require('./ctrls/fetchTransaction');
 
 var _fetchTransaction2 = _interopRequireDefault(_fetchTransaction);
 
+var _fetchPlayerSetting = require('./ctrls/fetchPlayerSetting');
+
+var _fetchPlayerSetting2 = _interopRequireDefault(_fetchPlayerSetting);
+
 var _purchaseCredit = require('./ctrls/purchaseCredit');
 
 var _purchaseCredit2 = _interopRequireDefault(_purchaseCredit);
@@ -41,6 +45,7 @@ router.route('/fetch-account').get(_fetchAccount2.default);
 router.route('/fetch-open-bet').get(_fetchOpenBet2.default);
 router.route('/fetch-history-bet').post(_fetchHistoryBet2.default);
 router.route('/fetch-transaction').post(_fetchTransaction2.default);
+router.route('/fetch-player-setting').post(_fetchPlayerSetting2.default);
 
 router.route('/purchase-credit').post(_purchaseCredit2.default);
 
