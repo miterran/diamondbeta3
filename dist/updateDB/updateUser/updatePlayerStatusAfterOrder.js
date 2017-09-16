@@ -89,7 +89,7 @@ var updatePlayerStatusAfterOrder = function () {
 						});
 
 					case 22:
-						return _context.abrupt('return', player.agent._id.toString());
+						return _context.abrupt('return', player.agent.toString());
 
 					case 25:
 						_context.prev = 25;

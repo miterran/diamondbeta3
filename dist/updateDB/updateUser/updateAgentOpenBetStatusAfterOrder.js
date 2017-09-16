@@ -33,7 +33,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 // update agent current status every time order changed
 var updateAgentOpenBetStatusAfterOrder = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(AgentId) {
-		var agent, agentOpenBets, agentCreditPending, activePlayerCounter, straightBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, totalRisk, totalWin, agentCurrentStatus, agentOpenBetStatus;
+		var agent, agentOpenBets, agentCreditPending, activePlayerCounter, straightBetCounter, requestCancelBetCounter, parlayBetCounter, teaserBetCounter, reverseBetCounter, totalRisk, totalWin, agentCurrentStatus, agentOpenBetStatus;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -45,7 +45,7 @@ var updateAgentOpenBetStatusAfterOrder = function () {
 					case 3:
 						agent = _context.sent;
 						_context.next = 6;
-						return _BetOrder.OpenBet.find({ 'owner.agent': _mongoose2.default.Types.ObjectId(AgentId) }, 'orderType wagerDetail wagerDetail owner');
+						return _BetOrder.OpenBet.find({ 'owner.agent': _mongoose2.default.Types.ObjectId(AgentId) }, 'orderType wagerDetail wagerDetail owner requestCancel');
 
 					case 6:
 						agentOpenBets = _context.sent;
@@ -57,6 +57,9 @@ var updateAgentOpenBetStatusAfterOrder = function () {
 						}));
 						straightBetCounter = agentOpenBets.reduce(function (total, openBet) {
 							return total + (openBet.orderType === 'Straight');
+						}, 0);
+						requestCancelBetCounter = agentOpenBets.reduce(function (total, openBet) {
+							return total + (openBet.requestCancel === true);
 						}, 0);
 						parlayBetCounter = agentOpenBets.reduce(function (total, openBet) {
 							return total + (openBet.orderType === 'Parlay');
@@ -80,6 +83,7 @@ var updateAgentOpenBetStatusAfterOrder = function () {
 							availableCredit: Number(agent.currentStatus.credit) - Number(agentCreditPending)
 						};
 						agentOpenBetStatus = {
+							requestCancelBet: requestCancelBetCounter,
 							activePlayer: activePlayerCounter.length,
 							straightBet: straightBetCounter || 0,
 							parlayBet: parlayBetCounter || 0,
@@ -89,26 +93,26 @@ var updateAgentOpenBetStatusAfterOrder = function () {
 							totalRisk: totalRisk || 0,
 							totalWin: totalWin || 0
 						};
-						_context.next = 19;
+						_context.next = 20;
 						return _Agent2.default.findOneAndUpdate({ _id: _mongoose2.default.Types.ObjectId(AgentId) }, { '$set': { currentStatus: agentCurrentStatus, openBetStatus: agentOpenBetStatus } }, { new: true }).then(function (agentUpdated) {
 							console.log('update agent status ' + agentUpdated);
 						});
 
-					case 19:
-						_context.next = 24;
+					case 20:
+						_context.next = 25;
 						break;
 
-					case 21:
-						_context.prev = 21;
+					case 22:
+						_context.prev = 22;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 24:
+					case 25:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 21]]);
+		}, _callee, undefined, [[0, 22]]);
 	}));
 
 	return function updateAgentOpenBetStatusAfterOrder(_x) {

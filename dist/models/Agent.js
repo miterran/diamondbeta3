@@ -30,6 +30,7 @@ var AgentSchema = _mongoose2.default.Schema({
 		availableCredit: { type: Number, default: 0 }
 	},
 	openBetStatus: {
+		requestCancelBet: { type: Number, default: 0 },
 		activePlayer: { type: Number, default: 0 },
 		straightBet: { type: Number, default: 0 },
 		parlayBet: { type: Number, default: 0 },
@@ -41,6 +42,7 @@ var AgentSchema = _mongoose2.default.Schema({
 	},
 	players: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
 	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent', required: true },
+	lastOnline: { type: Date, default: Date.now, required: true },
 	createdAt: { type: Date, default: Date.now, required: true }
 });
 

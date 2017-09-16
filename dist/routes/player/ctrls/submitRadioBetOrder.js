@@ -20,6 +20,10 @@ var _EventOdd = require('../../../models/EventOdd');
 
 var _BetOrder = require('../../../models/BetOrder');
 
+var _Agent = require('../../../models/Agent');
+
+var _Agent2 = _interopRequireDefault(_Agent);
+
 var _compareBetDetail = require('../../../utils/compareBetDetail');
 
 var _compareBetDetail2 = _interopRequireDefault(_compareBetDetail);
@@ -38,7 +42,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var submitRadioBetOrder = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(req, res) {
-		var _req$body, eventOdds, wagerDetails, orderType, newOrderCombo, existedOrders, existed, existedOrderNumber;
+		var _req$body, eventOdds, wagerDetails, orderType, agent, newOrderCombo, existedOrders, existed, existedOrderNumber;
 
 		return regeneratorRuntime.wrap(function _callee3$(_context3) {
 			while (1) {
@@ -46,13 +50,24 @@ var submitRadioBetOrder = function () {
 					case 0:
 						_context3.prev = 0;
 						_req$body = req.body, eventOdds = _req$body.eventOdds, wagerDetails = _req$body.wagerDetails, orderType = _req$body.orderType;
+						_context3.next = 4;
+						return _Agent2.default.findOne({ _id: req.user.agent }, 'currentStatus.availableCredit');
+
+					case 4:
+						agent = _context3.sent;
+
+						if (!(agent.currentStatus.availableCredit > wagerDetails.winAmount)) {
+							_context3.next = 17;
+							break;
+						}
+
 						newOrderCombo = eventOdds.map(function (event) {
 							return event['singlePickId'];
 						});
-						_context3.next = 5;
+						_context3.next = 9;
 						return _BetOrder.OpenBet.find({ 'owner.player': req.user._id, 'orderType': orderType });
 
-					case 5:
+					case 9:
 						existedOrders = _context3.sent;
 						existed = false;
 						existedOrderNumber = '';
@@ -70,7 +85,7 @@ var submitRadioBetOrder = function () {
 							}
 						});
 
-						_context3.next = 11;
+						_context3.next = 15;
 						return Promise.all(eventOdds.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event) {
 								var eventTimeOut, latestEvent;
@@ -186,21 +201,28 @@ var submitRadioBetOrder = function () {
 							}, _callee2, undefined);
 						})));
 
-					case 11:
-						_context3.next = 16;
+					case 15:
+						_context3.next = 18;
 						break;
 
-					case 13:
-						_context3.prev = 13;
+					case 17:
+						res.json('agentOutOfCredit');
+
+					case 18:
+						_context3.next = 23;
+						break;
+
+					case 20:
+						_context3.prev = 20;
 						_context3.t0 = _context3['catch'](0);
 						throw _context3.t0;
 
-					case 16:
+					case 23:
 					case 'end':
 						return _context3.stop();
 				}
 			}
-		}, _callee3, undefined, [[0, 13]]);
+		}, _callee3, undefined, [[0, 20]]);
 	}));
 
 	return function submitRadioBetOrder(_x, _x2) {

@@ -69,15 +69,15 @@ var fetchAllEventOdds_MW = exports.fetchAllEventOdds_MW = function () {
 						}
 
 						_context.next = 7;
-						return (0, _A1_fetch_jsonOdd_eventOdds2.default)();
+						return _CoolDown2.default.findOneAndUpdate({ usage: 'fetchAllEventOdds' }, { $set: { updatedAt: (0, _moment2.default)() } });
 
 					case 7:
 						_context.next = 9;
-						return (0, _A2_fetch_pickMon_eventOdds2.default)();
+						return (0, _A1_fetch_jsonOdd_eventOdds2.default)();
 
 					case 9:
 						_context.next = 11;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fetchAllEventOdds' }, { $set: { updatedAt: (0, _moment2.default)() } });
+						return (0, _A2_fetch_pickMon_eventOdds2.default)();
 
 					case 11:
 						next();
@@ -155,27 +155,27 @@ var fullResultUpdateDB_MW = exports.fullResultUpdateDB_MW = function () {
 						}
 
 						_context3.next = 7;
-						return (0, _C1_fetch_jsonOdd_result2.default)();
+						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
 
 					case 7:
 						_context3.next = 9;
-						return (0, _C2_fetch_pickMon_result2.default)();
+						return (0, _C1_fetch_jsonOdd_result2.default)();
 
 					case 9:
 						_context3.next = 11;
-						return (0, _D1_sync_Result_to_openBet_eventOdds2.default)();
+						return (0, _C2_fetch_pickMon_result2.default)();
 
 					case 11:
 						_context3.next = 13;
-						return (0, _E1_determine_OpenBet_eventOdds_result2.default)();
+						return (0, _D1_sync_Result_to_openBet_eventOdds2.default)();
 
 					case 13:
 						_context3.next = 15;
-						return (0, _F1_confirm_openBet_result_to_HistoryBet2.default)();
+						return (0, _E1_determine_OpenBet_eventOdds_result2.default)();
 
 					case 15:
 						_context3.next = 17;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
+						return (0, _F1_confirm_openBet_result_to_HistoryBet2.default)();
 
 					case 17:
 						next();
@@ -220,65 +220,65 @@ var fullUpdateDB_MW = exports.fullUpdateDB_MW = function () {
 						}
 
 						_context4.next = 7;
-						return _CoolDown2.default.findOne({ usage: 'fetchAllEventOdds' });
+						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
 
 					case 7:
+						_context4.next = 9;
+						return _CoolDown2.default.findOne({ usage: 'fetchAllEventOdds' });
+
+					case 9:
 						fetchAllEventOddscooldown = _context4.sent;
 
 						if (!((0, _moment2.default)().format('X') - (0, _moment2.default)(fetchAllEventOddscooldown.updatedAt).format('X') > fetchAllEventOddscooldown.sec)) {
-							_context4.next = 15;
+							_context4.next = 17;
 							break;
 						}
 
-						_context4.next = 11;
-						return (0, _A1_fetch_jsonOdd_eventOdds2.default)();
-
-					case 11:
 						_context4.next = 13;
-						return (0, _A2_fetch_pickMon_eventOdds2.default)();
+						return _CoolDown2.default.findOneAndUpdate({ usage: 'fetchAllEventOdds' }, { $set: { updatedAt: (0, _moment2.default)() } });
 
 					case 13:
 						_context4.next = 15;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fetchAllEventOdds' }, { $set: { updatedAt: (0, _moment2.default)() } });
+						return (0, _A1_fetch_jsonOdd_eventOdds2.default)();
 
 					case 15:
 						_context4.next = 17;
-						return _CoolDown2.default.findOne({ usage: 'fullResultUpdateDB' });
+						return (0, _A2_fetch_pickMon_eventOdds2.default)();
 
 					case 17:
+						_context4.next = 19;
+						return _CoolDown2.default.findOne({ usage: 'fullResultUpdateDB' });
+
+					case 19:
 						fullResultUpdateDBcooldown = _context4.sent;
 
 						if (!((0, _moment2.default)().format('X') - (0, _moment2.default)(fullResultUpdateDBcooldown.updatedAt).format('X') > fullResultUpdateDBcooldown.sec)) {
-							_context4.next = 31;
+							_context4.next = 33;
 							break;
 						}
 
-						_context4.next = 21;
-						return (0, _C1_fetch_jsonOdd_result2.default)();
-
-					case 21:
 						_context4.next = 23;
-						return (0, _C2_fetch_pickMon_result2.default)();
+						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
 
 					case 23:
 						_context4.next = 25;
-						return (0, _D1_sync_Result_to_openBet_eventOdds2.default)();
+						return (0, _C1_fetch_jsonOdd_result2.default)();
 
 					case 25:
 						_context4.next = 27;
-						return (0, _E1_determine_OpenBet_eventOdds_result2.default)();
+						return (0, _C2_fetch_pickMon_result2.default)();
 
 					case 27:
 						_context4.next = 29;
-						return (0, _F1_confirm_openBet_result_to_HistoryBet2.default)();
+						return (0, _D1_sync_Result_to_openBet_eventOdds2.default)();
 
 					case 29:
 						_context4.next = 31;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
+						return (0, _E1_determine_OpenBet_eventOdds_result2.default)();
 
 					case 31:
 						_context4.next = 33;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
+						return (0, _F1_confirm_openBet_result_to_HistoryBet2.default)();
 
 					case 33:
 						next();

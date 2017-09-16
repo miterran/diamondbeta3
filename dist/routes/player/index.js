@@ -44,6 +44,14 @@ var _submitRadioBetOrder = require('./ctrls/submitRadioBetOrder');
 
 var _submitRadioBetOrder2 = _interopRequireDefault(_submitRadioBetOrder);
 
+var _requestCancelOpenBet = require('./ctrls/requestCancelOpenBet');
+
+var _requestCancelOpenBet2 = _interopRequireDefault(_requestCancelOpenBet);
+
+var _userAccountSetting = require('./ctrls/userAccountSetting');
+
+var _userAccountSetting2 = _interopRequireDefault(_userAccountSetting);
+
 var _updateDB = require('../../middleware/updateDB');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -65,6 +73,10 @@ router.route('/fetch-history-bet').post(_updateDB.fullResultUpdateDB_MW, _fetchH
 router.route('/submit-single-bet-order').post(_updateDB.fetchAllEventOdds_MW, _submitSingleBetOrder2.default);
 
 router.route('/submit-radio-bet-order').post(_updateDB.fetchAllEventOdds_MW, _submitRadioBetOrder2.default);
+
+router.route('/request-cancel-open-bet').post(_requestCancelOpenBet2.default);
+
+router.route('/user-account-setting').post(_userAccountSetting2.default);
 
 exports.default = router;
 //# sourceMappingURL=index.js.map

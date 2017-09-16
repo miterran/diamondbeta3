@@ -45,6 +45,7 @@ var PlayerSchema = _mongoose2.default.Schema({
 	},
 	superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
 	agent: { type: Schema.Types.ObjectId, ref: 'Agent' },
+	lastOnline: { type: Date, default: Date.now, required: true },
 	createdAt: { type: Date, default: Date.now, required: true }
 });
 

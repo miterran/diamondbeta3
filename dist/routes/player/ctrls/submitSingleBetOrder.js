@@ -16,6 +16,10 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _Agent = require('../../../models/Agent');
+
+var _Agent2 = _interopRequireDefault(_Agent);
+
 var _Player = require('../../../models/Player');
 
 var _Player2 = _interopRequireDefault(_Player);
@@ -40,9 +44,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//34976
 var submitSingleBetOrder = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(req, res) {
-		var _req$body, eventOdds, wagerDetails, orderType;
+		var _req$body, eventOdds, wagerDetails, orderType, agent, totalWinAmount;
 
 		return regeneratorRuntime.wrap(function _callee5$(_context5) {
 			while (1) {
@@ -51,6 +56,22 @@ var submitSingleBetOrder = function () {
 						_context5.prev = 0;
 						_req$body = req.body, eventOdds = _req$body.eventOdds, wagerDetails = _req$body.wagerDetails, orderType = _req$body.orderType;
 						_context5.next = 4;
+						return _Agent2.default.findOne({ _id: req.user.agent }, 'currentStatus.availableCredit');
+
+					case 4:
+						agent = _context5.sent;
+						totalWinAmount = 0;
+
+						Object.keys(wagerDetails).map(function (wager) {
+							totalWinAmount += Number(wagerDetails[wager].winAmount);
+						});
+
+						if (!(agent.currentStatus.availableCredit > totalWinAmount)) {
+							_context5.next = 12;
+							break;
+						}
+
+						_context5.next = 10;
 						return Promise.all(eventOdds.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(event, eventIdx) {
 								var eventTimeOut, existed, latestEvent;
@@ -216,21 +237,28 @@ var submitSingleBetOrder = function () {
 							}, _callee4, undefined);
 						})));
 
-					case 4:
-						_context5.next = 9;
+					case 10:
+						_context5.next = 13;
 						break;
 
-					case 6:
-						_context5.prev = 6;
+					case 12:
+						res.json('agentOutOfCredit');
+
+					case 13:
+						_context5.next = 18;
+						break;
+
+					case 15:
+						_context5.prev = 15;
 						_context5.t0 = _context5['catch'](0);
 						throw _context5.t0;
 
-					case 9:
+					case 18:
 					case 'end':
 						return _context5.stop();
 				}
 			}
-		}, _callee5, undefined, [[0, 6]]);
+		}, _callee5, undefined, [[0, 15]]);
 	}));
 
 	return function submitSingleBetOrder(_x, _x2) {

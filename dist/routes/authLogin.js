@@ -44,7 +44,7 @@ var router = _express2.default.Router();
 
 router.post('/login', function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		var _req$body, username, password, authPlayer, token, authAgent, _token;
+		var _req$body, username, password, authPlayer, token, authAgent, _token, authSuperAgent, _token2;
 
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
@@ -106,19 +106,46 @@ router.post('/login', function () {
 						return _context.abrupt('return', res.status(404).send('password not correct'));
 
 					case 22:
+						_context.next = 24;
+						return _SuperAgent2.default.findOne({ 'account.username': { $regex: new RegExp('^' + username, 'i') } }, 'account');
+
+					case 24:
+						authSuperAgent = _context.sent;
+
+						if (_lodash2.default.isEmpty(authSuperAgent)) {
+							_context.next = 32;
+							break;
+						}
+
+						if (!(password.toLowerCase() === authSuperAgent.account.password.toLowerCase())) {
+							_context.next = 31;
+							break;
+						}
+
+						_token2 = _jsonwebtoken2.default.sign({
+							id: authSuperAgent._id,
+							role: authSuperAgent.account.role,
+							username: authSuperAgent.account.username
+						}, _config2.default.jwtSecret);
+						return _context.abrupt('return', res.status(200).send(_token2));
+
+					case 31:
+						return _context.abrupt('return', res.status(404).send('password not correct'));
+
+					case 32:
 						return _context.abrupt('return', res.status(404).send('user not found'));
 
-					case 25:
-						_context.prev = 25;
+					case 35:
+						_context.prev = 35;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 28:
+					case 38:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 25]]);
+		}, _callee, undefined, [[0, 35]]);
 	}));
 
 	return function (_x, _x2) {

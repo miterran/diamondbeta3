@@ -39,6 +39,7 @@ var BetOrderSchema = new _mongoose2.default.Schema({
 	note: { type: String },
 	createdAt: { type: Date, default: Date.now, required: true },
 	updatedAt: { type: Date },
+	requestCancel: { type: Boolean, default: false },
 	closedAt: { type: Date }
 });
 

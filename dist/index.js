@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 require('babel-polyfill');
@@ -50,6 +50,14 @@ var _methodOverride = require('method-override');
 
 var _methodOverride2 = _interopRequireDefault(_methodOverride);
 
+var _nodeSchedule = require('node-schedule');
+
+var _nodeSchedule2 = _interopRequireDefault(_nodeSchedule);
+
+var _resetUserStatus = require('./schedule/resetUserStatus');
+
+var _resetUserStatus2 = _interopRequireDefault(_resetUserStatus);
+
 var _passport = require('passport');
 
 var _passport2 = _interopRequireDefault(_passport);
@@ -65,6 +73,10 @@ var _player2 = _interopRequireDefault(_player);
 var _agent = require('./routes/agent');
 
 var _agent2 = _interopRequireDefault(_agent);
+
+var _superAgent = require('./routes/superAgent');
+
+var _superAgent2 = _interopRequireDefault(_superAgent);
 
 var _createAccount = require('./routes/createAccount');
 
@@ -83,6 +95,8 @@ var _bluebird = require('bluebird');
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 _passport2.default.use(_jwtStrategy2.default);
 
@@ -106,23 +120,38 @@ app.use(_passport2.default.initialize());
 
 app.use(_express2.default.static(_path2.default.resolve(__dirname, '../client/build')));
 
-// import setupDatabase from './admin/setupDatabase'
-// app.use('/admin', setupDatabase)
+(0, _resetUserStatus2.default)();
+_nodeSchedule2.default.scheduleJob('* * * * * 1', _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+	return regeneratorRuntime.wrap(function _callee$(_context) {
+		while (1) {
+			switch (_context.prev = _context.next) {
+				case 0:
+					_context.next = 2;
+					return (0, _resetUserStatus2.default)();
+
+				case 2:
+				case 'end':
+					return _context.stop();
+			}
+		}
+	}, _callee, undefined);
+})));
 
 app.use('/api', _authLogin2.default);
-app.use('/api', _createAccount2.default);
+//app.use('/test', createAccount);
 
 app.use('/api', _passport2.default.authenticate('jwt', { session: false }));
 
 app.use('/api/player', _player2.default);
 app.use('/api/agent', _agent2.default);
+app.use('/api/super-agent', _superAgent2.default);
 
 app.get('*', function (request, response) {
-  return response.sendFile(_path2.default.resolve(__dirname, '../client/build', 'index.html'));
+	return response.sendFile(_path2.default.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 app.server.listen(process.env.PORT || _config2.default.port, function () {
-  return console.log('Started on port ' + app.server.address().port);
+	return console.log('Started on port ' + app.server.address().port);
 });
 
 exports.default = app;
