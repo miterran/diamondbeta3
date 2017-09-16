@@ -31,7 +31,7 @@ var updatePlayerStatusAfterOrder = function () {
 					case 0:
 						_context.prev = 0;
 						_context.next = 3;
-						return _Player2.default.findOne({ _id: _mongoose2.default.Types.ObjectId(playerId) }, 'defaultSetting.weeklyStartCredit agent').populate({ path: 'agent', select: 'account.username' });
+						return _Player2.default.findOne({ _id: _mongoose2.default.Types.ObjectId(playerId) }, 'defaultSetting.weeklyStartCredit agent').populate({ path: 'agent', select: '_id' });
 
 					case 3:
 						player = _context.sent;
@@ -89,19 +89,20 @@ var updatePlayerStatusAfterOrder = function () {
 						});
 
 					case 22:
-						return _context.abrupt('return', player.agent.toString());
+						console.log('update this agent id ' + player.agent._id);
+						return _context.abrupt('return', player.agent._id);
 
-					case 25:
-						_context.prev = 25;
+					case 26:
+						_context.prev = 26;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 28:
+					case 29:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 25]]);
+		}, _callee, undefined, [[0, 26]]);
 	}));
 
 	return function updatePlayerStatusAfterOrder(_x) {

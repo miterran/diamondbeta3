@@ -195,9 +195,11 @@ var confirm_OpenBet_result_to_HistoryBet = function () {
 
 																	case 2:
 																		agentId = _context2.sent;
+
+																		console.log(agentId);
 																		return _context2.abrupt('return', agentId.toString());
 
-																	case 4:
+																	case 5:
 																	case 'end':
 																		return _context2.stop();
 																}
