@@ -220,7 +220,7 @@ var fullUpdateDB_MW = exports.fullUpdateDB_MW = function () {
 						}
 
 						_context4.next = 7;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
+						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
 
 					case 7:
 						_context4.next = 9;
