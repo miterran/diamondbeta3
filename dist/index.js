@@ -120,8 +120,12 @@ app.use(_passport2.default.initialize());
 
 app.use(_express2.default.static(_path2.default.resolve(__dirname, '../client/build')));
 
-(0, _resetUserStatus2.default)();
-_nodeSchedule2.default.scheduleJob('* * * * * 1', _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+// resetUserStatus()
+// schedule.scheduleJob('* * * * * 1', async () => {
+// 	await resetUserStatus()
+// });
+
+_nodeSchedule2.default.scheduleJob('* * 24 * * *', _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
 	return regeneratorRuntime.wrap(function _callee$(_context) {
 		while (1) {
 			switch (_context.prev = _context.next) {

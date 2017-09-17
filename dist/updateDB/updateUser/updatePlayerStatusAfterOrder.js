@@ -31,7 +31,7 @@ var updatePlayerStatusAfterOrder = function () {
 					case 0:
 						_context.prev = 0;
 						_context.next = 3;
-						return _Player2.default.findOne({ _id: _mongoose2.default.Types.ObjectId(playerId) }, 'defaultSetting.weeklyStartCredit agent').populate({ path: 'agent', select: '_id' });
+						return _Player2.default.findOne({ _id: _mongoose2.default.Types.ObjectId(playerId) }, 'defaultSetting.weeklyStartCredit agent');
 
 					case 3:
 						player = _context.sent;
@@ -89,8 +89,8 @@ var updatePlayerStatusAfterOrder = function () {
 						});
 
 					case 22:
-						console.log('update this agent id ' + player.agent._id);
-						return _context.abrupt('return', player.agent._id);
+						console.log('update this agent id ' + player.agent);
+						return _context.abrupt('return', player.agent.toString());
 
 					case 26:
 						_context.prev = 26;
