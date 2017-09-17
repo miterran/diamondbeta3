@@ -28,6 +28,12 @@ var _addCredit = require('./ctrls/addCredit');
 
 var _addCredit2 = _interopRequireDefault(_addCredit);
 
+var _fetchOpenBet = require('./ctrls/fetchOpenBet');
+
+var _fetchOpenBet2 = _interopRequireDefault(_fetchOpenBet);
+
+var _updateDB = require('../../middleware/updateDB');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();
@@ -37,6 +43,7 @@ router.route('/check-new-agent-username').post(_checkNewAgentUsername2.default);
 router.route('/create-new-agent').post(_createNewAgent2.default);
 router.route('/fetch-agent-status').post(_fetchAgentStatus2.default);
 router.route('/add-credit').post(_addCredit2.default);
+router.route('/fetch-open-bet').get(_updateDB.fullResultUpdateDB_MW, _fetchOpenBet2.default);
 
 exports.default = router;
 //# sourceMappingURL=index.js.map

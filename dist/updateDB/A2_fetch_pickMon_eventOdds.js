@@ -85,7 +85,7 @@ var fetch_pickMon_eventOdds = function () {
 									while (1) {
 										switch (_context.prev = _context.next) {
 											case 0:
-												if (!(event.header && !event.line.score.winner && (0, _moment2.default)().isBefore((0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').format()) && event.void === '0' && !event.team1.name.includes('/'))) {
+												if (!(event.header && !event.line.score.winner && (0, _moment2.default)().isBefore((0, _moment2.default)(event.line.wagercutoff).subtract(2, 'h').format()) && event.void === '0' && !event.team1.name.includes('/'))) {
 													_context.next = 50;
 													break;
 												}
