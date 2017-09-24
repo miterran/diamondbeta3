@@ -23,8 +23,6 @@ var Schema = _mongoose2.default.Schema;
 
 var EventOddSchema = exports.EventOddSchema = new Schema({
 	uniqueId: { type: String },
-	// eventOddId: { type: String },
-	// eventResultId: { type: String },
 	singlePickId: { type: String },
 	radioPickId: { type: String },
 	source: {

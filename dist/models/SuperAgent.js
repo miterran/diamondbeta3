@@ -29,28 +29,4 @@ var SuperAgentSchema = _mongoose2.default.Schema({
 var SuperAgent = _mongoose2.default.model('SuperAgent', SuperAgentSchema);
 
 exports.default = SuperAgent;
-
-// const AgentSchema = mongoose.Schema({
-// 	account: {
-// 		superAgent: { type: Schema.Types.ObjectId, ref: 'SuperAgent' },
-// 		players: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
-// 		username: { type: String, required: true },
-// 		password: { type: String, default: '1234', required: true },
-// 		passcode: { type: String, default: '4321', required: true },
-// 		email: { type: String },
-// 		activate: { type: Boolean, default: true, required: true },
-// 	},
-// 	credit: {
-// 		amount: { type: Number, default: 0, required: true }
-// 	},
-// 	betOrder: {
-// 		openBets: [{ type: Schema.Types.ObjectId, ref: 'OpenBet' }],
-// 		historyBets: [{ type: Schema.Types.ObjectId, ref: 'HistoryBet' }]
-// 	},
-// 	createdAt: { type: Date, default: Date.now, required: true }
-// })
-
-// const Agent = mongoose.model('Agent', AgentSchema)
-
-// export default Agent
 //# sourceMappingURL=SuperAgent.js.map

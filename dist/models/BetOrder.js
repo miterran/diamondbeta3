@@ -29,10 +29,6 @@ var BetOrderSchema = new _mongoose2.default.Schema({
 		winAmount: { type: Number, required: true },
 		riskAmount: { type: Number, required: true }
 	},
-	// msg: {
-	// 	type: { type: String, enum: ['warning', 'error', 'success'], default: ''},
-	// 	detail: { type: String, default: ''}
-	// },
 	status: { type: String, enum: ['Won', 'Won Half', 'Lost', 'Lost Half', 'Push', 'Closed', 'Pending', 'Canceled', 'Postponed', 'Finished', 'Review'] },
 	resultAmount: { type: Number, default: 0 },
 	eventOdds: [_EventOdd.EventOddSchema],

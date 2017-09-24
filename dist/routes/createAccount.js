@@ -38,6 +38,10 @@ var _updatePlayerStatusAfterOrder = require('../updateDB/updateUser/updatePlayer
 
 var _updatePlayerStatusAfterOrder2 = _interopRequireDefault(_updatePlayerStatusAfterOrder);
 
+var _mongoose = require('mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -59,7 +63,7 @@ router.get('/make-agent-transaction', function () {
 					case 0:
 						preTransactions = [];
 						_context3.next = 3;
-						return _Agent2.default.findOne({ 'account.username': 'M999' });
+						return _Agent2.default.findOne({ 'account.username': 'diamond' });
 
 					case 3:
 						agent = _context3.sent;
@@ -144,7 +148,7 @@ router.get('/make-agent-transaction', function () {
 										case 2:
 											agentOpenBets = _context2.sent;
 											agentCreditPending = agentOpenBets.reduce(function (total, openBet) {
-												return total + openBet.wagerDetail.riskAmount;
+												return total + openBet.wagerDetail.winAmount;
 											}, 0);
 											activePlayerCounter = _lodash2.default.uniqBy([].concat.apply([], agentOpenBets.map(function (openBet) {
 												return openBet.owner.player;
@@ -185,29 +189,36 @@ router.get('/make-agent-transaction', function () {
 
 );
 
-router.get('/update-all-players', function () {
+router.get('/add-transaction', function () {
 	var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(req, res) {
-		var players;
+		var mTransactions;
 		return regeneratorRuntime.wrap(function _callee5$(_context5) {
 			while (1) {
 				switch (_context5.prev = _context5.next) {
 					case 0:
 						_context5.next = 2;
-						return _Player2.default.find({});
+						return _AgentTransaction2.default.find({ 'owner.agent': _mongoose2.default.Types.ObjectId('59bc8aad753ce1067fd7c49f') });
 
 					case 2:
-						players = _context5.sent;
+						mTransactions = _context5.sent;
 						_context5.next = 5;
-						return Promise.all(players.map(function () {
-							var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(player) {
+						return Promise.all(mTransactions.map(function () {
+							var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(transaction) {
+								var a;
 								return regeneratorRuntime.wrap(function _callee4$(_context4) {
 									while (1) {
 										switch (_context4.prev = _context4.next) {
 											case 0:
 												_context4.next = 2;
-												return _Player2.default.findOneAndUpdate({ _id: player._id }, { $set: { lastOnline: (0, _moment2.default)() } });
+												return _AgentTransaction2.default.findOneAndRemove({ '_id': transaction._id });
 
 											case 2:
+												a = _context4.sent;
+
+												console.log(a);
+												return _context4.abrupt('return', null);
+
+											case 5:
 											case 'end':
 												return _context4.stop();
 										}
@@ -233,94 +244,122 @@ router.get('/update-all-players', function () {
 	return function (_x4, _x5) {
 		return _ref4.apply(this, arguments);
 	};
-}());
+}()
 
-router.get('/reset-all-agent-player', function () {
-	var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee10(req, res) {
-		var agent, player;
-		return regeneratorRuntime.wrap(function _callee10$(_context10) {
+//	await AgentTransaction.findOneAndRemove({})
+
+// //	const superAgent = await SuperAgent.findOne({ 'account.username': 'super'})
+// 	const agent = await Agent.findOne({ 'account.username': 'M999' })
+// 	const agentHistoryBet = await HistoryBet.findOne({ 'orderNumber': 'TJ7QH8UTI', 'status': 'Lost' }, 'orderNumber orderType resultAmount owner closedAt')
+// 	let newAgentTransaction = new AgentTransaction({
+// 				owner:{
+// 					// player: { type: Schema.Types.ObjectId, ref: 'Player' },
+// 					superAgent : agent.superAgent,
+// 					agent : agent._id
+// 				},
+// 				orderType: agentHistoryBet.orderType,
+// 	//			transactionType: { type: String, enum: [ 'in', 'out' ] },
+// 	//			creditAmount: { type: Number },
+// 	//			resultAmount: { type: Number },
+// 				orderNumber: agentHistoryBet.orderNumber,
+// 				createdAt: moment(agentHistoryBet.closedAt)
+// 			})
+
+
+// 			resultAmount += transaction.resultAmount
+// 			newAgentTransaction.transactionType = 'out'
+// 			newAgentTransaction.owner.player = transaction.owner.player
+// 			newAgentTransaction.creditAmount = transaction.resultAmount
+// 			newAgentTransaction.resultAmount = resultAmount
+
+// 	await newAgentTransaction.save()
+
+
+);
+
+router.get('/update-all-players', function () {
+	var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee7(req, res) {
+		var players;
+		return regeneratorRuntime.wrap(function _callee7$(_context7) {
 			while (1) {
-				switch (_context10.prev = _context10.next) {
+				switch (_context7.prev = _context7.next) {
 					case 0:
-						_context10.next = 2;
-						return _Agent2.default.findOne({ 'account.username': 'M999' });
+						_context7.next = 2;
+						return _Player2.default.find({});
 
 					case 2:
-						agent = _context10.sent;
-						_context10.next = 5;
-						return _Player2.default.findOneAndUpdate({ 'account.username': 'X8752' }, { $set: { 'owner.agent': agent._id } });
-
-					case 5:
-						player = _context10.sent;
-
-						agent.players.push(player._id);
-						_context10.next = 9;
-						return agent.save();
-
-					case 9:
-						_context10.next = 11;
-						return _BetOrder.HistoryBet.find({ 'owner.player': player._id }).then(function () {
-							var _ref7 = _asyncToGenerator(regeneratorRuntime.mark(function _callee7(result) {
-								return regeneratorRuntime.wrap(function _callee7$(_context7) {
+						players = _context7.sent;
+						_context7.next = 5;
+						return Promise.all(players.map(function () {
+							var _ref7 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(player) {
+								return regeneratorRuntime.wrap(function _callee6$(_context6) {
 									while (1) {
-										switch (_context7.prev = _context7.next) {
+										switch (_context6.prev = _context6.next) {
 											case 0:
-												_context7.next = 2;
-												return Promise.all(result.map(function () {
-													var _ref8 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(history) {
-														return regeneratorRuntime.wrap(function _callee6$(_context6) {
-															while (1) {
-																switch (_context6.prev = _context6.next) {
-																	case 0:
-																		_context6.next = 2;
-																		return _BetOrder.HistoryBet.findOneAndUpdate({ _id: history._id }, { $set: { 'owner.agent': agent._id } });
-
-																	case 2:
-																		return _context6.abrupt('return', null);
-
-																	case 3:
-																	case 'end':
-																		return _context6.stop();
-																}
-															}
-														}, _callee6, undefined);
-													}));
-
-													return function (_x10) {
-														return _ref8.apply(this, arguments);
-													};
-												}()));
+												_context6.next = 2;
+												return _Player2.default.findOneAndUpdate({ _id: player._id }, { $set: { lastOnline: (0, _moment2.default)() } });
 
 											case 2:
 											case 'end':
-												return _context7.stop();
+												return _context6.stop();
 										}
 									}
-								}, _callee7, undefined);
+								}, _callee6, undefined);
 							}));
 
 							return function (_x9) {
 								return _ref7.apply(this, arguments);
 							};
-						}());
+						}())).then(function () {
+							res.json('done');
+						});
 
-					case 11:
-						_context10.next = 13;
-						return _BetOrder.OpenBet.find({ 'owner.player': player._id }).then(function () {
-							var _ref9 = _asyncToGenerator(regeneratorRuntime.mark(function _callee9(openBets) {
+					case 5:
+					case 'end':
+						return _context7.stop();
+				}
+			}
+		}, _callee7, undefined);
+	}));
+
+	return function (_x7, _x8) {
+		return _ref6.apply(this, arguments);
+	};
+}());
+
+router.get('/reset-all-agent-player', function () {
+	var _ref8 = _asyncToGenerator(regeneratorRuntime.mark(function _callee12(req, res) {
+		var agent, player;
+		return regeneratorRuntime.wrap(function _callee12$(_context12) {
+			while (1) {
+				switch (_context12.prev = _context12.next) {
+					case 0:
+						_context12.next = 2;
+						return _Agent2.default.findOne({ 'account.username': 'M999' });
+
+					case 2:
+						agent = _context12.sent;
+						_context12.next = 5;
+						return _Player2.default.findOneAndUpdate({ 'account.username': 'p777' }, { $set: { 'owner.agent': agent._id } });
+
+					case 5:
+						player = _context12.sent;
+						_context12.next = 8;
+						return _BetOrder.HistoryBet.find({ 'owner.player': player._id }).then(function () {
+							var _ref9 = _asyncToGenerator(regeneratorRuntime.mark(function _callee9(result) {
 								return regeneratorRuntime.wrap(function _callee9$(_context9) {
 									while (1) {
 										switch (_context9.prev = _context9.next) {
 											case 0:
 												_context9.next = 2;
-												return Promise.all(openBets.map(function () {
-													var _ref10 = _asyncToGenerator(regeneratorRuntime.mark(function _callee8(openBet) {
+												return Promise.all(result.map(function () {
+													var _ref10 = _asyncToGenerator(regeneratorRuntime.mark(function _callee8(history) {
 														return regeneratorRuntime.wrap(function _callee8$(_context8) {
 															while (1) {
 																switch (_context8.prev = _context8.next) {
 																	case 0:
 																		_context8.next = 2;
-																		return _BetOrder.OpenBet.findOneAndUpdate({ _id: openBet._id }, { $set: { 'owner.agent': agent._id } });
+																		return _BetOrder.HistoryBet.findOneAndUpdate({ _id: history._id }, { $set: { 'owner.agent': agent._id } });
 
 																	case 2:
 																		return _context8.abrupt('return', null);
@@ -333,7 +372,7 @@ router.get('/reset-all-agent-player', function () {
 														}, _callee8, undefined);
 													}));
 
-													return function (_x12) {
+													return function (_x13) {
 														return _ref10.apply(this, arguments);
 													};
 												}()));
@@ -346,52 +385,99 @@ router.get('/reset-all-agent-player', function () {
 								}, _callee9, undefined);
 							}));
 
-							return function (_x11) {
+							return function (_x12) {
 								return _ref9.apply(this, arguments);
 							};
 						}());
 
-					case 13:
+					case 8:
+						_context12.next = 10;
+						return _BetOrder.OpenBet.find({ 'owner.player': player._id }).then(function () {
+							var _ref11 = _asyncToGenerator(regeneratorRuntime.mark(function _callee11(openBets) {
+								return regeneratorRuntime.wrap(function _callee11$(_context11) {
+									while (1) {
+										switch (_context11.prev = _context11.next) {
+											case 0:
+												_context11.next = 2;
+												return Promise.all(openBets.map(function () {
+													var _ref12 = _asyncToGenerator(regeneratorRuntime.mark(function _callee10(openBet) {
+														return regeneratorRuntime.wrap(function _callee10$(_context10) {
+															while (1) {
+																switch (_context10.prev = _context10.next) {
+																	case 0:
+																		_context10.next = 2;
+																		return _BetOrder.OpenBet.findOneAndUpdate({ _id: openBet._id }, { $set: { 'owner.agent': agent._id } });
+
+																	case 2:
+																		return _context10.abrupt('return', null);
+
+																	case 3:
+																	case 'end':
+																		return _context10.stop();
+																}
+															}
+														}, _callee10, undefined);
+													}));
+
+													return function (_x15) {
+														return _ref12.apply(this, arguments);
+													};
+												}()));
+
+											case 2:
+											case 'end':
+												return _context11.stop();
+										}
+									}
+								}, _callee11, undefined);
+							}));
+
+							return function (_x14) {
+								return _ref11.apply(this, arguments);
+							};
+						}());
+
+					case 10:
 
 						res.json('done');
 
-					case 14:
+					case 11:
 					case 'end':
-						return _context10.stop();
+						return _context12.stop();
 				}
 			}
-		}, _callee10, undefined);
+		}, _callee12, undefined);
 	}));
 
-	return function (_x7, _x8) {
-		return _ref6.apply(this, arguments);
+	return function (_x10, _x11) {
+		return _ref8.apply(this, arguments);
 	};
 }());
 
 router.get('/push', function () {
-	var _ref11 = _asyncToGenerator(regeneratorRuntime.mark(function _callee11(req, res) {
+	var _ref13 = _asyncToGenerator(regeneratorRuntime.mark(function _callee13(req, res) {
 		var agent, players;
-		return regeneratorRuntime.wrap(function _callee11$(_context11) {
+		return regeneratorRuntime.wrap(function _callee13$(_context13) {
 			while (1) {
-				switch (_context11.prev = _context11.next) {
+				switch (_context13.prev = _context13.next) {
 					case 0:
-						_context11.next = 2;
+						_context13.next = 2;
 						return _Agent2.default.findOne({ 'account.username': 'diamond' });
 
 					case 2:
-						agent = _context11.sent;
-						_context11.next = 5;
+						agent = _context13.sent;
+						_context13.next = 5;
 						return _Player2.default.find({ agent: agent._id }, '_id');
 
 					case 5:
-						players = _context11.sent;
+						players = _context13.sent;
 
 
 						players.forEach(function (player) {
 							agent.players.push(player);
 						});
 
-						_context11.next = 9;
+						_context13.next = 9;
 						return agent.save();
 
 					case 9:
@@ -400,103 +486,38 @@ router.get('/push', function () {
 
 					case 11:
 					case 'end':
-						return _context11.stop();
-				}
-			}
-		}, _callee11, undefined);
-	}));
-
-	return function (_x13, _x14) {
-		return _ref11.apply(this, arguments);
-	};
-}());
-
-router.get('/setup', function () {
-	var _ref12 = _asyncToGenerator(regeneratorRuntime.mark(function _callee13(req, res) {
-		var players;
-		return regeneratorRuntime.wrap(function _callee13$(_context13) {
-			while (1) {
-				switch (_context13.prev = _context13.next) {
-					case 0:
-						_context13.next = 2;
-						return _Player2.default.find({});
-
-					case 2:
-						players = _context13.sent;
-						_context13.next = 5;
-						return Promise.all(players.map(function () {
-							var _ref13 = _asyncToGenerator(regeneratorRuntime.mark(function _callee12(player) {
-								return regeneratorRuntime.wrap(function _callee12$(_context12) {
-									while (1) {
-										switch (_context12.prev = _context12.next) {
-											case 0:
-												_context12.next = 2;
-												return (0, _updatePlayerStatusAfterOrder2.default)(player._id);
-
-											case 2:
-											case 'end':
-												return _context12.stop();
-										}
-									}
-								}, _callee12, undefined);
-							}));
-
-							return function (_x17) {
-								return _ref13.apply(this, arguments);
-							};
-						}())).then(function () {
-							res.json('done');
-						});
-
-					case 5:
-					case 'end':
 						return _context13.stop();
 				}
 			}
 		}, _callee13, undefined);
 	}));
 
-	return function (_x15, _x16) {
-		return _ref12.apply(this, arguments);
+	return function (_x16, _x17) {
+		return _ref13.apply(this, arguments);
 	};
 }());
 
-router.get('/create-player', function () {
+router.get('/setup', function () {
 	var _ref14 = _asyncToGenerator(regeneratorRuntime.mark(function _callee15(req, res) {
-		var superAgent, agent, newPlayer, player;
+		var players;
 		return regeneratorRuntime.wrap(function _callee15$(_context15) {
 			while (1) {
 				switch (_context15.prev = _context15.next) {
 					case 0:
 						_context15.next = 2;
-						return _SuperAgent2.default.findOne({ 'account.username': 'boss' });
+						return _Player2.default.find({});
 
 					case 2:
-						superAgent = _context15.sent;
+						players = _context15.sent;
 						_context15.next = 5;
-						return _Agent2.default.findOne({ 'account.username': 'diamond' });
-
-					case 5:
-						agent = _context15.sent;
-						newPlayer = new _Player2.default({
-							account: {
-								username: 'f',
-								password: '1234',
-								passcode: '4321',
-								activate: true
-							},
-							superAgent: superAgent._id,
-							agent: agent._id
-						});
-						_context15.next = 9;
-						return newPlayer.save().then(function () {
-							var _ref15 = _asyncToGenerator(regeneratorRuntime.mark(function _callee14(newOne) {
+						return Promise.all(players.map(function () {
+							var _ref15 = _asyncToGenerator(regeneratorRuntime.mark(function _callee14(player) {
 								return regeneratorRuntime.wrap(function _callee14$(_context14) {
 									while (1) {
 										switch (_context14.prev = _context14.next) {
 											case 0:
 												_context14.next = 2;
-												return (0, _updatePlayerStatusAfterOrder2.default)(newOne._id);
+												return (0, _updatePlayerStatusAfterOrder2.default)(player._id);
 
 											case 2:
 											case 'end':
@@ -509,19 +530,11 @@ router.get('/create-player', function () {
 							return function (_x20) {
 								return _ref15.apply(this, arguments);
 							};
-						}());
+						}())).then(function () {
+							res.json('done');
+						});
 
-					case 9:
-						player = _context15.sent;
-
-						// await agent.players.push(player._id)
-						// await agent.save()
-						// await superAgent.players.push(player._id)
-						// await superAgent.save()
-
-						res.json(player);
-
-					case 11:
+					case 5:
 					case 'end':
 						return _context15.stop();
 				}
@@ -534,21 +547,94 @@ router.get('/create-player', function () {
 	};
 }());
 
-router.get('/create-agent', function () {
-	var _ref16 = _asyncToGenerator(regeneratorRuntime.mark(function _callee16(req, res) {
-		var superAgent, newAgent, agent;
-		return regeneratorRuntime.wrap(function _callee16$(_context16) {
+router.get('/create-player', function () {
+	var _ref16 = _asyncToGenerator(regeneratorRuntime.mark(function _callee17(req, res) {
+		var superAgent, agent, newPlayer, player;
+		return regeneratorRuntime.wrap(function _callee17$(_context17) {
 			while (1) {
-				switch (_context16.prev = _context16.next) {
+				switch (_context17.prev = _context17.next) {
 					case 0:
-						_context16.next = 2;
+						_context17.next = 2;
 						return _SuperAgent2.default.findOne({ 'account.username': 'boss' });
 
 					case 2:
-						superAgent = _context16.sent;
+						superAgent = _context17.sent;
+						_context17.next = 5;
+						return _Agent2.default.findOne({ 'account.username': 'diamond' });
+
+					case 5:
+						agent = _context17.sent;
+						newPlayer = new _Player2.default({
+							account: {
+								username: 'f',
+								password: '1234',
+								passcode: '4321',
+								activate: true
+							},
+							superAgent: superAgent._id,
+							agent: agent._id
+						});
+						_context17.next = 9;
+						return newPlayer.save().then(function () {
+							var _ref17 = _asyncToGenerator(regeneratorRuntime.mark(function _callee16(newOne) {
+								return regeneratorRuntime.wrap(function _callee16$(_context16) {
+									while (1) {
+										switch (_context16.prev = _context16.next) {
+											case 0:
+												_context16.next = 2;
+												return (0, _updatePlayerStatusAfterOrder2.default)(newOne._id);
+
+											case 2:
+											case 'end':
+												return _context16.stop();
+										}
+									}
+								}, _callee16, undefined);
+							}));
+
+							return function (_x23) {
+								return _ref17.apply(this, arguments);
+							};
+						}());
+
+					case 9:
+						player = _context17.sent;
+
+						// await agent.players.push(player._id)
+						// await agent.save()
+						// await superAgent.players.push(player._id)
+						// await superAgent.save()
+
+						res.json(player);
+
+					case 11:
+					case 'end':
+						return _context17.stop();
+				}
+			}
+		}, _callee17, undefined);
+	}));
+
+	return function (_x21, _x22) {
+		return _ref16.apply(this, arguments);
+	};
+}());
+
+router.get('/create-agent', function () {
+	var _ref18 = _asyncToGenerator(regeneratorRuntime.mark(function _callee18(req, res) {
+		var superAgent, newAgent, agent;
+		return regeneratorRuntime.wrap(function _callee18$(_context18) {
+			while (1) {
+				switch (_context18.prev = _context18.next) {
+					case 0:
+						_context18.next = 2;
+						return _SuperAgent2.default.findOne({ 'account.username': 'boss' });
+
+					case 2:
+						superAgent = _context18.sent;
 
 						if (_lodash2.default.isEmpty(superAgent)) {
-							_context16.next = 11;
+							_context18.next = 11;
 							break;
 						}
 
@@ -557,16 +643,16 @@ router.get('/create-agent', function () {
 								username: 'diamond'
 							}
 						});
-						_context16.next = 7;
+						_context18.next = 7;
 						return newAgent.save();
 
 					case 7:
-						agent = _context16.sent;
+						agent = _context18.sent;
 
 						//		superAgent.agents.push(agent._id)
 						//		await superAgent.save()
 						res.json('done');
-						_context16.next = 12;
+						_context18.next = 12;
 						break;
 
 					case 11:
@@ -574,14 +660,14 @@ router.get('/create-agent', function () {
 
 					case 12:
 					case 'end':
-						return _context16.stop();
+						return _context18.stop();
 				}
 			}
-		}, _callee16, undefined);
+		}, _callee18, undefined);
 	}));
 
-	return function (_x21, _x22) {
-		return _ref16.apply(this, arguments);
+	return function (_x24, _x25) {
+		return _ref18.apply(this, arguments);
 	};
 }());
 

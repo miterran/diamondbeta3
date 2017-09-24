@@ -19,49 +19,6 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Schema = _mongoose2.default.Schema;
-// import mongoose from 'mongoose'
-
-// const Schema = mongoose.Schema
-
-// const LeagueSchema = Schema({
-// 	name: { type: String },
-// 	region: { type: String },
-// 	details: { type: String },
-// 	provider: { type: String },
-// 	apiLink: { type: String },
-// 	bookMaker: { type: String },
-// 	oddTypes: [{ type: String, enum: oddTypeList }]
-// })
-
-// const SportLeagueSchema = Schema({
-// 	sport: { type: String, enum: SportLeagueList, required: true },
-// 	leagues: [LeagueSchema],
-// 	updatedAt: { type: Date }
-// })
-
-// const SportLeague = mongoose.model('SportLeague', SportLeagueSchema)
-
-// export default SportLeague
-
-// const oddTypeList = [
-// 	'Game',
-// 	'First Half',
-// 	'Second Half',
-// 	'First Quarter',
-// 	'Second Quarter',
-// 	'Third Quarter',
-// 	'Fourth Quarter',
-// 	'First Period',
-// 	'Second Period',
-// 	'Third Period',
-// 	'First Inning',
-// 	'First Five Innings'
-// ]
-
-// const sportList = [ 'Basketball', 'Baseball', 'Football', 'Hockey', 'Boxing', 'MMA', 'Soccer' ]
-
-//import SportLeagueList from '../utils/SportLeagueList';
-
 
 var LeagueSchema = Schema({
 	name: { type: String },

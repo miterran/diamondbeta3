@@ -10,6 +10,10 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _Agent = require('../../../models/Agent');
 
 var _Agent2 = _interopRequireDefault(_Agent);
@@ -24,7 +28,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var saveNewHistoryBet = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet, betOrderStatus, resultAmount) {
-		var newHistoryBet, agent, newAgentTransaction;
+		var newHistoryBet, existedHistory, agent, newAgentTransaction;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -42,25 +46,36 @@ var saveNewHistoryBet = function () {
 							closedAt: (0, _moment2.default)()
 						});
 						_context.next = 4;
-						return newHistoryBet.save();
+						return _BetOrder.HistoryBet.findOne({ orderNumber: openBet.orderNumber });
 
 					case 4:
-						console.log('saved history straight bet' + newHistoryBet.orderNumber);
-						_context.next = 7;
-						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
+						existedHistory = _context.sent;
 
-					case 7:
-						console.log('deleted openbet ' + openBet.orderNumber);
-
-						if (!(betOrderStatus === 'Lost')) {
-							_context.next = 17;
+						if (!_lodash2.default.isEmpty(existedHistory)) {
+							_context.next = 21;
 							break;
 						}
 
+						_context.next = 8;
+						return newHistoryBet.save();
+
+					case 8:
+						console.log('saved history straight bet' + newHistoryBet.orderNumber);
 						_context.next = 11;
-						return _Agent2.default.findOneAndUpdate({ _id: openBet.owner.agent }, { '$inc': { 'currentStatus.credit': resultAmount, 'currentStatus.availableCredit': resultAmount } });
+						return _BetOrder.OpenBet.findOneAndRemove({ _id: openBet._id });
 
 					case 11:
+						console.log('deleted openbet ' + openBet.orderNumber);
+
+						if (!(betOrderStatus === 'Lost')) {
+							_context.next = 21;
+							break;
+						}
+
+						_context.next = 15;
+						return _Agent2.default.findOneAndUpdate({ _id: openBet.owner.agent }, { '$inc': { 'currentStatus.credit': resultAmount, 'currentStatus.availableCredit': resultAmount } });
+
+					case 15:
 						agent = _context.sent;
 
 						console.log('player lost game, updated agent status credit');
@@ -77,27 +92,27 @@ var saveNewHistoryBet = function () {
 							orderNumber: openBet.orderNumber,
 							createdAt: (0, _moment2.default)()
 						});
-						_context.next = 16;
+						_context.next = 20;
 						return newAgentTransaction.save();
 
-					case 16:
+					case 20:
 						console.log('saved new agent transaction');
 
-					case 17:
-						_context.next = 22;
+					case 21:
+						_context.next = 26;
 						break;
 
-					case 19:
-						_context.prev = 19;
+					case 23:
+						_context.prev = 23;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 22:
+					case 26:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 19]]);
+		}, _callee, undefined, [[0, 23]]);
 	}));
 
 	return function saveNewHistoryBet(_x, _x2, _x3) {
