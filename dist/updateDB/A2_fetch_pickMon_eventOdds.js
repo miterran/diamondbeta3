@@ -100,18 +100,18 @@ var fetch_pickMon_eventOdds = function () {
 													sport: event.sporttype,
 													matchTime: (0, _moment2.default)(event.gamedate).subtract(3, 'h'),
 													team: {
-														home: event.team1.name,
-														homeROT: event.team1.rotnum,
-														away: event.team2.name,
-														awayROT: event.team2.rotnum
+														home: event.team2.name,
+														homeROT: event.team2.rotnum,
+														away: event.team1.name,
+														awayROT: event.team1.rotnum
 													},
 													details: event.header || '',
 													odds: {
-														moneyLineHome: Number(event.line.money.team1) || 0,
-														moneyLineAway: Number(event.line.money.team2) || 0,
+														moneyLineHome: Number(event.line.money.team2) || 0,
+														moneyLineAway: Number(event.line.money.team1) || 0,
 														pointSpreadAway: Number(event.line.spread.points) || 0,
-														pointSpreadHomeLine: Number(event.line.spread.team1) || 0,
-														pointSpreadAwayLine: Number(event.line.spread.team2) || 0,
+														pointSpreadHomeLine: Number(event.line.spread.team2) || 0,
+														pointSpreadAwayLine: Number(event.line.spread.team1) || 0,
 														totalNumber: Number(event.line.total.points) || 0,
 														overLine: Number(event.line.total.over) || 0,
 														underLine: Number(event.line.total.under) || 0,
@@ -136,8 +136,8 @@ var fetch_pickMon_eventOdds = function () {
 												}
 
 												if (event.sporttype === 'Baseball') {
-													newEventOdd.team.homePitcher = event.team1.pitcher || 'Action';
-													newEventOdd.team.awayPitcher = event.team2.pitcher || 'Action';
+													newEventOdd.team.homePitcher = event.team2.pitcher || 'Action';
+													newEventOdd.team.awayPitcher = event.team1.pitcher || 'Action';
 												}
 
 												if (event.sporttype !== 'Soccer') {

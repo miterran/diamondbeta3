@@ -148,8 +148,8 @@ var fetch_pickMon_result = function () {
 																			matchTime: openBetEvent.matchTime,
 																			team: openBetEvent.team,
 																			score: {
-																				homeScore: event.line.score.team1 || 0,
-																				awayScore: event.line.score.team2 || 0
+																				homeScore: event.line.score.team2 || 0,
+																				awayScore: event.line.score.team1 || 0
 																			},
 																			expireAt: (0, _moment2.default)().add(3, 'd')
 																		};
