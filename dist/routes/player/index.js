@@ -58,7 +58,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = _express2.default.Router();
 
-router.route('/sync-current-status').get(_syncCurrentStatus2.default);
+router.route('/sync-current-status').get(_updateDB.fullResultUpdateDB_MW, _syncCurrentStatus2.default);
 
 router.route('/fetch-account').get(_fetchAccount2.default);
 
@@ -66,9 +66,9 @@ router.route('/fetch-sport-league-list').get(_updateDB.fetchAllEventOdds_MW, _up
 
 router.route('/fetch-eventodd-list').post(_fetchEventOdd2.default);
 
-router.route('/fetch-open-bet').get(_updateDB.fullResultUpdateDB_MW, _fetchOpenBet2.default);
+router.route('/fetch-open-bet').get(_fetchOpenBet2.default);
 
-router.route('/fetch-history-bet').post(_updateDB.fullResultUpdateDB_MW, _fetchHistoryBet2.default);
+router.route('/fetch-history-bet').post(_fetchHistoryBet2.default);
 
 router.route('/submit-single-bet-order').post(_updateDB.fetchAllEventOdds_MW, _submitSingleBetOrder2.default);
 
