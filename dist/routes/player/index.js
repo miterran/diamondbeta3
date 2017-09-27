@@ -60,7 +60,7 @@ var router = _express2.default.Router();
 
 router.route('/sync-current-status').get(_syncCurrentStatus2.default);
 
-router.route('/fetch-account').get(_updateDB.fullUpdateDB_MW, _fetchAccount2.default);
+router.route('/fetch-account').get(_fetchAccount2.default);
 
 router.route('/fetch-sport-league-list').get(_updateDB.fetchAllEventOdds_MW, _updateDB.buildSportLeagueTable_MW, _fetchSportLeague2.default);
 

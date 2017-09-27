@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.fullUpdateDB_MW = exports.fullResultUpdateDB_MW = exports.buildSportLeagueTable_MW = exports.fetchAllEventOdds_MW = undefined;
+exports.fullResultUpdateDB_MW = exports.buildSportLeagueTable_MW = exports.fetchAllEventOdds_MW = undefined;
 
 var _moment = require('moment');
 
@@ -200,106 +200,30 @@ var fullResultUpdateDB_MW = exports.fullResultUpdateDB_MW = function () {
 	};
 }();
 
-var fullUpdateDB_MW = exports.fullUpdateDB_MW = function () {
-	var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(req, res, next) {
-		var fullUpdateDBcooldown, fetchAllEventOddscooldown, fullResultUpdateDBcooldown;
-		return regeneratorRuntime.wrap(function _callee4$(_context4) {
-			while (1) {
-				switch (_context4.prev = _context4.next) {
-					case 0:
-						_context4.prev = 0;
-						_context4.next = 3;
-						return _CoolDown2.default.findOne({ usage: 'fullUpdateDB' });
-
-					case 3:
-						fullUpdateDBcooldown = _context4.sent;
-
-						if (!((0, _moment2.default)().format('X') - (0, _moment2.default)(fullUpdateDBcooldown.updatedAt).format('X') > fullUpdateDBcooldown.sec)) {
-							_context4.next = 33;
-							break;
-						}
-
-						_context4.next = 7;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
-
-					case 7:
-						_context4.next = 9;
-						return _CoolDown2.default.findOne({ usage: 'fetchAllEventOdds' });
-
-					case 9:
-						fetchAllEventOddscooldown = _context4.sent;
-
-						if (!((0, _moment2.default)().format('X') - (0, _moment2.default)(fetchAllEventOddscooldown.updatedAt).format('X') > fetchAllEventOddscooldown.sec)) {
-							_context4.next = 17;
-							break;
-						}
-
-						_context4.next = 13;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fetchAllEventOdds' }, { $set: { updatedAt: (0, _moment2.default)() } });
-
-					case 13:
-						_context4.next = 15;
-						return (0, _A1_fetch_jsonOdd_eventOdds2.default)();
-
-					case 15:
-						_context4.next = 17;
-						return (0, _A2_fetch_pickMon_eventOdds2.default)();
-
-					case 17:
-						_context4.next = 19;
-						return _CoolDown2.default.findOne({ usage: 'fullResultUpdateDB' });
-
-					case 19:
-						fullResultUpdateDBcooldown = _context4.sent;
-
-						if (!((0, _moment2.default)().format('X') - (0, _moment2.default)(fullResultUpdateDBcooldown.updatedAt).format('X') > fullResultUpdateDBcooldown.sec)) {
-							_context4.next = 33;
-							break;
-						}
-
-						_context4.next = 23;
-						return _CoolDown2.default.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: (0, _moment2.default)() } });
-
-					case 23:
-						_context4.next = 25;
-						return (0, _C1_fetch_jsonOdd_result2.default)();
-
-					case 25:
-						_context4.next = 27;
-						return (0, _C2_fetch_pickMon_result2.default)();
-
-					case 27:
-						_context4.next = 29;
-						return (0, _D1_sync_Result_to_openBet_eventOdds2.default)();
-
-					case 29:
-						_context4.next = 31;
-						return (0, _E1_determine_OpenBet_eventOdds_result2.default)();
-
-					case 31:
-						_context4.next = 33;
-						return (0, _F1_confirm_openBet_result_to_HistoryBet2.default)();
-
-					case 33:
-						next();
-						_context4.next = 39;
-						break;
-
-					case 36:
-						_context4.prev = 36;
-						_context4.t0 = _context4['catch'](0);
-						throw _context4.t0;
-
-					case 39:
-					case 'end':
-						return _context4.stop();
-				}
-			}
-		}, _callee4, undefined, [[0, 36]]);
-	}));
-
-	return function fullUpdateDB_MW(_x10, _x11, _x12) {
-		return _ref4.apply(this, arguments);
-	};
-}();
+// export const fullUpdateDB_MW = async (req, res, next) => {
+// 	try{
+// 		const fullUpdateDBcooldown = await CoolDown.findOne({ usage: 'fullUpdateDB' })
+// 		if(moment().format('X') - moment(fullUpdateDBcooldown.updatedAt).format('X') > fullUpdateDBcooldown.sec){
+// 			await CoolDown.findOneAndUpdate({ usage: 'fullUpdateDB' }, { $set: { updatedAt: moment() } })
+// 			const fetchAllEventOddscooldown = await CoolDown.findOne({ usage: 'fetchAllEventOdds' })
+// 			if(moment().format('X') - moment(fetchAllEventOddscooldown.updatedAt).format('X') > fetchAllEventOddscooldown.sec){
+// 				await CoolDown.findOneAndUpdate({ usage: 'fetchAllEventOdds' }, { $set: { updatedAt: moment() } })
+// 				await A1_fetch_jsonOdd_eventOdds()
+// 				await A2_fetch_pickMon_eventOdds()
+// 			}
+// 			const fullResultUpdateDBcooldown = await CoolDown.findOne({ usage: 'fullResultUpdateDB' })
+// 			if(moment().format('X') - moment(fullResultUpdateDBcooldown.updatedAt).format('X') > fullResultUpdateDBcooldown.sec){
+// 				await CoolDown.findOneAndUpdate({ usage: 'fullResultUpdateDB' }, { $set: { updatedAt: moment() } })
+// 				await C1_fetch_jsonOdd_result()
+// 				await C2_fetch_pickMon_result()
+// 				await D1_sync_Result_to_openBet_eventOdds()
+// 				await E1_determine_OpenBet_eventOdds_result()
+// 				await F1_confirm_openBet_result_to_HistoryBet()
+// 			}
+// 		}
+// 		next()
+// 	}catch(err){
+// 		throw err
+// 	}
+// }
 //# sourceMappingURL=updateDB.js.map

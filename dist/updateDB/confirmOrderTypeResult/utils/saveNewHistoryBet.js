@@ -28,12 +28,23 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var saveNewHistoryBet = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(openBet, betOrderStatus, resultAmount) {
-		var newHistoryBet, existedHistory, agent, newAgentTransaction;
+		var existedHistory, newHistoryBet, agent, newAgentTransaction;
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
 						_context.prev = 0;
+						_context.next = 3;
+						return _BetOrder.HistoryBet.findOne({ orderNumber: openBet.orderNumber });
+
+					case 3:
+						existedHistory = _context.sent;
+
+						if (!_lodash2.default.isEmpty(existedHistory)) {
+							_context.next = 21;
+							break;
+						}
+
 						newHistoryBet = new _BetOrder.HistoryBet({
 							orderNumber: openBet.orderNumber,
 							orderType: openBet.orderType,
@@ -45,17 +56,6 @@ var saveNewHistoryBet = function () {
 							createdAt: openBet.createdAt,
 							closedAt: (0, _moment2.default)()
 						});
-						_context.next = 4;
-						return _BetOrder.HistoryBet.findOne({ orderNumber: openBet.orderNumber });
-
-					case 4:
-						existedHistory = _context.sent;
-
-						if (!_lodash2.default.isEmpty(existedHistory)) {
-							_context.next = 21;
-							break;
-						}
-
 						_context.next = 8;
 						return newHistoryBet.save();
 
