@@ -109,7 +109,7 @@ var fetch_pickMon_eventOdds = function () {
 													odds: {
 														moneyLineHome: Number(event.line.money.team2) || 0,
 														moneyLineAway: Number(event.line.money.team1) || 0,
-														pointSpreadAway: Number(event.line.spread.points) || 0,
+														pointSpreadHome: Number(event.line.spread.points) || 0,
 														pointSpreadHomeLine: Number(event.line.spread.team2) || 0,
 														pointSpreadAwayLine: Number(event.line.spread.team1) || 0,
 														totalNumber: Number(event.line.total.points) || 0,
@@ -119,7 +119,7 @@ var fetch_pickMon_eventOdds = function () {
 													},
 													updatedAt: (0, _moment2.default)()
 												};
-												checkOddPoints = _lodash2.default.pick(newEventOdd.odds, ['moneyLineHome', 'moneyLineAway', 'pointSpreadHome', 'pointSpreadAway', 'pointSpreadHomeLine', 'pointSpreadAwayLine', 'totalNumber', 'overLine', 'underLine', 'drawLine']);
+												checkOddPoints = _lodash2.default.pick(newEventOdd.odds, ['moneyLineHome', 'moneyLineAway', 'pointSpreadAway', 'pointSpreadHome', 'pointSpreadHomeLine', 'pointSpreadAwayLine', 'totalNumber', 'overLine', 'underLine', 'drawLine']);
 												allZero = Object.values(checkOddPoints).every(function (val) {
 													return Number(val) === 0;
 												});
@@ -130,9 +130,9 @@ var fetch_pickMon_eventOdds = function () {
 												}
 
 												if (Number(event.line.spread.points) > 0) {
-													newEventOdd.odds.pointSpreadHome = -Number(event.line.spread.points);
+													newEventOdd.odds.pointSpreadAway = -Number(event.line.spread.points);
 												} else {
-													newEventOdd.odds.pointSpreadHome = Math.abs(Number(event.line.spread.points));
+													newEventOdd.odds.pointSpreadAway = Math.abs(Number(event.line.spread.points));
 												}
 
 												if (event.sporttype === 'Baseball') {
