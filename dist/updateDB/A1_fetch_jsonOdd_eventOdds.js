@@ -45,7 +45,13 @@ var fetch_jsonOdd_eventOdds = function () {
 
 					case 3:
 						jsonOddList = _context4.sent;
-						_context4.next = 6;
+
+						if (_lodash2.default.isEmpty(jsonOddList)) {
+							_context4.next = 7;
+							break;
+						}
+
+						_context4.next = 7;
 						return Promise.all(jsonOddList.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(sportLeague) {
 								var events;
@@ -150,7 +156,7 @@ var fetch_jsonOdd_eventOdds = function () {
 																									newEventOdd.region = event.DisplayRegion;
 																								}
 
-																								newEventOdd.uniqueId = newEventOdd.team.homeROT + '_' + newEventOdd.team.awayROT + '_' + newEventOdd.sport.replace(/\s/g, '').toUpperCase() + '_' + newEventOdd.oddType.replace(/\s/g, '').toUpperCase() + '_' + (0, _moment2.default)(newEventOdd.matchTime).format('MMDDYYYY');
+																								newEventOdd.uniqueId = newEventOdd.team.homeROT + '_' + newEventOdd.team.awayROT + '_' + newEventOdd.sport.replace(/\s/g, '').toUpperCase() + '_' + newEventOdd.oddType.replace(/\s/g, '').toUpperCase() + '_' + _moment2.default.utc(newEventOdd.matchTime).format('MMDDYYYY');
 
 																								_context.next = 10;
 																								return _EventOdd.EventOdd.findOne({ uniqueId: newEventOdd.uniqueId });
@@ -245,21 +251,21 @@ var fetch_jsonOdd_eventOdds = function () {
 							};
 						}()));
 
-					case 6:
-						_context4.next = 11;
+					case 7:
+						_context4.next = 12;
 						break;
 
-					case 8:
-						_context4.prev = 8;
+					case 9:
+						_context4.prev = 9;
 						_context4.t0 = _context4['catch'](0);
 						throw _context4.t0;
 
-					case 11:
+					case 12:
 					case 'end':
 						return _context4.stop();
 				}
 			}
-		}, _callee4, undefined, [[0, 8]]);
+		}, _callee4, undefined, [[0, 9]]);
 	}));
 
 	return function fetch_jsonOdd_eventOdds() {

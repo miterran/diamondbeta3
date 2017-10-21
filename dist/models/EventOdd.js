@@ -47,16 +47,16 @@ var EventOddSchema = exports.EventOddSchema = new Schema({
 		awayPitcher: { type: String }
 	},
 	odds: {
-		moneyLineHome: { type: Number },
-		moneyLineAway: { type: Number },
-		pointSpreadHome: { type: Number },
-		pointSpreadAway: { type: Number },
-		pointSpreadHomeLine: { type: Number },
-		pointSpreadAwayLine: { type: Number },
-		totalNumber: { type: Number },
-		overLine: { type: Number },
-		underLine: { type: Number },
-		drawLine: { type: Number }
+		moneyLineHome: { type: Number, default: 0 },
+		moneyLineAway: { type: Number, default: 0 },
+		pointSpreadHome: { type: Number, default: 0 },
+		pointSpreadAway: { type: Number, default: 0 },
+		pointSpreadHomeLine: { type: Number, default: 0 },
+		pointSpreadAwayLine: { type: Number, default: 0 },
+		totalNumber: { type: Number, default: 0 },
+		overLine: { type: Number, default: 0 },
+		underLine: { type: Number, default: 0 },
+		drawLine: { type: Number, default: 0 }
 	},
 	betDetail: {
 		oddLine: { type: Number },

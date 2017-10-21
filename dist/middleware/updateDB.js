@@ -21,6 +21,14 @@ var _A2_fetch_pickMon_eventOdds = require('../updateDB/A2_fetch_pickMon_eventOdd
 
 var _A2_fetch_pickMon_eventOdds2 = _interopRequireDefault(_A2_fetch_pickMon_eventOdds);
 
+var _A3_fetch_betOnlineNBA_eventOdds = require('../updateDB/A3_fetch_betOnlineNBA_eventOdds');
+
+var _A3_fetch_betOnlineNBA_eventOdds2 = _interopRequireDefault(_A3_fetch_betOnlineNBA_eventOdds);
+
+var _A4_fetch_betOnlineFootball_eventOdds = require('../updateDB/A4_fetch_betOnlineFootball_eventOdds');
+
+var _A4_fetch_betOnlineFootball_eventOdds2 = _interopRequireDefault(_A4_fetch_betOnlineFootball_eventOdds);
+
 var _B1_build_SportLeague_table = require('../updateDB/B1_build_SportLeague_table');
 
 var _B1_build_SportLeague_table2 = _interopRequireDefault(_B1_build_SportLeague_table);
@@ -64,33 +72,45 @@ var fetchAllEventOdds_MW = exports.fetchAllEventOdds_MW = function () {
 						cooldown = _context.sent;
 
 						if (!((0, _moment2.default)().format('X') - (0, _moment2.default)(cooldown.updatedAt).format('X') > cooldown.sec)) {
-							_context.next = 9;
+							_context.next = 15;
 							break;
 						}
 
 						_context.next = 7;
-						return (0, _A1_fetch_jsonOdd_eventOdds2.default)();
+						return _CoolDown2.default.findOneAndUpdate({ usage: 'fetchAllEventOdds' }, { $set: { updatedAt: (0, _moment2.default)() } });
 
 					case 7:
 						_context.next = 9;
-						return (0, _A2_fetch_pickMon_eventOdds2.default)();
+						return (0, _A1_fetch_jsonOdd_eventOdds2.default)();
 
 					case 9:
-						next();
+						_context.next = 11;
+						return (0, _A2_fetch_pickMon_eventOdds2.default)();
+
+					case 11:
+						_context.next = 13;
+						return (0, _A3_fetch_betOnlineNBA_eventOdds2.default)();
+
+					case 13:
 						_context.next = 15;
+						return (0, _A4_fetch_betOnlineFootball_eventOdds2.default)();
+
+					case 15:
+						next();
+						_context.next = 21;
 						break;
 
-					case 12:
-						_context.prev = 12;
+					case 18:
+						_context.prev = 18;
 						_context.t0 = _context['catch'](0);
 						throw _context.t0;
 
-					case 15:
+					case 21:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 12]]);
+		}, _callee, undefined, [[0, 18]]);
 	}));
 
 	return function fetchAllEventOdds_MW(_x, _x2, _x3) {

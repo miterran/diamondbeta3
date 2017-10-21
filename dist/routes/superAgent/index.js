@@ -36,6 +36,10 @@ var _fetchHistoryBet = require('./ctrls/fetchHistoryBet');
 
 var _fetchHistoryBet2 = _interopRequireDefault(_fetchHistoryBet);
 
+var _addGame = require('./ctrls/addGame');
+
+var _addGame2 = _interopRequireDefault(_addGame);
+
 var _updateDB = require('../../middleware/updateDB');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49,6 +53,7 @@ router.route('/fetch-agent-status').post(_fetchAgentStatus2.default);
 router.route('/add-credit').post(_addCredit2.default);
 router.route('/fetch-open-bet').get(_updateDB.fullResultUpdateDB_MW, _fetchOpenBet2.default);
 router.route('/fetch-history-bet').get(_updateDB.fullResultUpdateDB_MW, _fetchHistoryBet2.default);
+router.route('/add-game').post(_addGame2.default);
 
 exports.default = router;
 //# sourceMappingURL=index.js.map
