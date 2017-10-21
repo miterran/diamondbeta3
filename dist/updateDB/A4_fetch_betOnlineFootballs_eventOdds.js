@@ -256,4 +256,4 @@ var fetch_betOnlineFootball_eventOdds = function () {
 }();
 
 exports.default = fetch_betOnlineFootball_eventOdds;
-//# sourceMappingURL=A4_fetch_betOnlineFootball_eventOdds.js.map
+//# sourceMappingURL=A4_fetch_betOnlineFootballs_eventOdds.js.map

@@ -25,9 +25,9 @@ var _A3_fetch_betOnlineNBA_eventOdds = require('../updateDB/A3_fetch_betOnlineNB
 
 var _A3_fetch_betOnlineNBA_eventOdds2 = _interopRequireDefault(_A3_fetch_betOnlineNBA_eventOdds);
 
-var _A4_fetch_betOnlineFootball_eventOdds = require('../updateDB/A4_fetch_betOnlineFootball_eventOdds');
+var _A4_fetch_betOnlineFootballs_eventOdds = require('../updateDB/A4_fetch_betOnlineFootballs_eventOdds');
 
-var _A4_fetch_betOnlineFootball_eventOdds2 = _interopRequireDefault(_A4_fetch_betOnlineFootball_eventOdds);
+var _A4_fetch_betOnlineFootballs_eventOdds2 = _interopRequireDefault(_A4_fetch_betOnlineFootballs_eventOdds);
 
 var _B1_build_SportLeague_table = require('../updateDB/B1_build_SportLeague_table');
 
@@ -93,7 +93,7 @@ var fetchAllEventOdds_MW = exports.fetchAllEventOdds_MW = function () {
 
 					case 13:
 						_context.next = 15;
-						return (0, _A4_fetch_betOnlineFootball_eventOdds2.default)();
+						return (0, _A4_fetch_betOnlineFootballs_eventOdds2.default)();
 
 					case 15:
 						next();
