@@ -34,7 +34,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var createNewPlayer = function () {
 	var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res) {
-		var _req$body, minRisk, maxWager, maxParlay, maxWin, weeklyStartCredit, username, password, passcode, existedPlayer, amountGap, newPlayer, newPlayerInfo;
+		var _req$body, minRisk, maxWager, maxParlay, maxWin, weeklyStartCredit, username, password, passcode, existedPlayer, existedAgent, existedSuperAgent, amountGap, newPlayer, newPlayerInfo;
 
 		return regeneratorRuntime.wrap(function _callee$(_context) {
 			while (1) {
@@ -51,39 +51,49 @@ var createNewPlayer = function () {
 
 					case 5:
 						existedPlayer = _context.sent;
+						_context.next = 8;
+						return _Agent2.default.findOne({ 'account.username': username }, '_id');
+
+					case 8:
+						existedAgent = _context.sent;
+						_context.next = 11;
+						return existedSuperAgent.findOne({ 'account.username': username }, '_id');
+
+					case 11:
+						existedSuperAgent = _context.sent;
 
 
-						if (!_lodash2.default.isEmpty(existedPlayer)) res.status(404);
+						if (!_lodash2.default.isEmpty(existedPlayer) && !_lodash2.default.isEmpty(existedAgent) && !_lodash2.default.isEmpty(existedSuperAgent)) res.status(404);
 
 						amountGap = 10;
 						_context.t0 = true;
-						_context.next = _context.t0 === maxWager <= 500 ? 11 : _context.t0 === (maxWager > 500 && maxWager <= 1000) ? 13 : _context.t0 === (maxWager > 1000 && maxWager <= 3000) ? 15 : _context.t0 === maxWager > 3000 ? 17 : 19;
+						_context.next = _context.t0 === maxWager <= 500 ? 17 : _context.t0 === (maxWager > 500 && maxWager <= 1000) ? 19 : _context.t0 === (maxWager > 1000 && maxWager <= 3000) ? 21 : _context.t0 === maxWager > 3000 ? 23 : 25;
 						break;
 
-					case 11:
+					case 17:
 						//			case minRisk < 50:
 						amountGap = 10;
-						return _context.abrupt('break', 20);
-
-					case 13:
-						//			case minRisk >= 50 && minRisk < 100:
-						amountGap = 20;
-						return _context.abrupt('break', 20);
-
-					case 15:
-						//			case minRisk >= 100 && minRisk < 300:
-						amountGap = 50;
-						return _context.abrupt('break', 20);
-
-					case 17:
-						//			case minRisk >= 300:
-						amountGap = 100;
-						return _context.abrupt('break', 20);
+						return _context.abrupt('break', 26);
 
 					case 19:
+						//			case minRisk >= 50 && minRisk < 100:
+						amountGap = 20;
+						return _context.abrupt('break', 26);
+
+					case 21:
+						//			case minRisk >= 100 && minRisk < 300:
+						amountGap = 50;
+						return _context.abrupt('break', 26);
+
+					case 23:
+						//			case minRisk >= 300:
+						amountGap = 100;
+						return _context.abrupt('break', 26);
+
+					case 25:
 						return _context.abrupt('return');
 
-					case 20:
+					case 26:
 						newPlayer = new _Player2.default({
 							account: {
 								username: username,
@@ -101,40 +111,40 @@ var createNewPlayer = function () {
 							superAgent: req.user.superAgent,
 							agent: req.user._id
 						});
-						_context.next = 23;
+						_context.next = 29;
 						return newPlayer.save();
 
-					case 23:
+					case 29:
 						newPlayerInfo = _context.sent;
-						_context.next = 26;
+						_context.next = 32;
 						return (0, _updatePlayerStatusAfterOrder2.default)(newPlayerInfo._id);
 
-					case 26:
-						_context.next = 28;
+					case 32:
+						_context.next = 34;
 						return _Agent2.default.findOneAndUpdate({ _id: req.user._id }, { $push: { players: newPlayerInfo._id } });
 
-					case 28:
-						_context.next = 30;
+					case 34:
+						_context.next = 36;
 						return _SuperAgent2.default.findOneAndUpdate({ _id: req.user.superAgent }, { $push: { players: newPlayerInfo._id } });
 
-					case 30:
+					case 36:
 
 						res.json({ id: newPlayerInfo._id, username: newPlayerInfo.account.username });
 
-						_context.next = 36;
+						_context.next = 42;
 						break;
 
-					case 33:
-						_context.prev = 33;
+					case 39:
+						_context.prev = 39;
 						_context.t1 = _context['catch'](0);
 						throw _context.t1;
 
-					case 36:
+					case 42:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, undefined, [[0, 33]]);
+		}, _callee, undefined, [[0, 39]]);
 	}));
 
 	return function createNewPlayer(_x, _x2) {

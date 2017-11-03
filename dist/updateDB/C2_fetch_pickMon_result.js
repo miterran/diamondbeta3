@@ -51,7 +51,7 @@ var fetch_pickMon_result = function () {
 						pickMonApi = _context3.sent;
 
 						if (!pickMonApi) {
-							_context3.next = 25;
+							_context3.next = 27;
 							break;
 						}
 
@@ -63,6 +63,7 @@ var fetch_pickMon_result = function () {
 						openBetPickMon = _lodash2.default.compact(_lodash2.default.uniqBy([].concat.apply([], openBets.map(function (openBet) {
 							return openBet.eventOdds.map(function (event) {
 								if (event.status === 'Pending' && event.source.provider === 'pickMon' && (0, _moment2.default)().isAfter(event.cutOffTime)) {
+
 									if (event.sport === 'Football' && event.league === 'College') {
 										event.sportLeague = event.sport.toLowerCase() + '-ncaa';
 									} else if (event.sport === 'Soccer') {
@@ -79,37 +80,34 @@ var fetch_pickMon_result = function () {
 							return pickMonSportLeague.sportLeague;
 						}).join(',');
 
-
-						console.log(pickMonSportLeagues);
-
 						if (_lodash2.default.isEmpty(pickMonSportLeagues)) {
-							_context3.next = 24;
+							_context3.next = 26;
 							break;
 						}
 
-						_context3.next = 14;
+						_context3.next = 13;
 						return _axios2.default.get(pickMonApi.apiLink + 'uid=' + _config2.default.pickMon_UID + '&key=' + _config2.default.pickMon_Key + '&sports=' + pickMonSportLeagues + '&graded=1&full_call=' + pickMonApi.option.resultFullCall);
 
-					case 14:
+					case 13:
 						response = _context3.sent;
 
 						if (_lodash2.default.isEmpty(response.data)) {
-							_context3.next = 22;
+							_context3.next = 23;
 							break;
 						}
 
-						_context3.next = 18;
+						_context3.next = 17;
 						return (0, _xml2jsEs6Promise2.default)(response.data, { explicitArray: false });
 
-					case 18:
+					case 17:
 						pickMonData = _context3.sent;
 
 						if (!(!_lodash2.default.isEmpty(pickMonData.lines) && !_lodash2.default.isEmpty(pickMonData.lines.game) && _lodash2.default.isFunction(pickMonData.lines.game.map))) {
-							_context3.next = 22;
+							_context3.next = 21;
 							break;
 						}
 
-						_context3.next = 22;
+						_context3.next = 21;
 						return Promise.all(pickMonData.lines.game.map(function () {
 							var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(event) {
 								return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -216,28 +214,35 @@ var fetch_pickMon_result = function () {
 							};
 						}()));
 
-					case 22:
-						_context3.next = 25;
+					case 21:
+						_context3.next = 24;
 						break;
+
+					case 23:
+						console.log('response.empty');
 
 					case 24:
-						console.log('use open bet event id to update pickmon result, but open bet empty');
-
-					case 25:
-						_context3.next = 30;
+						_context3.next = 27;
 						break;
 
+					case 26:
+						console.log('use open bet event id to update pickmon result, but open bet empty');
+
 					case 27:
-						_context3.prev = 27;
+						_context3.next = 32;
+						break;
+
+					case 29:
+						_context3.prev = 29;
 						_context3.t0 = _context3['catch'](0);
 						throw _context3.t0;
 
-					case 30:
+					case 32:
 					case 'end':
 						return _context3.stop();
 				}
 			}
-		}, _callee3, undefined, [[0, 27]]);
+		}, _callee3, undefined, [[0, 29]]);
 	}));
 
 	return function fetch_pickMon_result() {
