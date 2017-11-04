@@ -230,6 +230,8 @@ var fetch_pickMon_eventOdds = function () {
 
 											case 40:
 												console.log('saved ' + newEventOdd.uniqueId);
+												//}
+
 												_context.next = 50;
 												break;
 
