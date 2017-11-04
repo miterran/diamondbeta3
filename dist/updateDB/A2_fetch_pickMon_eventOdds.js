@@ -199,6 +199,14 @@ var fetch_pickMon_eventOdds = function () {
 												if (newEventOdd.oddType === 'Game') {
 													newEventOdd.cutOffTime = (0, _moment2.default)(event.gamedate).subtract(3, 'h').subtract(1, 's');
 													newEventOdd.expireAt = (0, _moment2.default)(event.gamedate).subtract(3, 'h').subtract(1, 's');
+												} else if (newEventOdd.oddType === 'Second Half') {
+													if ((0, _moment2.default)(event.gamedate).add(2, 'h').isAfter(event.line.wagercutoff)) {
+														newEventOdd.cutOffTime = (0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').subtract(1, 's');
+														newEventOdd.expireAt = (0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').subtract(1, 's');
+													} else {
+														newEventOdd.cutOffTime = (0, _moment2.default)(event.gamedate).add(2, 'h').subtract(3, 'h').subtract(1, 's');
+														newEventOdd.expireAt = (0, _moment2.default)(event.gamedate).add(2, 'h').subtract(3, 'h').subtract(1, 's');
+													}
 												} else {
 													newEventOdd.cutOffTime = (0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').subtract(1, 's');
 													newEventOdd.expireAt = (0, _moment2.default)(event.line.wagercutoff).subtract(3, 'h').subtract(1, 's');
