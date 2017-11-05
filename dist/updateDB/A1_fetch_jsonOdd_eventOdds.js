@@ -123,7 +123,7 @@ var fetch_jsonOdd_eventOdds = function () {
 																										drawLine: Number(odd.DrawLine) || 0
 																									},
 																									updatedAt: (0, _moment2.default)(),
-																									expireAt: _moment2.default.utc(event.MatchTime).subtract(1, 'seconds')
+																									expireAt: _moment2.default.utc(event.MatchTime)
 																								};
 																								checkOddPoints = _lodash2.default.pick(newEventOdd.odds, ['moneyLineHome', 'moneyLineAway', 'pointSpreadHome', 'pointSpreadAway', 'pointSpreadHomeLine', 'pointSpreadAwayLine', 'totalNumber', 'overLine', 'underLine', 'drawLine']);
 																								allZero = Object.values(checkOddPoints).every(function (val) {
