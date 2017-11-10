@@ -79,7 +79,7 @@ var submitSingleBetOrder = function () {
 									while (1) {
 										switch (_context.prev = _context.next) {
 											case 0:
-												eventTimeOut = (0, _moment2.default)().isSameOrAfter((0, _moment2.default)(event.cutOffTime).format());
+												eventTimeOut = (0, _moment2.default)().isSameOrAfter((0, _moment2.default)(event.cutOffTime));
 												_context.next = 3;
 												return _BetOrder.OpenBet.findOne({ 'owner.player': req.user._id, orderType: orderType, 'eventOdds.singlePickId': event.singlePickId });
 

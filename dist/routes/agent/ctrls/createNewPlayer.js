@@ -57,7 +57,7 @@ var createNewPlayer = function () {
 					case 8:
 						existedAgent = _context.sent;
 						_context.next = 11;
-						return existedSuperAgent.findOne({ 'account.username': username }, '_id');
+						return _SuperAgent2.default.findOne({ 'account.username': username }, '_id');
 
 					case 11:
 						existedSuperAgent = _context.sent;
